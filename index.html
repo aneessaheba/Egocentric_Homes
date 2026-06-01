@@ -80,101 +80,131 @@
 
 
   <!-- ═══════════════════════════════════════════════════════
-       CORE DATASET CARD — gray card, info left, frames right
+       CORE DATASET — accent-titled section with large info card
        ═══════════════════════════════════════════════════════ -->
   <section class="section" id="dataset">
 
-    <div class="dataset-card">
+    <!-- Section title: "Core Dataset" with orange-red left border accent -->
+    <h2 class="section__title section__title--accent">Core Dataset</h2>
+    <!-- Section subtitle -->
+    <p class="section__subtitle">First-person household activity recordings with multi-modal annotations</p>
 
-      <!-- Orange-red "CORE DATA" badge, top-left of card -->
-      <span class="badge">CORE DATA</span>
+    <!-- Large gray card: left = info, right = frame grid -->
+    <div class="cd-card">
+      <div class="cd-card__inner">
 
-      <!-- Two-column layout: left = text/stats, right = image grid -->
-      <div class="dataset-card__inner">
+        <!-- ── LEFT COLUMN ─────────────────────────────────── -->
+        <div class="cd-card__left">
 
-        <!-- LEFT COLUMN: description and stats grid -->
-        <div class="dataset-card__left">
-          <h2 class="dataset-card__name">HomeHands Dataset</h2> <!-- Dataset title -->
+          <!-- Orange-red badge label -->
+          <span class="badge">CORE DATA</span>
 
-          <!-- Short prose description -->
-          <p class="dataset-card__desc">
-            Egocentric video recordings of everyday household tasks captured
-            from a head-mounted camera. Includes RGB frames, 21-keypoint hand
-            pose annotations per frame, and pixel-level semantic segmentation
-            masks aligned to each recording.
+          <!-- Dataset name -->
+          <h3 class="cd-card__title">HomeHands-10</h3>
+
+          <!-- One-paragraph description -->
+          <p class="cd-card__desc">
+            10 videos of unscripted egocentric household activities captured
+            from first-person view with hand pose and semantic segmentation
           </p>
 
-          <!-- 3×2 mini stats grid: six key numbers at a glance -->
-          <div class="stats-grid">
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">10</span>          <!-- Count -->
-              <span class="stats-grid__key">Videos</span>        <!-- Label -->
+          <!-- 2-column stats grid: 6 numbers in 3 rows -->
+          <div class="cd-stats">
+
+            <!-- Stat 1 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">10</span>           <!-- Number -->
+              <span class="cd-stat__key">Videos</span>         <!-- Label -->
             </div>
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">~5K</span>
-              <span class="stats-grid__key">Frames</span>
+
+            <!-- Stat 2 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">516</span>
+              <span class="cd-stat__key">Frames</span>
             </div>
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">21</span>
-              <span class="stats-grid__key">Keypoints / Hand</span>
+
+            <!-- Stat 3 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">21</span>
+              <span class="cd-stat__key">Keypoints</span>
             </div>
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">10</span>
-              <span class="stats-grid__key">Task Classes</span>
+
+            <!-- Stat 4 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">2</span>
+              <span class="cd-stat__key">Hands Per Frame</span>
             </div>
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">30</span>
-              <span class="stats-grid__key">FPS</span>
+
+            <!-- Stat 5 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">4</span>
+              <span class="cd-stat__key">Segmentation Classes</span>
             </div>
-            <div class="stats-grid__item">
-              <span class="stats-grid__value">1080p</span>
-              <span class="stats-grid__key">Resolution</span>
+
+            <!-- Stat 6 -->
+            <div class="cd-stat">
+              <span class="cd-stat__value">10</span>
+              <span class="cd-stat__key">Tasks</span>
             </div>
+
+          </div><!-- /cd-stats -->
+
+          <!-- Tag chip row: three keyword labels -->
+          <div class="cd-tags">
+            <span class="cd-tag">Hand Tracking</span>   <!-- Topic tag 1 -->
+            <span class="cd-tag">Segmentation</span>    <!-- Topic tag 2 -->
+            <span class="cd-tag">VLA Training</span>    <!-- Topic tag 3 -->
           </div>
-        </div>
 
-        <!-- RIGHT COLUMN: 3×2 grid of semantic frame samples -->
-        <div class="dataset-card__right">
+        </div><!-- /cd-card__left -->
 
-          <!-- Frame 100 -->
-          <figure class="frame-item">
-            <img src="assets/frames/frame_000100.png" alt="Semantic frame 100" class="frame-item__img" />
-            <figcaption class="frame-item__label">Frame #100</figcaption>
-          </figure>
+        <!-- ── RIGHT COLUMN: 2×3 frame grid ──────────────── -->
+        <div class="cd-card__right">
 
-          <!-- Frame 200 -->
-          <figure class="frame-item">
-            <img src="assets/frames/frame_000200.png" alt="Semantic frame 200" class="frame-item__img" />
-            <figcaption class="frame-item__label">Frame #200</figcaption>
-          </figure>
+          <!-- Grid wrapper: 2 columns, auto rows -->
+          <div class="cd-frames">
 
-          <!-- Frame 300 -->
-          <figure class="frame-item">
-            <img src="assets/frames/frame_000300.png" alt="Semantic frame 300" class="frame-item__img" />
-            <figcaption class="frame-item__label">Frame #300</figcaption>
-          </figure>
+            <!-- Row 1, Col 1 -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000100.png" alt="Frame 100 — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
 
-          <!-- Frame 400 -->
-          <figure class="frame-item">
-            <img src="assets/frames/frame_000400.png" alt="Semantic frame 400" class="frame-item__img" />
-            <figcaption class="frame-item__label">Frame #400</figcaption>
-          </figure>
+            <!-- Row 1, Col 2 -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000200.png" alt="Frame 200 — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
 
-          <!-- Frame 500 -->
-          <figure class="frame-item">
-            <img src="assets/frames/frame_000500.png" alt="Semantic frame 500" class="frame-item__img" />
-            <figcaption class="frame-item__label">Frame #500</figcaption>
-          </figure>
+            <!-- Row 2, Col 1 -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000300.png" alt="Frame 300 — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
 
-          <!-- View-all link fills the 6th grid slot -->
-          <a href="#download" class="frame-item frame-item--more">
-            <span class="frame-item__more-text">View All →</span>
-          </a>
+            <!-- Row 2, Col 2 -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000400.png" alt="Frame 400 — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
 
-        </div>
+            <!-- Row 3, Col 1 -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000500.png" alt="Frame 500 — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
 
-      </div>
-    </div>
+            <!-- Row 3, Col 2 — repeat frame 100 to complete the 2×3 grid -->
+            <figure class="cd-frame">
+              <img src="assets/frames/frame_000100.png" alt="Frame sample — folding clothes" class="cd-frame__img" />
+              <figcaption class="cd-frame__label">folding clothes</figcaption>
+            </figure>
+
+          </div><!-- /cd-frames -->
+        </div><!-- /cd-card__right -->
+
+      </div><!-- /cd-card__inner -->
+    </div><!-- /cd-card -->
 
   </section>
 
