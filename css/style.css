@@ -526,12 +526,162 @@ body {
 
 
 /* ============================================================
+   SECTION TITLE — accent left-border variant
+   ============================================================ */
+.section__title--accent {
+  border-left: 4px solid var(--accent); /* Orange-red vertical rule left of title */
+  padding-left: 0.75rem;                /* Space text away from the border */
+}
+
+
+/* ============================================================
+   CORE DATASET CARD (cd-card)
+   ============================================================ */
+
+/* Outer card: light gray, rounded, padded */
+.cd-card {
+  background: var(--gray-bg); /* #F5F5F5 card background */
+  border-radius: 12px;         /* Rounded corners */
+  padding: 2.75rem;            /* Internal whitespace */
+}
+
+/* Two-column inner layout: left info, right frame grid */
+.cd-card__inner {
+  display: grid;                     /* CSS Grid */
+  grid-template-columns: 1fr 1fr;   /* Left and right columns are equal width */
+  gap: 3rem;                          /* Gutter between the two columns */
+  align-items: start;                /* Both columns start at the top */
+}
+
+/* Dataset name heading inside the card */
+.cd-card__title {
+  font-size: 1.6rem;        /* Prominent display heading */
+  font-weight: 800;          /* Extra-bold */
+  letter-spacing: -0.03em;  /* Tight tracking for large text */
+  color: var(--black);       /* Solid black */
+  margin-top: 0.5rem;        /* Breathing room below the badge */
+  margin-bottom: 0.85rem;   /* Space before the description */
+}
+
+/* Description paragraph */
+.cd-card__desc {
+  font-size: 0.95rem;     /* Slightly smaller than body */
+  color: #444444;          /* Dark gray — secondary to the heading */
+  line-height: 1.75;       /* Loose line height for readability */
+  margin-bottom: 1.85rem; /* Space before the stats grid */
+}
+
+
+/* ============================================================
+   CORE DATASET STATS GRID — 2 columns × 3 rows
+   ============================================================ */
+
+/* Grid wrapper: two equal columns */
+.cd-stats {
+  display: grid;                          /* CSS Grid */
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 1.1rem 2rem;                      /* Row gap / column gap */
+  margin-bottom: 2rem;                   /* Space before the tag chips */
+}
+
+/* Individual stat block: value stacked above key */
+.cd-stat {
+  display: flex;            /* Flex column to stack vertically */
+  flex-direction: column;  /* Vertical stack */
+  gap: 0.15rem;             /* Tight gap between number and label */
+}
+
+/* Large orange-red stat number */
+.cd-stat__value {
+  font-size: 1.4rem;       /* Large and readable */
+  font-weight: 800;         /* Extra-bold */
+  color: var(--accent);    /* Orange-red accent color */
+  line-height: 1;           /* No extra spacing needed */
+}
+
+/* Small uppercase stat key label */
+.cd-stat__key {
+  font-size: 0.72rem;        /* Very small */
+  font-weight: 500;          /* Medium weight */
+  color: var(--gray-mute);  /* Muted gray */
+  text-transform: uppercase; /* ALL CAPS styling */
+  letter-spacing: 0.04em;    /* Slight wide-spacing for caps */
+}
+
+
+/* ============================================================
+   CORE DATASET TAG CHIPS — outlined keyword pills
+   ============================================================ */
+
+/* Horizontal row of chips */
+.cd-tags {
+  display: flex;    /* Side-by-side chips */
+  gap: 0.5rem;      /* Gap between each chip */
+  flex-wrap: wrap;  /* Wrap if container is too narrow */
+}
+
+/* Individual chip: no fill, black outline */
+.cd-tag {
+  display: inline-block;              /* Shrinks to content */
+  font-size: 0.68rem;                 /* Very small label */
+  font-weight: 700;                   /* Bold */
+  letter-spacing: 0.07em;            /* Wide-spaced uppercase feel */
+  text-transform: uppercase;         /* ALL CAPS */
+  padding: 0.3rem 0.75rem;           /* Horizontal padding for pill shape */
+  border: 1.5px solid var(--black);  /* Thin solid black border */
+  border-radius: 4px;                 /* Softly rounded corners */
+  color: var(--black);               /* Black text */
+}
+
+
+/* ============================================================
+   CORE DATASET FRAME GRID — 2 columns, auto rows (2×3)
+   ============================================================ */
+
+/* Grid wrapper: 2 columns so 6 images make 3 rows */
+.cd-frames {
+  display: grid;                          /* CSS Grid */
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 0.85rem;                           /* Gap between frame cells */
+}
+
+/* Individual frame figure: image stacked above caption */
+.cd-frame {
+  display: flex;            /* Flex column */
+  flex-direction: column;  /* Vertical stack */
+  gap: 0.4rem;              /* Space between image and label */
+}
+
+/* Frame thumbnail image */
+.cd-frame__img {
+  width: 100%;               /* Fill its grid column completely */
+  aspect-ratio: 4 / 3;     /* Consistent 4:3 ratio across all frames */
+  object-fit: cover;         /* Crop to fill — no letterboxing */
+  border-radius: 6px;        /* Slight rounding as requested */
+  border: 1px solid var(--gray-mid); /* Subtle gray border around each frame */
+}
+
+/* Small black label below each frame */
+.cd-frame__label {
+  font-size: 0.72rem;   /* Small caption text */
+  font-weight: 500;      /* Medium weight */
+  color: var(--black);  /* Black label as requested */
+  text-align: center;    /* Center below the image */
+}
+
+
+/* ============================================================
    RESPONSIVE — tablet and mobile adjustments
    ============================================================ */
 @media (max-width: 860px) {
-  /* Stack dataset card columns vertically on smaller screens */
-  .dataset-card__inner {
-    grid-template-columns: 1fr; /* Single column */
+  /* Stack core dataset card columns vertically */
+  .cd-card__inner {
+    grid-template-columns: 1fr; /* Single column layout */
+  }
+
+  /* When stacked, switch frames to 3-col to use the wider single column */
+  .cd-frames {
+    grid-template-columns: repeat(3, 1fr); /* 3 across on mobile single-col */
   }
 
   /* Stack modality cards vertically */
@@ -561,5 +711,10 @@ body {
   /* Tighter section padding on mobile */
   .section {
     padding: 3.5rem 1.25rem; /* Reduce padding */
+  }
+
+  /* Frames go back to 2-col on very narrow mobile */
+  .cd-frames {
+    grid-template-columns: repeat(2, 1fr); /* 2-col on narrow screens */
   }
 }
