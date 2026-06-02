@@ -16,3 +16,9 @@ SEG_DIR         = PROCESSED_DIR / "segmentation"
 DEPTH_DIR       = PROCESSED_DIR / "depth"
 QUALITY_DIR     = PROCESSED_DIR / "quality"
 TRANSCRIPT_DIR  = PROCESSED_DIR / "transcripts"
+
+# ── Model paths ───────────────────────────────────────────────────
+YOLO_POSE_MODEL  = Path("yolov8n-pose.pt")
+SAM2_CHECKPOINT  = Path("models/sam2.1_hiera_tiny.pt")
+DEPTH_CHECKPOINT = Path("models/depth_anything_v2_metric_indoor_small.pth")
+WHISPER_MODEL    = "base"
