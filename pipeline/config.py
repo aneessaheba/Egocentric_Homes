@@ -22,3 +22,12 @@ YOLO_POSE_MODEL  = Path("yolov8n-pose.pt")
 SAM2_CHECKPOINT  = Path("models/sam2.1_hiera_tiny.pt")
 DEPTH_CHECKPOINT = Path("models/depth_anything_v2_metric_indoor_small.pth")
 WHISPER_MODEL    = "base"
+
+# ── Processing thresholds ─────────────────────────────────────────
+QUALITY_REJECT_THRESHOLD = 60
+HAND_CONFIDENCE_MIN      = 0.5
+ARM_CONFIDENCE_MIN       = 0.4
+ARM_EMA_ALPHA            = 0.3
+ARM_TEMPORAL_BUFFER      = 3
+SEG_FRAME_INTERVAL       = 9
+DEPTH_RESIZE_WIDTH       = 518
