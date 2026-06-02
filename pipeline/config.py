@@ -56,3 +56,8 @@ STAGE_ORDER = [
 EXPORT_FORMATS = ["json", "csv", "coco"]
 DEFAULT_FORMAT = "json"
 JSON_INDENT    = 2
+
+# ── Batch processing defaults ─────────────────────────────────────
+BATCH_SIZE    = 4
+MAX_WORKERS   = 2
+SKIP_EXISTING = True
