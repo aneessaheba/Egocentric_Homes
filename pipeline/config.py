@@ -31,3 +31,12 @@ ARM_EMA_ALPHA            = 0.3
 ARM_TEMPORAL_BUFFER      = 3
 SEG_FRAME_INTERVAL       = 9
 DEPTH_RESIZE_WIDTH       = 518
+
+# ── Quality score weights ─────────────────────────────────────────
+QUALITY_WEIGHTS = {
+    "blur":            0.30,
+    "brightness":      0.15,
+    "contrast":        0.15,
+    "hand_visibility": 0.25,
+    "motion_coverage": 0.15,
+}
