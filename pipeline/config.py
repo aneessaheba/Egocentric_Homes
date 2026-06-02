@@ -51,3 +51,8 @@ STAGE_ORDER = [
     "quality_check",
     "quality_gate",
 ]
+
+# ── Export formats ────────────────────────────────────────────────
+EXPORT_FORMATS = ["json", "csv", "coco"]
+DEFAULT_FORMAT = "json"
+JSON_INDENT    = 2
