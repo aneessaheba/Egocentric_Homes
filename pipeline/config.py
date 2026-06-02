@@ -40,3 +40,14 @@ QUALITY_WEIGHTS = {
     "hand_visibility": 0.25,
     "motion_coverage": 0.15,
 }
+
+# ── Pipeline stage order ──────────────────────────────────────────
+STAGE_ORDER = [
+    "hand_pose",
+    "arm_pose",
+    "segmentation",
+    "depth",
+    "transcription",
+    "quality_check",
+    "quality_gate",
+]
