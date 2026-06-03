@@ -61,3 +61,16 @@ JSON_INDENT    = 2
 BATCH_SIZE    = 4
 MAX_WORKERS   = 2
 SKIP_EXISTING = True
+
+# ── Supported video extensions ────────────────────────────────────
+SUPPORTED_VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv"}
+PREFERRED_CODEC      = "mp4v"
+
+# ── Logging ───────────────────────────────────────────────────────
+LOG_DIR     = Path("logs")
+LOG_LEVEL   = "INFO"
+LOG_TO_FILE = False
+
+# ── Dataset metadata ──────────────────────────────────────────────
+DATASET_NAME    = "HomeHands-50"
+DATASET_VERSION = "1.0.0"
