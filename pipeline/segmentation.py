@@ -199,26 +199,40 @@ def segment_frame(
             color_rgb  = COLOR_LEFT_HAND_RGB    # red — for JSON storage
             mask_label = "left_hand"
 
-        # ── Get wrist pixel coordinates ───────────────────────
-        # The wrist is the base of the hand — a stable, reliable prompt point
+        # ── Collect ALL arm + hand points as SAM2 prompts ────────
+        # More points = better mask coverage across the full arm region.
+        # We pass: shoulder + elbow + pose wrist + hand WRIST + index + middle tips
+        prompt_pts = []   # will be a list of [px, py] pairs
+
+        # Add arm points (shoulder, elbow, wrist) from the new "arm" field
+        arm = hand.get("arm", {})   # arm dict added by the updated hand_pose.py
+        for joint in ["shoulder", "elbow", "wrist"]:
+            pt = arm.get(joint)     # e.g. {"px": 540, "py": 200} or None
+            if pt:
+                prompt_pts.append([pt["px"], pt["py"]])   # add this arm joint
+
+        # Add hand keypoints: WRIST + fingertips for good coverage of the hand
         keypoints = hand.get("keypoints", {})   # dict of all 21 landmark positions
-        wrist     = keypoints.get("WRIST")      # the WRIST entry: {"px": ..., "py": ...}
+        for name in ["WRIST", "INDEX_FINGER_TIP", "MIDDLE_FINGER_TIP",
+                     "RING_FINGER_TIP", "PINKY_TIP", "THUMB_TIP"]:
+            kp = keypoints.get(name)   # {"x":..., "y":..., "px":..., "py":...}
+            if kp:
+                prompt_pts.append([kp["px"], kp["py"]])   # add this finger point
 
-        if wrist is None:
-            continue   # this hand has no wrist data — skip it
-
-        px = wrist["px"]   # wrist x position in pixels (0 = left edge of frame)
-        py = wrist["py"]   # wrist y position in pixels (0 = top edge of frame)
+        # Fall back to just the hand WRIST if no points were found at all
+        if not prompt_pts:
+            wrist = keypoints.get("WRIST")
+            if wrist is None:
+                continue   # nothing to prompt with — skip this hand
+            prompt_pts.append([wrist["px"], wrist["py"]])
 
         # ── Build the SAM2 point prompt arrays ───────────────
-        # SAM2 accepts a list of (x, y) pixel coordinates.
-        # shape of point_coords must be (N, 2) where N = number of points
-        # We provide just one point — the wrist.
-        point_coords = np.array([[px, py]], dtype=np.float32)   # shape: (1, 2)
-
-        # point_labels tells SAM2 whether each point is foreground (1) or background (0)
-        # We mark the wrist as foreground (1) so SAM2 segments toward the hand
-        point_labels = np.array([1], dtype=np.int32)            # shape: (1,)
+        # SAM2 expects:
+        #   point_coords  — shape (N, 2) array of (x, y) pixel positions
+        #   point_labels  — shape (N,)  array of 1s (1=foreground, 0=background)
+        # Every point we're giving is a foreground point (part of the hand/arm)
+        point_coords = np.array(prompt_pts, dtype=np.float32)          # shape: (N, 2)
+        point_labels = np.ones(len(prompt_pts), dtype=np.int32)        # all foreground
 
         # ── Run SAM2 mask prediction ──────────────────────────
         # predictor.predict() returns three things:
