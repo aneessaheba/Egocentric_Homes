@@ -214,11 +214,24 @@ def detect_frame(result, width, height):
     # or an empty list [] if no body was detected in this frame.
     pose = result.pose_landmarks   # shorthand
 
+    # Visibility threshold: MediaPipe assigns each landmark a score 0.0–1.0.
+    # For a top-down GoPro view the pose model gets confused and places
+    # shoulder/elbow landmarks on the CHEST instead of the actual arm.
+    # Only use a pose landmark if MediaPipe is at least 70% confident it's
+    # in the right place — this filters out the chest/torso false detections.
+    POSE_VIS_THRESHOLD = 0.70
+
     def pose_pt(idx):
-        """Get pixel coords for pose landmark at index idx, or None."""
+        """Get pixel coords for pose landmark at index idx, or None.
+        Returns None if the landmark's visibility score is below the threshold
+        — this prevents drawing arm lines on the chest."""
         if not pose or idx >= len(pose):
-            return None   # no pose detected
-        return lm_to_px(pose[idx], width, height)
+            return None
+        lm = pose[idx]
+        # lm.visibility is a float 0.0–1.0; low = MediaPipe is unsure
+        if (lm.visibility or 0.0) < POSE_VIS_THRESHOLD:
+            return None   # skip low-confidence landmarks
+        return lm_to_px(lm, width, height)
 
     # Extract 3 joints per side
     left_arm  = {
