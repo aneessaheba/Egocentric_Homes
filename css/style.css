@@ -978,6 +978,119 @@ body {
   }
 }
 
+/* ── Derived Datasets divider ──────────────────────────── */
+.derived-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 1.5rem;
+}
+.derived-divider__line {
+  flex: 1;
+  height: 1px;
+  background: var(--gray-mid);
+}
+.derived-divider__label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-mute);
+  border: 1px solid var(--gray-mid);
+  border-radius: 4px;
+  padding: 0.28rem 0.75rem;
+  white-space: nowrap;
+}
+
+/* ── Derived dataset 3-column grid ─────────────────────── */
+.derived-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.derived-card {
+  background: var(--gray-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.derived-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  overflow: hidden;
+}
+.derived-card__thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.derived-card__thumb--ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.derived-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+}
+
+.derived-card__body {
+  padding: 1rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.derived-card__name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.025em;
+}
+
+.derived-card__desc {
+  font-size: 0.8rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Compact 2×2 stats for derived cards */
+.hh1-stats--sm {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem;
+  margin-bottom: 0;
+}
+.hh1-stats--sm .hh1-stat {
+  padding: 0.4rem 0.4rem 0.35rem;
+}
+.hh1-stats--sm .hh1-stat__num {
+  font-size: 0.88rem;
+}
+
+@media (max-width: 860px) {
+  .derived-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 560px) {
   /* Tighten navbar on very small screens */
   .navbar {
