@@ -74,6 +74,8 @@ def run_prompt(predictor: Sam3Predictor, pil_image: Image.Image, text_prompt: st
         # Normalise: result may be a dict {'masks': ...} or a bare array/list
         if isinstance(result, dict):
             masks = result.get("masks", None)
+        elif hasattr(result, "masks"):
+            masks = result.masks
         else:
             masks = result
 
