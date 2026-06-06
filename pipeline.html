@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="pipeline">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipeline — Egocentric Homes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVBAR — Pipeline is active
+       ═══════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <span class="navbar__logo">Egocentric Homes</span>
+    <ul class="navbar__links">
+      <li><a href="index.html"          class="nav-link">About</a></li>
+      <li><a href="index.html#dataset"  class="nav-link">Dataset</a></li>
+      <li><a href="pipeline.html"       class="nav-link nav-link--active">Pipeline</a></li>
+      <li><a href="index.html#download" class="nav-link">Download</a></li>
+      <li><a href="index.html#contact"  class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════ -->
+  <main class="section">
+
+
+    <!-- ── Hero ─────────────────────────────────────────── -->
+    <div class="pl-hero">
+      <span class="pl-badge">OPEN SOURCE</span>
+      <h1 class="pl-hero__title">Pipeline &amp; Tools</h1>
+      <p class="pl-hero__sub">
+        Open source annotation pipeline for egocentric household activity data
+      </p>
+      <a href="https://github.com/aneessaheba/Egocentric_Homes"
+         class="btn pl-btn"
+         target="_blank"
+         rel="noopener noreferrer">
+        View on GitHub
+      </a>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1 — Pipeline Flow Diagram
+         ══════════════════════════════════════════════════════ -->
+    <div class="pl-section">
+      <h2 class="pl-section__title">How It Works</h2>
+
+      <div class="pl-flow">
+
+        <!-- Source node -->
+        <div class="pl-flow__source-wrap">
+          <div class="pl-flow__box pl-flow__box--source">Raw GoPro Video</div>
+        </div>
+        <div class="pl-flow__v">↓</div>
+
+        <!-- Four pipeline steps, each with output below -->
+        <div class="pl-flow__steps">
+
+          <!-- Quality Check column -->
+          <div class="pl-flow__col">
+            <div class="pl-flow__box">Quality Check</div>
+            <div class="pl-flow__v">↓</div>
+            <div class="pl-flow__box pl-flow__box--out">Report JSON</div>
+          </div>
+
+          <div class="pl-flow__h">→</div>
+
+          <!-- Hand Pose column -->
+          <div class="pl-flow__col">
+            <div class="pl-flow__box">Hand Pose</div>
+            <div class="pl-flow__v">↓</div>
+            <div class="pl-flow__box pl-flow__box--out">Keypoints JSON</div>
+          </div>
+
+          <div class="pl-flow__h">→</div>
+
+          <!-- Segmentation column — extra output at bottom -->
+          <div class="pl-flow__col">
+            <div class="pl-flow__box">Segmentation</div>
+            <div class="pl-flow__v">↓</div>
+            <div class="pl-flow__box pl-flow__box--out">SAM2 Masks</div>
+            <div class="pl-flow__v">↓</div>
+            <div class="pl-flow__box pl-flow__box--combined">Combined Full JSON</div>
+          </div>
+
+          <div class="pl-flow__h">→</div>
+
+          <!-- Transcription column -->
+          <div class="pl-flow__col">
+            <div class="pl-flow__box">Transcription</div>
+            <div class="pl-flow__v">↓</div>
+            <div class="pl-flow__box pl-flow__box--out">Narration JSON</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 2 — Tool Cards
+         ══════════════════════════════════════════════════════ -->
+    <div class="pl-section">
+      <h2 class="pl-section__title">Tools</h2>
+
+      <div class="pl-tools">
+
+        <!-- Card 1: Quality Check -->
+        <div class="pl-tool">
+          <span class="pl-tool__badge">QUALITY CHECK</span>
+          <h3 class="pl-tool__name">HomeHands-QC</h3>
+          <p class="pl-tool__desc">
+            Automated video quality assessment for egocentric GoPro footage.
+            Checks resolution, FPS, hand detection rate, and blur score.
+          </p>
+          <div class="pl-tool__meta">
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Input</span>
+              <span class="pl-tool__val">Raw .mp4 video</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Output</span>
+              <span class="pl-tool__val">Quality report JSON</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Model</span>
+              <span class="pl-tool__val">MediaPipe Hand Landmarker</span>
+            </div>
+          </div>
+          <pre class="pl-tool__cmd">pip install mediapipe opencv-python</pre>
+          <div class="pl-tool__footer">
+            <a href="https://github.com/aneessaheba/Egocentric_Homes/blob/main/pipeline/run_pipeline.py"
+               class="pl-tool__link" target="_blank" rel="noopener">View Code →</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Hand Tracking -->
+        <div class="pl-tool">
+          <span class="pl-tool__badge">HAND TRACKING</span>
+          <h3 class="pl-tool__name">HomeHands-Pose</h3>
+          <p class="pl-tool__desc">
+            21-point hand skeleton detection per frame. Detects left and right
+            hand with confidence scores and pixel coordinates.
+          </p>
+          <div class="pl-tool__meta">
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Input</span>
+              <span class="pl-tool__val">Raw .mp4 video</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Output</span>
+              <span class="pl-tool__val">hand_pose.json per clip</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Model</span>
+              <span class="pl-tool__val">MediaPipe Hand Landmarker</span>
+            </div>
+          </div>
+          <pre class="pl-tool__cmd">pip install mediapipe</pre>
+          <div class="pl-tool__footer">
+            <a href="https://github.com/aneessaheba/Egocentric_Homes/blob/main/pipeline/hand_pose.py"
+               class="pl-tool__link" target="_blank" rel="noopener">View Code →</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Segmentation -->
+        <div class="pl-tool">
+          <span class="pl-tool__badge">SEGMENTATION</span>
+          <h3 class="pl-tool__name">HomeHands-Seg</h3>
+          <p class="pl-tool__desc">
+            Pixel-level hand segmentation using SAM2. Wrist coordinates used
+            as point prompts. Right hand purple, left hand red.
+          </p>
+          <div class="pl-tool__meta">
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Input</span>
+              <span class="pl-tool__val">Video + hand_pose.json</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Output</span>
+              <span class="pl-tool__val">Colored PNG frames per clip</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Model</span>
+              <span class="pl-tool__val">SAM2 tiny (Meta AI)</span>
+            </div>
+          </div>
+          <pre class="pl-tool__cmd">pip install sam2</pre>
+          <div class="pl-tool__footer">
+            <a href="https://github.com/aneessaheba/Egocentric_Homes/blob/main/pipeline/segmentation.py"
+               class="pl-tool__link" target="_blank" rel="noopener">View Code →</a>
+          </div>
+        </div>
+
+        <!-- Card 4: Audio -->
+        <div class="pl-tool">
+          <span class="pl-tool__badge">AUDIO</span>
+          <h3 class="pl-tool__name">HomeHands-Audio</h3>
+          <p class="pl-tool__desc">
+            Speech transcription from egocentric narration. Generates subtitles
+            and timestamped narration JSON locally.
+          </p>
+          <div class="pl-tool__meta">
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Input</span>
+              <span class="pl-tool__val">Raw .mp4 video with audio</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Output</span>
+              <span class="pl-tool__val">.srt + narration.json + subtitled .mp4</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Model</span>
+              <span class="pl-tool__val">OpenAI Whisper base</span>
+            </div>
+          </div>
+          <pre class="pl-tool__cmd">pip install openai-whisper</pre>
+          <div class="pl-tool__footer">
+            <a href="https://github.com/aneessaheba/Egocentric_Homes/blob/main/pipeline/transcribe.py"
+               class="pl-tool__link" target="_blank" rel="noopener">View Code →</a>
+          </div>
+        </div>
+
+        <!-- Card 5: Full Pipeline -->
+        <div class="pl-tool">
+          <span class="pl-tool__badge">FULL PIPELINE</span>
+          <h3 class="pl-tool__name">HomeHands-Pipeline</h3>
+          <p class="pl-tool__desc">
+            Master script that runs all modules automatically on every video
+            in a folder. Produces one combined annotation JSON per clip.
+          </p>
+          <div class="pl-tool__meta">
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Input</span>
+              <span class="pl-tool__val">Folder of .mp4 videos</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Output</span>
+              <span class="pl-tool__val">Full annotation JSON per clip</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Model</span>
+              <span class="pl-tool__val">All of the above</span>
+            </div>
+            <div class="pl-tool__row">
+              <span class="pl-tool__key">Run</span>
+              <span class="pl-tool__val">python pipeline/run_pipeline.py</span>
+            </div>
+          </div>
+          <pre class="pl-tool__cmd">python pipeline/run_pipeline.py</pre>
+          <div class="pl-tool__footer">
+            <a href="https://github.com/aneessaheba/Egocentric_Homes/blob/main/pipeline/run_pipeline.py"
+               class="pl-tool__link" target="_blank" rel="noopener">View Code →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 3 — Quick Start
+         ══════════════════════════════════════════════════════ -->
+    <div class="pl-section">
+      <h2 class="pl-section__title">Quick Start</h2>
+
+      <div class="pl-quickstart">
+        <button class="pl-quickstart__copy" onclick="copyQuickStart(this)">Copy</button>
+        <pre id="qs-code"><span class="pl-comment"># 1. Clone the repository</span>
+git clone https://github.com/aneessaheba/Egocentric_Homes
+cd Egocentric_Homes
+
+<span class="pl-comment"># 2. Install dependencies</span>
+pip install mediapipe sam2 openai-whisper opencv-python
+brew install ffmpeg
+
+<span class="pl-comment"># 3. Add your videos</span>
+cp your_videos/*.mp4 assets/videos/
+
+<span class="pl-comment"># 4. Run full pipeline</span>
+python pipeline/run_pipeline.py
+
+<span class="pl-comment"># Output per video:</span>
+<span class="pl-comment"># Hand pose JSON     → assets/processed/hand_pose/</span>
+<span class="pl-comment"># Segmentation PNGs  → assets/processed/segmented/</span>
+<span class="pl-comment"># Narration JSON     → assets/processed/narrations/</span>
+<span class="pl-comment"># Combined JSON      → assets/processed/annotations/</span></pre>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 4 — Models Used
+         ══════════════════════════════════════════════════════ -->
+    <div class="pl-section">
+      <h2 class="pl-section__title">Models Used</h2>
+
+      <div class="pl-table-wrap">
+        <table class="pl-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Task</th>
+              <th>Made by</th>
+              <th>Size</th>
+              <th>License</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MediaPipe Hands</td>
+              <td>Hand tracking</td>
+              <td>Google</td>
+              <td>8 MB</td>
+              <td>Apache 2.0</td>
+            </tr>
+            <tr>
+              <td>SAM2 tiny</td>
+              <td>Segmentation</td>
+              <td>Meta AI</td>
+              <td>155 MB</td>
+              <td>Apache 2.0</td>
+            </tr>
+            <tr>
+              <td>Whisper base</td>
+              <td>Transcription</td>
+              <td>OpenAI</td>
+              <td>145 MB</td>
+              <td>MIT</td>
+            </tr>
+            <tr>
+              <td>ffmpeg</td>
+              <td>Audio extraction</td>
+              <td>OSS</td>
+              <td>—</td>
+              <td>LGPL</td>
+            </tr>
+            <tr>
+              <td>OpenCV</td>
+              <td>Video processing</td>
+              <td>OSS</td>
+              <td>—</td>
+              <td>Apache 2.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 5 — Output Format
+         ══════════════════════════════════════════════════════ -->
+    <div class="pl-section">
+      <h2 class="pl-section__title">Output Format</h2>
+
+      <div class="pl-json">
+        <pre>{
+  <span class="pl-json-key">"clip_id"</span>: <span class="pl-json-str">"HH_001"</span>,
+  <span class="pl-json-key">"filename"</span>: <span class="pl-json-str">"[video_name].mp4"</span>,
+  <span class="pl-json-key">"task"</span>: <span class="pl-json-str">"[task_name]"</span>,
+  <span class="pl-json-key">"duration_sec"</span>: <span class="pl-json-str">"--"</span>,
+  <span class="pl-json-key">"total_frames"</span>: <span class="pl-json-str">"--"</span>,
+  <span class="pl-json-key">"fps"</span>: <span class="pl-json-num">30</span>,
+  <span class="pl-json-key">"resolution"</span>: {
+    <span class="pl-json-key">"width"</span>: <span class="pl-json-str">"--"</span>,
+    <span class="pl-json-key">"height"</span>: <span class="pl-json-str">"--"</span>
+  },
+  <span class="pl-json-key">"hand_detection_rate"</span>: <span class="pl-json-str">"--"</span>,
+  <span class="pl-json-key">"narrations"</span>: [
+    {
+      <span class="pl-json-key">"id"</span>: <span class="pl-json-num">1</span>,
+      <span class="pl-json-key">"start"</span>: <span class="pl-json-str">"--"</span>,
+      <span class="pl-json-key">"end"</span>: <span class="pl-json-str">"--"</span>,
+      <span class="pl-json-key">"text"</span>: <span class="pl-json-str">"[narration text]"</span>
+    }
+  ],
+  <span class="pl-json-key">"frames"</span>: [
+    {
+      <span class="pl-json-key">"frame_id"</span>: <span class="pl-json-num">0</span>,
+      <span class="pl-json-key">"timestamp_sec"</span>: <span class="pl-json-str">"--"</span>,
+      <span class="pl-json-key">"hands_detected"</span>: <span class="pl-json-str">"--"</span>,
+      <span class="pl-json-key">"hands"</span>: [
+        {
+          <span class="pl-json-key">"label"</span>: <span class="pl-json-str">"Right"</span>,
+          <span class="pl-json-key">"confidence"</span>: <span class="pl-json-str">"--"</span>,
+          <span class="pl-json-key">"keypoints"</span>: {
+            <span class="pl-json-key">"WRIST"</span>: {
+              <span class="pl-json-key">"x"</span>: <span class="pl-json-str">"--"</span>, <span class="pl-json-key">"y"</span>: <span class="pl-json-str">"--"</span>,
+              <span class="pl-json-key">"z"</span>: <span class="pl-json-str">"--"</span>, <span class="pl-json-key">"px"</span>: <span class="pl-json-str">"--"</span>, <span class="pl-json-key">"py"</span>: <span class="pl-json-str">"--"</span>
+            }
+          },
+          <span class="pl-json-key">"segmentation"</span>: {
+            <span class="pl-json-key">"method"</span>: <span class="pl-json-str">"SAM2"</span>,
+            <span class="pl-json-key">"pixel_count"</span>: <span class="pl-json-str">"--"</span>,
+            <span class="pl-json-key">"coverage_pct"</span>: <span class="pl-json-str">"--"</span>
+          }
+        }
+      ],
+      <span class="pl-json-key">"narration"</span>: <span class="pl-json-str">"[narration text at this timestamp]"</span>
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <span class="footer__text">© 2024 Egocentric Homes · SJSU Research</span>
+    <div class="footer__links">
+      <a href="index.html"         class="footer__link">About</a>
+      <a href="index.html#dataset" class="footer__link">Dataset</a>
+      <a href="pipeline.html"      class="footer__link">Pipeline</a>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPTS
+       ═══════════════════════════════════════════════════════ -->
+  <script>
+    function copyQuickStart(btn) {
+      /* Strip HTML tags to get plain text for clipboard */
+      const el = document.getElementById('qs-code');
+      const text = el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      }).catch(() => {
+        alert('Could not copy — please select and copy manually.');
+      });
+    }
+  </script>
+
+</body>
+</html>
