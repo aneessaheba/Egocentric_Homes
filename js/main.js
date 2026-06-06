@@ -22,6 +22,10 @@ function showPage(id) {
   window.scrollTo({ top: 0 });
 }
 
+// On load, check URL hash so links like index.html#dataset work cross-page
+const _hash = window.location.hash.slice(1);
+if (_hash) showPage(_hash);
+
 // Wire up navbar links
 document.querySelectorAll('.nav-link[data-page]').forEach(link => {
   link.addEventListener('click', e => {
