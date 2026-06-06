@@ -778,8 +778,9 @@ body {
 .hh1-card {
   background: var(--gray-bg);
   border-radius: 12px;
-  padding: 2.5rem;
+  padding: 2.5rem 2.5rem 0 2.5rem;
   margin-bottom: 3rem;
+  overflow: hidden;
 }
 
 /* Two equal columns with a hairline divider between them */
@@ -793,6 +794,7 @@ body {
 /* Left column: content + right border acts as divider */
 .hh1-card__left {
   padding-right: 2.5rem;
+  padding-bottom: 2.5rem;
   border-right: 1px solid var(--gray-mid);
 }
 
