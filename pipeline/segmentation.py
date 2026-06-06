@@ -66,7 +66,7 @@ def run_prompt(predictor: Sam3Predictor, pil_image: Image.Image, text_prompt: st
     Returns the combined mask, or None if nothing was found or an error occurred.
     """
     try:
-        result = predictor.predict(pil_image, text=text_prompt)
+        result = predictor.predict(pil_image, text_prompt=text_prompt)
 
         if result is None:
             return None
@@ -128,11 +128,20 @@ def segment_frame(predictor, frame_bgr, frame_h, frame_w):
     Returns (annotated_bgr, left_info_dict, right_info_dict).
     Right arm is painted first, left arm on top → left always wins on overlap.
     """
+    frame_bgr = cv2.resize(frame_bgr, (640, 360))
     pil_img    = Image.fromarray(cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB))
     right_mask = run_prompt(predictor, pil_img, "right arm")
     left_mask  = run_prompt(predictor, pil_img, "left arm")
 
-    annotated = frame_bgr.copy()
+    original_h, original_w = frame_h, frame_w
+    if left_mask is not None:
+        left_mask = cv2.resize(left_mask.astype(np.uint8),
+                    (original_w, original_h)).astype(bool)
+    if right_mask is not None:
+        right_mask = cv2.resize(right_mask.astype(np.uint8),
+                     (original_w, original_h)).astype(bool)
+
+    annotated = cv2.resize(frame_bgr, (original_w, original_h))
     if right_mask is not None:
         annotated = paint_solid(annotated, right_mask, COLOR_RIGHT_RGB)
     if left_mask is not None:
