@@ -61,6 +61,16 @@ function copyCode() {
 }
 
 
+// ---- HomeVoice audio toggle --------------------------------
+
+function toggleVoiceAudio(btn) {
+  const video = document.getElementById('voice-video');
+  video.muted = !video.muted;
+  btn.querySelector('.voice-icon--muted').style.display = video.muted ? '' : 'none';
+  btn.querySelector('.voice-icon--on').style.display    = video.muted ? 'none' : '';
+}
+
+
 // ---- Disabled-button feedback for "coming soon" links -------
 
 document.querySelectorAll('.btn--outlined[href="#"]').forEach(btn => {
