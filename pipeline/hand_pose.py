@@ -365,7 +365,27 @@ def process_frames(frames_dir: str, fps: float = 29.97):
 
 # ── Video file mode ───────────────────────────────────────────────────────────
 
-def process_video(video_path: str):
+def stitch_handpose_video(annotated_dir: Path, clip_name: str, fps: float, width: int, height: int):
+    """Stitch annotated PNGs into a handpose video."""
+    png_files = sorted(annotated_dir.glob("frame_*.png"))
+    if not png_files:
+        print("  [warn] No frames found to stitch.")
+        return
+    out_path = Path("assets/processed") / f"{clip_name}_handpose.mp4"
+    writer   = cv2.VideoWriter(
+        str(out_path),
+        cv2.VideoWriter_fourcc(*"mp4v"),
+        fps,
+        (width, height),
+    )
+    print("  Stitching frames into handpose video...")
+    for p in png_files:
+        writer.write(cv2.imread(str(p)))
+    writer.release()
+    print(f"  Saved → {out_path}")
+
+
+def process_video(video_path: str, output_video: bool = False):
     """Read directly from video file and process every frame."""
 
     video_path = Path(video_path)
@@ -438,27 +458,33 @@ def process_video(video_path: str):
     print(f"\n  DONE  —  {frame_id:,} frames  in  {(time.time()-start_time)/60:.1f} min")
     print(f"  Frames → {annotated_dir}/  |  JSON → {json_path}\n")
 
+    if output_video:
+        stitch_handpose_video(annotated_dir, clip_name, fps, width, height)
+
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
 
-    if "--test" in sys.argv:
+    output_video = "--output-video" in sys.argv
+    clean_argv   = [a for a in sys.argv if a != "--output-video"]
+
+    if "--test" in clean_argv:
         run_test()
 
-    elif "--frames" in sys.argv:
-        idx = sys.argv.index("--frames")
-        if idx + 1 >= len(sys.argv):
+    elif "--frames" in clean_argv:
+        idx = clean_argv.index("--frames")
+        if idx + 1 >= len(clean_argv):
             print("Usage: python pipeline/hand_pose.py --frames <folder>")
             sys.exit(1)
-        process_frames(sys.argv[idx + 1])
+        process_frames(clean_argv[idx + 1])
 
-    elif len(sys.argv) == 2:
-        process_video(sys.argv[1])
+    elif len(clean_argv) == 2:
+        process_video(clean_argv[1], output_video=output_video)
 
     else:
         print("Usage:")
         print("  Test   : python pipeline/hand_pose.py --test")
         print("  Frames : python pipeline/hand_pose.py --frames <folder>")
-        print("  Video  : python pipeline/hand_pose.py <video_path>")
+        print("  Video  : python pipeline/hand_pose.py <video_path> [--output-video]")
         sys.exit(1)
