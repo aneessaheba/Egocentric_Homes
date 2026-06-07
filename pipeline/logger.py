@@ -75,3 +75,7 @@ class Logger:
     def stage_done(self, name: str):
         elapsed = time.time() - self._stage_start.get(name, time.time())
         self.info(f"✓  {name} done  ({elapsed:.1f}s)")
+
+    def flush(self):
+        for h in self._log.handlers:
+            h.flush()
