@@ -54,3 +54,16 @@ class Logger:
         ch = logging.StreamHandler(sys.stdout)
         ch.setFormatter(_ColourFormatter(fmt, datefmt=datefmt))
         self._log.addHandler(ch)
+
+        if log_dir is not None:
+            log_dir = Path(log_dir)
+            log_dir.mkdir(parents=True, exist_ok=True)
+            fh = logging.FileHandler(log_dir / f"pipeline_{self.session_id}.log")
+            fh.setFormatter(logging.Formatter(fmt, datefmt=datefmt))
+            self._log.addHandler(fh)
+
+        self.debug    = self._log.debug
+        self.info     = self._log.info
+        self.warning  = self._log.warning
+        self.error    = self._log.error
+        self.critical = self._log.critical
