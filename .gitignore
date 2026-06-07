@@ -20,3 +20,5 @@ assets/processed/narrations/
 assets/processed/annotations/
 yolov8s-pose.pt
 transcribe_videos.py
+assets/models/holistic_landmarker.task
+assets/models/sam2_hiera_tiny.pt
