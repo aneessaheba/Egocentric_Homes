@@ -34,3 +34,23 @@ class _ColourFormatter(logging.Formatter):
             colour = _COLOURS.get(record.levelname, "")
             msg = f"{colour}{msg}{_RESET}"
         return msg
+
+
+class Logger:
+    """Per-session logger with optional file sink and stage timing."""
+
+    def __init__(self, name: str = "pipeline", level: str = "INFO",
+                 log_dir=None, verbose: bool = False):
+        self.session_id = uuid.uuid4().hex[:8]
+        self._stage_start: dict = {}
+
+        self._log = logging.getLogger(f"{name}.{self.session_id}")
+        self._log.setLevel(getattr(logging, level.upper(), logging.INFO))
+        self._log.propagate = False
+
+        fmt     = "%(asctime)s  %(levelname)-8s  %(message)s"
+        datefmt = "%H:%M:%S"
+
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setFormatter(_ColourFormatter(fmt, datefmt=datefmt))
+        self._log.addHandler(ch)
