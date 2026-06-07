@@ -84,3 +84,6 @@ class Logger:
 def get_logger(name: str = "pipeline", **kwargs) -> "Logger":
     """Convenience factory — returns a configured Logger instance."""
     return Logger(name=name, **kwargs)
+
+
+__all__ = ["Logger", "get_logger"]
