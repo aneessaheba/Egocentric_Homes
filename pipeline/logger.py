@@ -23,3 +23,14 @@ _COLOURS = {
     "ERROR":    _RED,
     "CRITICAL": _RED + _BOLD,
 }
+
+
+class _ColourFormatter(logging.Formatter):
+    _use_colour = sys.stdout.isatty()
+
+    def format(self, record):
+        msg = super().format(record)
+        if self._use_colour:
+            colour = _COLOURS.get(record.levelname, "")
+            msg = f"{colour}{msg}{_RESET}"
+        return msg
