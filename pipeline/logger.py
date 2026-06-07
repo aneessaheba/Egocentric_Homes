@@ -67,3 +67,11 @@ class Logger:
         self.warning  = self._log.warning
         self.error    = self._log.error
         self.critical = self._log.critical
+
+    def stage_start(self, name: str):
+        self._stage_start[name] = time.time()
+        self.info(f"▶  {name} started")
+
+    def stage_done(self, name: str):
+        elapsed = time.time() - self._stage_start.get(name, time.time())
+        self.info(f"✓  {name} done  ({elapsed:.1f}s)")
