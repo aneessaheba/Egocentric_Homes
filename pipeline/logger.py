@@ -79,3 +79,8 @@ class Logger:
     def flush(self):
         for h in self._log.handlers:
             h.flush()
+
+
+def get_logger(name: str = "pipeline", **kwargs) -> "Logger":
+    """Convenience factory — returns a configured Logger instance."""
+    return Logger(name=name, **kwargs)
