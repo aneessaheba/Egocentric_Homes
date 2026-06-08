@@ -73,3 +73,15 @@ def validate_clip_name(name: str) -> str:
             f"Clip name '{name}' has invalid characters. Use letters, digits, _ or -."
         )
     return name
+
+# ── Model / path ──────────────────────────────────────────────────
+def validate_model_path(path: Union[str, Path]) -> Path:
+    p = Path(path)
+    if not p.exists():
+        raise ValueError(f"Model checkpoint not found: {p}")
+    return p
+
+def validate_output_dir(path: Union[str, Path]) -> Path:
+    p = Path(path)
+    p.mkdir(parents=True, exist_ok=True)
+    return p
