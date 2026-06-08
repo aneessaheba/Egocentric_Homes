@@ -65,3 +65,11 @@ def validate_language(code: str) -> str:
     if code not in LANGUAGE_CODES:
         raise ValueError(f"Unknown language code '{code}'")
     return code
+
+def validate_clip_name(name: str) -> str:
+    import re
+    if not re.match(r'^[A-Za-z0-9_\-]+$', name):
+        raise ValueError(
+            f"Clip name '{name}' has invalid characters. Use letters, digits, _ or -."
+        )
+    return name
