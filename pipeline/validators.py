@@ -16,3 +16,12 @@ def validate_video_path(path: Union[str, Path]) -> Path:
     if p.suffix.lower() not in SUPPORTED_EXTS:
         raise ValueError(f"Unsupported extension '{p.suffix}'")
     return p
+
+def validate_video_dir(path: Union[str, Path]) -> Path:
+    """Ensure path is a directory containing at least one .mp4 file."""
+    p = Path(path)
+    if not p.is_dir():
+        raise ValueError(f"Not a directory: {p}")
+    if not list(p.glob("*.mp4")):
+        raise ValueError(f"No .mp4 files found in {p}")
+    return p
