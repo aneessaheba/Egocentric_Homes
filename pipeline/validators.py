@@ -45,3 +45,11 @@ def validate_resolution(width: int, height: int):
     if width <= 0 or height <= 0:
         raise ValueError(f"Resolution must be positive, got {width}x{height}")
     return width, height
+
+def validate_duration(seconds: float, min_sec: float = 1.0,
+                      max_sec: float = 300.0) -> float:
+    if not (min_sec <= seconds <= max_sec):
+        raise ValueError(
+            f"Duration {seconds:.1f}s outside accepted range [{min_sec}, {max_sec}]s"
+        )
+    return float(seconds)
