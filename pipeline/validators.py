@@ -53,3 +53,15 @@ def validate_duration(seconds: float, min_sec: float = 1.0,
             f"Duration {seconds:.1f}s outside accepted range [{min_sec}, {max_sec}]s"
         )
     return float(seconds)
+
+# ── String / code validators ───────────────────────────────────────
+LANGUAGE_CODES = {
+    "en","hi","bn","te","mr","ta","gu","kn","pa","ml",
+    "ur","or","as","zh","ja","ko","fr","de","es","ar"
+}
+
+def validate_language(code: str) -> str:
+    code = code.strip().lower()
+    if code not in LANGUAGE_CODES:
+        raise ValueError(f"Unknown language code '{code}'")
+    return code
