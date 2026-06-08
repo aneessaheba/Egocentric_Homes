@@ -35,3 +35,13 @@ def validate_score(value: float, lo: float = 0.0, hi: float = 100.0,
 
 def validate_confidence(value: float, name: str = "confidence") -> float:
     return validate_score(value, 0.0, 1.0, name)
+
+def validate_fps(fps: float) -> float:
+    if fps <= 0:
+        raise ValueError(f"FPS must be positive, got {fps}")
+    return float(fps)
+
+def validate_resolution(width: int, height: int):
+    if width <= 0 or height <= 0:
+        raise ValueError(f"Resolution must be positive, got {width}x{height}")
+    return width, height
