@@ -59,3 +59,17 @@ def to_coco(frames: list, clip_name: str, path: Path,
     with open(path, "w", encoding="utf-8") as f:
         json.dump(coco, f, indent=2)
     return path
+
+def summary_stats(frames: list) -> dict:
+    """Return aggregate statistics over the annotation frames."""
+    total = len(frames)
+    if total == 0:
+        return {"total_frames": 0}
+    hand_frames = sum(1 for f in frames if f.get("hands"))
+    scores = [f["quality_score"] for f in frames if "quality_score" in f]
+    return {
+        "total_frames":      total,
+        "hand_frames":       hand_frames,
+        "hand_visibility_%": round(hand_frames / total * 100, 1),
+        "avg_quality_score": round(sum(scores) / len(scores), 2) if scores else None,
+    }
