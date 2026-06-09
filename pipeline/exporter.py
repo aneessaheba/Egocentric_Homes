@@ -73,3 +73,23 @@ def summary_stats(frames: list) -> dict:
         "hand_visibility_%": round(hand_frames / total * 100, 1),
         "avg_quality_score": round(sum(scores) / len(scores), 2) if scores else None,
     }
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 3:
+        print("Usage: python pipeline/exporter.py <input.json> <json|csv|coco>")
+        sys.exit(1)
+    src = Path(sys.argv[1])
+    fmt = sys.argv[2].lower()
+    with open(src) as f:
+        data = json.load(f)
+    out = src.with_suffix(f".export.{fmt}")
+    if fmt == "json":
+        to_json(data, out)
+    elif fmt == "csv":
+        to_csv(data if isinstance(data, list) else [data], out)
+    elif fmt == "coco":
+        to_coco(data if isinstance(data, list) else [data], src.stem, out)
+    else:
+        print(f"Unknown format: {fmt}"); sys.exit(1)
+    print(f"Exported → {out}")
