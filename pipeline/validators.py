@@ -85,3 +85,24 @@ def validate_output_dir(path: Union[str, Path]) -> Path:
     p = Path(path)
     p.mkdir(parents=True, exist_ok=True)
     return p
+
+# ── Config dict ───────────────────────────────────────────────────
+def validate_quality_weights(weights: dict) -> dict:
+    total = sum(weights.values())
+    if abs(total - 1.0) > 1e-6:
+        raise ValueError(f"Quality weights must sum to 1.0, got {total:.4f}")
+    return weights
+
+def validate_batch_size(n: int) -> int:
+    if n < 1:
+        raise ValueError(f"Batch size must be >= 1, got {n}")
+    return int(n)
+
+__all__ = [
+    "validate_video_path", "validate_video_dir",
+    "validate_score", "validate_confidence",
+    "validate_fps", "validate_resolution", "validate_duration",
+    "validate_language", "validate_clip_name",
+    "validate_model_path", "validate_output_dir",
+    "validate_quality_weights", "validate_batch_size",
+]
