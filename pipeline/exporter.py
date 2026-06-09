@@ -35,3 +35,27 @@ def to_csv(frames: list, path: Path) -> Path:
         for frame in frames:
             writer.writerow(frame)
     return path
+
+def to_coco(frames: list, clip_name: str, path: Path,
+            category: str = "hand_interaction") -> Path:
+    """Export to a minimal COCO-compatible JSON structure."""
+    _ensure(path)
+    coco: dict[str, Any] = {
+        "info": {"description": f"HomeHands — {clip_name}", "version": "1.0"},
+        "categories": [{"id": 1, "name": category}],
+        "images": [],
+        "annotations": [],
+    }
+    ann_id = 1
+    for frame in frames:
+        fid = frame.get("frame_id", 0)
+        coco["images"].append({"id": fid, "file_name": f"{clip_name}_{fid:06d}.jpg"})
+        for hand in frame.get("hands", []):
+            coco["annotations"].append({
+                "id": ann_id, "image_id": fid, "category_id": 1,
+                "keypoints": hand.get("landmarks", []),
+            })
+            ann_id += 1
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(coco, f, indent=2)
+    return path
