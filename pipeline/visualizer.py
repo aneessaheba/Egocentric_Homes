@@ -32,3 +32,20 @@ def draw_hand_landmarks(frame, landmarks: list, colour=_GREEN, radius: int = 4):
             cv2.line(frame, pts[a], pts[b], colour, 1, cv2.LINE_AA)
     for p in pts:
         cv2.circle(frame, p, radius, colour, -1, cv2.LINE_AA)
+
+_ARM_CONNECTIONS = [(5,7),(7,9),(6,8),(8,10)]
+
+def draw_arm_skeleton(frame, keypoints: list, colour=_BLUE, thickness: int = 2):
+    """Draw arm skeleton from YOLO pose keypoints."""
+    import cv2
+    h, w = frame.shape[:2]
+    pts = {}
+    for kp in keypoints:
+        idx = kp.get("id")
+        if idx is not None and kp.get("confidence", 0) > 0.3:
+            pts[idx] = (int(kp["x"] * w), int(kp["y"] * h))
+    for a, b in _ARM_CONNECTIONS:
+        if a in pts and b in pts:
+            cv2.line(frame, pts[a], pts[b], colour, thickness, cv2.LINE_AA)
+    for p in pts.values():
+        cv2.circle(frame, p, 5, colour, -1)
