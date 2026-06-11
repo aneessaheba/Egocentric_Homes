@@ -21,3 +21,14 @@ _HAND_CONNECTIONS = [
     (9,13),(13,14),(14,15),(15,16),
     (13,17),(0,17),(17,18),(18,19),(19,20),
 ]
+
+def draw_hand_landmarks(frame, landmarks: list, colour=_GREEN, radius: int = 4):
+    """Draw hand keypoints and skeleton on *frame* in-place."""
+    import cv2
+    h, w = frame.shape[:2]
+    pts = [(int(lm["x"] * w), int(lm["y"] * h)) for lm in landmarks]
+    for a, b in _HAND_CONNECTIONS:
+        if a < len(pts) and b < len(pts):
+            cv2.line(frame, pts[a], pts[b], colour, 1, cv2.LINE_AA)
+    for p in pts:
+        cv2.circle(frame, p, radius, colour, -1, cv2.LINE_AA)
