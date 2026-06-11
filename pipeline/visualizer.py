@@ -68,3 +68,18 @@ def draw_quality_hud(frame, score: float, frame_id: Optional[int] = None):
     cv2.rectangle(frame, (x1-4, y1), (x1+tw+4, y1+th+6), _BLACK, -1)
     cv2.putText(frame, label, (x1, y1+th+2),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, colour, 1, cv2.LINE_AA)
+
+def open_video_writer(out_path: Path, fps: float, width: int, height: int):
+    """Return an open cv2.VideoWriter for the given path and dimensions."""
+    import cv2
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    writer = cv2.VideoWriter(str(out_path), fourcc, fps, (width, height))
+    if not writer.isOpened():
+        raise RuntimeError(f"Could not open VideoWriter for {out_path}")
+    return writer
+
+__all__ = [
+    "draw_hand_landmarks", "draw_arm_skeleton",
+    "draw_depth_heatmap", "draw_quality_hud",
+    "open_video_writer",
+]
