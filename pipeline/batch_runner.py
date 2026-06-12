@@ -23,3 +23,14 @@ except ImportError:
     REJECTED_DIR    = Path("assets/videos/rejected")
     BATCH_SIZE      = 4
     MAX_WORKERS     = 2
+
+
+def collect_clips(videos_dir: Path, resume: bool = False) -> list:
+    """Return sorted list of .mp4 clips to process, skipping done clips if resume."""
+    clips = sorted(videos_dir.glob("*.mp4"))
+    if resume:
+        clips = [
+            c for c in clips
+            if not (ANNOTATIONS_DIR / f"{c.stem}_full.json").exists()
+        ]
+    return clips
