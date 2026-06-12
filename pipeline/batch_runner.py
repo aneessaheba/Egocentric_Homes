@@ -68,3 +68,15 @@ def run_batch(videos_dir: Path, workers: int = MAX_WORKERS,
     passed = sum(1 for _, ok in results if ok)
     print(f"\n  {len(results)} clips  |  {passed} passed  |  {len(results)-passed} failed")
     print_done("Batch runner", timer)
+
+
+if __name__ == "__main__":
+    workers = MAX_WORKERS
+    resume  = "--resume" in sys.argv
+    vdir    = VIDEOS_DIR
+    for arg in sys.argv[1:]:
+        if arg.startswith("--workers="):
+            workers = int(arg.split("=")[1])
+        elif not arg.startswith("--"):
+            vdir = Path(arg)
+    run_batch(vdir, workers=workers, resume=resume)
