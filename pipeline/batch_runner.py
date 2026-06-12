@@ -34,3 +34,13 @@ def collect_clips(videos_dir: Path, resume: bool = False) -> list:
             if not (ANNOTATIONS_DIR / f"{c.stem}_full.json").exists()
         ]
     return clips
+
+
+def process_clip(clip: Path) -> tuple:
+    """Process a single clip; return (name, success, message)."""
+    try:
+        import run_pipeline
+        run_pipeline.main()
+        return clip.stem, True, "OK"
+    except Exception as exc:
+        return clip.stem, False, str(exc)[:120]
