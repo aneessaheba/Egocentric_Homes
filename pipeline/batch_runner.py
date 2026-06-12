@@ -44,3 +44,27 @@ def process_clip(clip: Path) -> tuple:
         return clip.stem, True, "OK"
     except Exception as exc:
         return clip.stem, False, str(exc)[:120]
+
+
+def run_batch(videos_dir: Path, workers: int = MAX_WORKERS,
+              resume: bool = False, batch_size: int = BATCH_SIZE):
+    """Process all clips in *videos_dir* using *workers* parallel processes."""
+    ensure_dirs(ANNOTATIONS_DIR, REJECTED_DIR)
+    clips = collect_clips(videos_dir, resume=resume)
+    if not clips:
+        print("  No clips to process.")
+        return
+    print_header(f"Batch runner  |  {len(clips)} clip(s)  |  {workers} worker(s)")
+    timer   = Timer()
+    results = []
+    for i in range(0, len(clips), batch_size):
+        chunk = clips[i : i + batch_size]
+        with concurrent.futures.ProcessPoolExecutor(max_workers=workers) as exe:
+            futures = {exe.submit(process_clip, c): c for c in chunk}
+            for fut in concurrent.futures.as_completed(futures):
+                name, ok, msg = fut.result()
+                print(f"  [{'OK' if ok else 'FAIL'}]  {name}  —  {msg}")
+                results.append((name, ok))
+    passed = sum(1 for _, ok in results if ok)
+    print(f"\n  {len(results)} clips  |  {passed} passed  |  {len(results)-passed} failed")
+    print_done("Batch runner", timer)
