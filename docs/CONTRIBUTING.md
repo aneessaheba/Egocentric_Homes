@@ -17,3 +17,11 @@ Examples:
 - `WashingDishes_S01.mp4`
 - `ChoppingVegetables_S12.mp4`
 - `FoldingLaundry_S03.mp4`
+
+## Submission checklist
+
+- [ ] Video is at least 15 seconds long
+- [ ] Hands visible in most frames
+- [ ] File named correctly (`Activity_S##.mp4`)
+- [ ] No personally identifiable information in frame
+- [ ] Uploaded via the EgoLoop contributor portal
