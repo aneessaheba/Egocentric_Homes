@@ -33,6 +33,7 @@ Usage:
 
 import sys
 import json
+import math
 import time
 from pathlib import Path
 
@@ -128,6 +129,10 @@ class KeypointSmoother:
             return (int(x), int(y))
         return None
 
+    def last(self, key):
+        """Return the last smoothed position for `key`, or None."""
+        return self._smoothed.get(key)
+
 
 # ── Model loaders ─────────────────────────────────────────────────────────────
 
@@ -161,29 +166,85 @@ def draw_arm_dot(img, pt, color):
     cv2.circle(img, pt, DOT_INNER,  COLOR_WHITE, -1, cv2.LINE_AA)
 
 
-def extract_raw_arm_keypoints(yolo_results):
-    raw = {"left_wrist": None, "left_elbow": None, "right_wrist": None, "right_elbow": None}
+def extract_arm_candidates(yolo_results):
+    """
+    Return YOLO's two (wrist, elbow) keypoint pairs, unlabeled.
+
+    YOLO's own left/right assignment is not used here — for this top-down
+    egocentric view it flips between the person's actual left and right arm
+    from frame to frame, which is the main cause of the arm lines jumping
+    around. Side identity is resolved later in assign_arm_sides().
+
+    Keypoints below CONF_THRESHOLD are treated as not detected (None) so
+    low-confidence noise doesn't get fed into the smoother.
+    """
+    empty = [{"wrist": None, "elbow": None}, {"wrist": None, "elbow": None}]
+
     best_result = yolo_results[0]
     if best_result.keypoints is None or len(best_result.keypoints.xy) == 0:
-        return raw
+        return empty
     boxes = best_result.boxes
     if boxes is None or len(boxes.conf) == 0:
-        return raw
+        return empty
+
     best_idx = int(boxes.conf.argmax())
-    kps   = best_result.keypoints.xy[best_idx]
-    confs = best_result.keypoints.conf[best_idx]
+    kps      = best_result.keypoints.xy[best_idx]
+    confs    = best_result.keypoints.conf[best_idx]
 
     def to_pt(idx):
         if float(confs[idx]) < CONF_THRESHOLD:
             return None
         pt = (float(kps[idx][0]), float(kps[idx][1]))
-        return (int(pt[0]), int(pt[1])) if is_valid_kp(pt) else None
+        return pt if is_valid_kp(pt) else None
 
-    raw["left_wrist"]  = to_pt(YOLO_LEFT_WRIST)
-    raw["left_elbow"]  = to_pt(YOLO_LEFT_ELBOW)
-    raw["right_wrist"] = to_pt(YOLO_RIGHT_WRIST)
-    raw["right_elbow"] = to_pt(YOLO_RIGHT_ELBOW)
-    return raw
+    return [
+        {"wrist": to_pt(YOLO_LEFT_WRIST),  "elbow": to_pt(YOLO_LEFT_ELBOW)},
+        {"wrist": to_pt(YOLO_RIGHT_WRIST), "elbow": to_pt(YOLO_RIGHT_ELBOW)},
+    ]
+
+
+def assign_arm_sides(candidates, mp_anchors, smoother):
+    """
+    Match YOLO's two unlabeled (wrist, elbow) candidates to left/right identity.
+
+    Identity is inferred from wrist proximity to a trusted anchor:
+    MediaPipe's hand-landmark wrist (consistent left/right across frames),
+    falling back to the smoother's last known wrist position, and finally
+    to raw x-position (left hand appears on the left side of the frame).
+    """
+    c0, c1 = candidates
+    w0, w1 = c0["wrist"], c1["wrist"]
+
+    left_anchor  = mp_anchors.get("left")  or smoother.last("left_wrist")
+    right_anchor = mp_anchors.get("right") or smoother.last("right_wrist")
+
+    def dist(a, b):
+        return math.hypot(a[0] - b[0], a[1] - b[1])
+
+    def cost(swap):
+        """Total distance to anchors if c0/c1 -> left/right (swap=False) or right/left (swap=True)."""
+        left, right = (w1, w0) if swap else (w0, w1)
+        total = 0.0
+        if left  is not None and left_anchor  is not None: total += dist(left,  left_anchor)
+        if right is not None and right_anchor is not None: total += dist(right, right_anchor)
+        return total
+
+    if left_anchor or right_anchor:
+        do_swap = cost(True) < cost(False)
+    elif w0 is not None and w1 is not None:
+        do_swap = w0[0] > w1[0]   # no anchors at all: leftmost wrist = left hand
+    else:
+        do_swap = False
+
+    left, right = (c1, c0) if do_swap else (c0, c1)
+
+    def to_int(pt):
+        return (int(pt[0]), int(pt[1])) if pt is not None else None
+
+    return {
+        "left_wrist":  to_int(left["wrist"]),  "left_elbow":  to_int(left["elbow"]),
+        "right_wrist": to_int(right["wrist"]), "right_elbow": to_int(right["elbow"]),
+    }
 
 
 def draw_arm_segments(img, arm_kps):
@@ -250,9 +311,17 @@ def process_frame(mp_detector, yolo_model, smoother, frame, width, height):
     mp_result  = mp_detector.detect(mp_image)
     wrist_data = draw_hand_skeleton(annotated, mp_result, width, height)
 
-    # YOLO + smoothing
+    # Anchors for left/right identity, from MediaPipe's handedness (stable
+    # across frames, unlike YOLO's left/right keypoint labels)
+    mp_anchors = {"left": None, "right": None}
+    for w in wrist_data:
+        side = "left" if w["label"] == "Left" else "right"
+        mp_anchors[side] = (w["px"], w["py"])
+
+    # YOLO + side re-identification + smoothing
     yolo_results = yolo_model(frame, verbose=False)
-    raw_kps      = extract_raw_arm_keypoints(yolo_results)
+    candidates   = extract_arm_candidates(yolo_results)
+    raw_kps      = assign_arm_sides(candidates, mp_anchors, smoother)
     arm_kps = {
         "left_wrist":  smoother.update("left_wrist",  raw_kps["left_wrist"]),
         "left_elbow":  smoother.update("left_elbow",  raw_kps["left_elbow"]),
