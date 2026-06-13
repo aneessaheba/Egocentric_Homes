@@ -67,8 +67,9 @@ COLOR_RIGHT     = (230, 80,  50 )
 COLOR_WHITE     = (255, 255, 255)
 
 # Smoothing
-EMA_ALPHA   = 0.4   # lower = smoother but more lag
-HOLD_FRAMES = 5     # frames to hold last position when keypoint disappears
+EMA_ALPHA      = 0.4   # lower = smoother but more lag
+HOLD_FRAMES    = 5     # frames to hold last position when keypoint disappears
+CONF_THRESHOLD = 0.3   # min YOLO keypoint confidence to trust (else treated as missing)
 
 HAND_CONNECTIONS = [
     (0,1),(1,2),(2,3),(3,4),
@@ -169,9 +170,12 @@ def extract_raw_arm_keypoints(yolo_results):
     if boxes is None or len(boxes.conf) == 0:
         return raw
     best_idx = int(boxes.conf.argmax())
-    kps = best_result.keypoints.xy[best_idx]
+    kps   = best_result.keypoints.xy[best_idx]
+    confs = best_result.keypoints.conf[best_idx]
 
     def to_pt(idx):
+        if float(confs[idx]) < CONF_THRESHOLD:
+            return None
         pt = (float(kps[idx][0]), float(kps[idx][1]))
         return (int(pt[0]), int(pt[1])) if is_valid_kp(pt) else None
 
