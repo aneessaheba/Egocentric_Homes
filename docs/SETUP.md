@@ -13,3 +13,18 @@ git clone https://github.com/aneessaheba/Egocentric_Homes.git
 cd Egocentric_Homes
 pip install -r requirements.txt
 ```
+
+## Directory structure
+
+```
+assets/
+  videos/          # raw .mp4 clips go here
+  processed/
+    hand_pose/     # hand landmark JSONs
+    arm_pose/      # arm keypoint JSONs
+    segmentation/  # SAM2 mask outputs
+    depth/         # depth map arrays
+    transcripts/   # Whisper transcript JSONs
+    quality/       # quality score JSONs
+    annotations/   # merged full annotation JSONs
+```
