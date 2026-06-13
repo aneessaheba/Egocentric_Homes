@@ -39,3 +39,10 @@ Submissions are auto-scored on:
 | Motion coverage   | 15%    |
 
 A minimum score of **60 / 100** is required for acceptance.
+
+## Reporting issues
+
+Open an issue on GitHub with:
+- A short description of the problem
+- The clip name (if applicable)
+- Steps to reproduce
