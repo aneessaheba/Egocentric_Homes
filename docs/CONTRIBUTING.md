@@ -25,3 +25,17 @@ Examples:
 - [ ] File named correctly (`Activity_S##.mp4`)
 - [ ] No personally identifiable information in frame
 - [ ] Uploaded via the EgoLoop contributor portal
+
+## Quality scoring
+
+Submissions are auto-scored on:
+
+| Criterion         | Weight |
+|-------------------|--------|
+| Blur / sharpness  | 30%    |
+| Brightness        | 15%    |
+| Contrast          | 15%    |
+| Hand visibility   | 25%    |
+| Motion coverage   | 15%    |
+
+A minimum score of **60 / 100** is required for acceptance.
