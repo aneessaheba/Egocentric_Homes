@@ -46,3 +46,10 @@ Open an issue on GitHub with:
 - A short description of the problem
 - The clip name (if applicable)
 - Steps to reproduce
+
+## Code contributions
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/my-fix`)
+3. Commit your changes with clear messages
+4. Open a pull request describing what you changed and why
