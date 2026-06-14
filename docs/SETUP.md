@@ -44,3 +44,10 @@ python pipeline/quality_gate.py assets/videos/
 # Preview rejections without moving files
 python pipeline/quality_gate.py assets/videos/ --dry-run
 ```
+
+## Batch processing
+
+```bash
+python pipeline/batch_runner.py assets/videos/ --workers 2
+python pipeline/batch_runner.py assets/videos/ --resume --workers 4
+```
