@@ -28,3 +28,19 @@ assets/
     quality/       # quality score JSONs
     annotations/   # merged full annotation JSONs
 ```
+
+## Running the pipeline
+
+```bash
+# Process a single video
+python pipeline/run_pipeline.py
+
+# Skip already-processed clips
+python pipeline/run_pipeline.py --resume
+
+# Run quality gate on all clips
+python pipeline/quality_gate.py assets/videos/
+
+# Preview rejections without moving files
+python pipeline/quality_gate.py assets/videos/ --dry-run
+```
