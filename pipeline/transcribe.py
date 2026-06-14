@@ -12,6 +12,8 @@ Outputs:
 
 Usage:
   python pipeline/transcribe.py assets/videos/WashingCup.mp4
+  python pipeline/transcribe.py assets/videos/WashingCup.mp4 --language hi   # Hindi
+  python pipeline/transcribe.py assets/videos/WashingCup.mp4 --language es   # Spanish
 """
 
 # ── Imports ───────────────────────────────────────────────────────────────────
@@ -86,7 +88,7 @@ def extract_audio(video_path: Path, audio_path: Path):
 
 # ── Step 2: transcribe with Whisper ──────────────────────────────────────────
 
-def transcribe_audio(audio_path: Path, model) -> list:
+def transcribe_audio(audio_path: Path, model, language: str = "en") -> list:
     """
     Run Whisper on the WAV file and return a list of timed segments.
 
@@ -101,11 +103,11 @@ def transcribe_audio(audio_path: Path, model) -> list:
 
     # model.transcribe() is the main Whisper call — it processes the entire file
     result = model.transcribe(
-        str(audio_path),      # path to the .wav file
-        language="en",        # set language explicitly — skips Whisper's auto-detect step
-        fp16=False,           # fp16 (half-precision) only works on NVIDIA CUDA GPUs
-                              # setting False forces full-precision (works everywhere)
-        word_timestamps=True, # return per-word timing inside each segment
+        str(audio_path),         # path to the .wav file
+        language=language,       # ISO 639-1 code e.g. "en", "hi", "es" — or None to auto-detect
+        fp16=False,              # fp16 (half-precision) only works on NVIDIA CUDA GPUs
+                                 # setting False forces full-precision (works everywhere)
+        word_timestamps=True,    # return per-word timing inside each segment
     )
 
     # result["segments"] is a list of dicts — one per spoken phrase/sentence
@@ -309,9 +311,13 @@ def write_json(clip_name: str, segments: list, total_duration: float, json_path:
 
 # ── Main pipeline ─────────────────────────────────────────────────────────────
 
-def process_video(video_path: str):
+def process_video(video_path: str, language: str = "en"):
     """
     Runs all transcription steps for one video file end-to-end.
+
+    language: ISO 639-1 code passed to Whisper (default "en").
+              Use "hi" for Hindi, "es" for Spanish, etc.
+              Pass None to let Whisper auto-detect.
     """
 
     # Convert string argument to a Path object for easy manipulation
@@ -374,7 +380,7 @@ def process_video(video_path: str):
 
         # Run transcription — this is the main Whisper call
         # Each segment is printed to the terminal as it is returned (Step 6)
-        segments = transcribe_audio(tmp_wav_path, model)
+        segments = transcribe_audio(tmp_wav_path, model, language=language)
 
         # If Whisper found nothing (silent video, music only, etc.), warn and stop
         if not segments:
@@ -442,11 +448,19 @@ if __name__ == "__main__":
     # sys.argv is the list of words you typed on the command line.
     # sys.argv[0] = "pipeline/transcribe.py"  ← always the script name
     # sys.argv[1] = "assets/videos/WashingCup.mp4"  ← what we need
-    if len(sys.argv) != 2:
-        # Wrong number of arguments — show the user what to type
-        print("Usage  : python pipeline/transcribe.py <path_to_video>")
-        print("Example: python pipeline/transcribe.py assets/videos/WashingCup.mp4")
-        sys.exit(1)    # exit with error code 1 to signal something went wrong
+    args = sys.argv[1:]
+    if not args or args[0].startswith("--"):
+        print("Usage  : python pipeline/transcribe.py <path_to_video> [--language CODE]")
+        print("Example: python pipeline/transcribe.py assets/videos/WashingCup.mp4 --language hi")
+        sys.exit(1)
 
-    # Hand the video path to the main function
-    process_video(sys.argv[1])
+    video = args[0]
+    language = "en"
+    if "--language" in args:
+        idx = args.index("--language")
+        if idx + 1 >= len(args):
+            print("[ERROR] --language requires a language code, e.g. --language hi")
+            sys.exit(1)
+        language = args[idx + 1]
+
+    process_video(video, language=language)
