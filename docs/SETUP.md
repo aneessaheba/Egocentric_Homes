@@ -51,3 +51,13 @@ python pipeline/quality_gate.py assets/videos/ --dry-run
 python pipeline/batch_runner.py assets/videos/ --workers 2
 python pipeline/batch_runner.py assets/videos/ --resume --workers 4
 ```
+
+## Exporting annotations
+
+```bash
+# Convert JSON annotations to CSV
+python pipeline/exporter.py assets/processed/annotations/MyClip_full.json csv
+
+# Convert to COCO format
+python pipeline/exporter.py assets/processed/annotations/MyClip_full.json coco
+```
