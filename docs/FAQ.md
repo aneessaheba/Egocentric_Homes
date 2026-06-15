@@ -46,3 +46,13 @@ the rejected clip for a breakdown of which metrics brought the score down.
 **Can I re-submit a rejected clip?**
 Yes — improve the lighting or stabilisation, re-record, and re-submit
 through the contributor portal.
+
+## Data access
+
+**Is the dataset public?**
+The raw clips remain private; derived annotations (hand poses, arm poses,
+depth maps, transcripts) will be released on Hugging Face under a
+Creative Commons license once the collection campaign closes.
+
+**How do I cite this dataset?**
+Citation details will be published alongside the official release.
