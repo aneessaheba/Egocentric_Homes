@@ -27,3 +27,11 @@ or wrist works well. We recommend 1080p at 30 fps minimum.
 | Depth          | Depth-Anything-V2 Metric Indoor-S  |
 | Transcription  | OpenAI Whisper base                |
 | Quality check  | MediaPipe + OpenCV metrics         |
+
+**How long does the pipeline take per clip?**
+On a machine with an NVIDIA RTX 3060 or better, expect roughly:
+- 30-second clip: ~2-3 minutes total
+- 60-second clip: ~4-6 minutes total
+
+Depth inference is the slowest stage; reducing `DEPTH_RESIZE_WIDTH`
+in `config.py` speeds it up at the cost of accuracy.
