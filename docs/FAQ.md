@@ -35,3 +35,14 @@ On a machine with an NVIDIA RTX 3060 or better, expect roughly:
 
 Depth inference is the slowest stage; reducing `DEPTH_RESIZE_WIDTH`
 in `config.py` speeds it up at the cost of accuracy.
+
+## Quality gate
+
+**Why was my clip rejected?**
+Clips scoring below 60 / 100 are automatically quarantined in
+`assets/videos/rejected/`. Check the `*_quality.json` file alongside
+the rejected clip for a breakdown of which metrics brought the score down.
+
+**Can I re-submit a rejected clip?**
+Yes — improve the lighting or stabilisation, re-record, and re-submit
+through the contributor portal.
