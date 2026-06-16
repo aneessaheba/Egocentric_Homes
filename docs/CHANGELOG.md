@@ -22,3 +22,8 @@ All notable changes to this project will be documented here.
 
 ### Changed
 - Removed HomeDepth section from dataset page (dataset not yet public)
+
+### Fixed
+- Fixed left/right arm identity swap in YOLO arm tracking
+- Filtered low-confidence YOLO arm keypoints (threshold 0.4)
+- Fixed MediaPipe handedness collision bug in hand_pose.py
