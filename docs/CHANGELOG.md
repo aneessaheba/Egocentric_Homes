@@ -36,3 +36,11 @@ All notable changes to this project will be documented here.
 - Whisper transcription stage
 - Quality check scoring with weighted metrics
 - Quality gate to quarantine low-scoring clips
+
+## [0.1.0] — 2026-06-01
+
+### Added
+- Initial EgoLoop platform scaffolding (index, campaigns, dataset, pipeline pages)
+- MediaPipe hand pose annotation script
+- YOLOv8n arm pose annotation script
+- Basic homepage with hero, stats, and campaign card
