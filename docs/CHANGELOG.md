@@ -12,3 +12,7 @@ All notable changes to this project will be documented here.
 - `pipeline/exporter.py` — JSON, CSV, and COCO export for annotations
 - `pipeline/visualizer.py` — OpenCV drawing helpers for annotation overlays
 - `pipeline/batch_runner.py` — parallel multi-clip processing
+
+- `pipeline/arm_pose.py` — `--batch` mode for processing entire video folders
+- `pipeline/run_pipeline.py` — `--resume` flag to skip already-processed clips
+- `pipeline/quality_gate.py` — `--dry-run` flag to preview rejections
