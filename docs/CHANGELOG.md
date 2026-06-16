@@ -27,3 +27,12 @@ All notable changes to this project will be documented here.
 - Fixed left/right arm identity swap in YOLO arm tracking
 - Filtered low-confidence YOLO arm keypoints (threshold 0.4)
 - Fixed MediaPipe handedness collision bug in hand_pose.py
+
+## [0.2.0] — 2026-06-05
+
+### Added
+- SAM 2.1 Hiera-Tiny segmentation stage
+- Depth-Anything-V2 Metric Indoor depth stage
+- Whisper transcription stage
+- Quality check scoring with weighted metrics
+- Quality gate to quarantine low-scoring clips
