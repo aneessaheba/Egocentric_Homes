@@ -16,3 +16,9 @@ All notable changes to this project will be documented here.
 - `pipeline/arm_pose.py` — `--batch` mode for processing entire video folders
 - `pipeline/run_pipeline.py` — `--resume` flag to skip already-processed clips
 - `pipeline/quality_gate.py` — `--dry-run` flag to preview rejections
+
+- `pipeline/transcribe.py` — `--language` flag for non-English narration
+- `pipeline/utils.py` — shared JSON I/O, video metadata, timer utilities
+
+### Changed
+- Removed HomeDepth section from dataset page (dataset not yet public)
