@@ -57,3 +57,20 @@ All validators **raise `ValueError`** on bad input and **return the value** on s
 | `validate_duration(secs)`       | 1–300 seconds                         |
 | `validate_language(code)`       | ISO 639-1 code in supported set       |
 | `validate_clip_name(name)`      | Letters, digits, `_`, `-` only        |
+
+## logger.py
+
+```python
+from logger import get_logger
+log = get_logger("my_module", log_dir="logs/")
+log.info("Processing started")
+log.stage_start("hand_pose")
+# ... do work ...
+log.stage_done("hand_pose")
+```
+
+### `get_logger(name, level, log_dir, verbose) -> Logger`
+Factory that returns a configured `Logger` instance.
+
+### `Logger.stage_start(name)` / `Logger.stage_done(name)`
+Log stage boundaries and compute elapsed time automatically.
