@@ -37,3 +37,23 @@ Return `{width, height, fps, total_frames, duration_sec}` without decoding frame
 
 ### `Timer`
 Simple wall-clock timer with `elapsed()` and `elapsed_str()` methods.
+
+## validators.py
+
+```python
+from validators import validate_video_path, validate_score, validate_language
+```
+
+All validators **raise `ValueError`** on bad input and **return the value** on success.
+
+| Function                        | Validates                             |
+|---------------------------------|---------------------------------------|
+| `validate_video_path(path)`     | File exists, supported extension      |
+| `validate_video_dir(path)`      | Directory exists, contains .mp4 files |
+| `validate_score(v, lo, hi)`     | Numeric in `[lo, hi]`                 |
+| `validate_confidence(v)`        | Float in `[0, 1]`                     |
+| `validate_fps(fps)`             | Positive float                        |
+| `validate_resolution(w, h)`     | Both dimensions > 0                   |
+| `validate_duration(secs)`       | 1–300 seconds                         |
+| `validate_language(code)`       | ISO 639-1 code in supported set       |
+| `validate_clip_name(name)`      | Letters, digits, `_`, `-` only        |
