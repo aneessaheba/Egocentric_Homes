@@ -74,3 +74,16 @@ Factory that returns a configured `Logger` instance.
 
 ### `Logger.stage_start(name)` / `Logger.stage_done(name)`
 Log stage boundaries and compute elapsed time automatically.
+
+## exporter.py
+
+```python
+from exporter import to_json, to_csv, to_coco, summary_stats
+```
+
+| Function                              | Output                            |
+|---------------------------------------|-----------------------------------|
+| `to_json(data, path)`                 | Pretty-printed JSON file          |
+| `to_csv(frames, path)`                | One CSV row per frame             |
+| `to_coco(frames, clip_name, path)`    | COCO-compatible JSON              |
+| `summary_stats(frames) -> dict`       | Aggregated stats dict             |
