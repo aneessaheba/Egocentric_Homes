@@ -87,3 +87,21 @@ from exporter import to_json, to_csv, to_coco, summary_stats
 | `to_csv(frames, path)`                | One CSV row per frame             |
 | `to_coco(frames, clip_name, path)`    | COCO-compatible JSON              |
 | `summary_stats(frames) -> dict`       | Aggregated stats dict             |
+
+## visualizer.py
+
+```python
+from visualizer import draw_hand_landmarks, draw_quality_hud, open_video_writer
+```
+
+All drawing functions modify frames **in-place** and return `None` except
+`draw_depth_heatmap` which returns a new BGR frame, and `open_video_writer`
+which returns a `cv2.VideoWriter`.
+
+| Function                            | Effect                                   |
+|-------------------------------------|------------------------------------------|
+| `draw_hand_landmarks(frame, lms)`   | Draw skeleton + keypoints on frame       |
+| `draw_arm_skeleton(frame, kps)`     | Draw arm bone connections on frame       |
+| `draw_depth_heatmap(depth_arr)`     | Return INFERNO-colourmap depth frame     |
+| `draw_quality_hud(frame, score)`    | Overlay score badge top-right            |
+| `open_video_writer(path, fps, w, h)`| Open VideoWriter; raises on failure      |
