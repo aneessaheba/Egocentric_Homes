@@ -29,3 +29,19 @@
 - **Output**: Per-pixel metric depth map (metres)
 - **Resize width**: 518 px (configurable via `DEPTH_RESIZE_WIDTH`)
 - **Script**: `pipeline/depth.py`
+
+## Transcription — OpenAI Whisper
+
+- **Model**: `base` (multilingual, ~150 MB)
+- **Audio extraction**: 16 kHz mono WAV via ffmpeg
+- **Language**: auto-detected by default; override with `--language CODE`
+- **Script**: `pipeline/transcribe.py`
+
+## Quality Scoring — MediaPipe + OpenCV
+
+No pretrained model — computed from frame statistics:
+- **Blur**: Laplacian variance
+- **Brightness / Contrast**: Mean and std of grayscale channel
+- **Hand visibility**: Fraction of frames with detected hands
+- **Motion coverage**: Optical flow magnitude distribution
+- **Script**: `pipeline/quality_check.py`
