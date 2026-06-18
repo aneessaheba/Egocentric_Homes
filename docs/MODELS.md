@@ -22,3 +22,10 @@
 - **Inference interval**: Every 9th frame (configurable via `SEG_FRAME_INTERVAL`)
 - **Quantisation**: 4-bit to reduce VRAM usage
 - **Script**: `pipeline/segmentation.py`
+
+## Depth — Depth-Anything-V2 Metric Indoor Small
+
+- **Model**: `depth_anything_v2_metric_indoor_small.pth`
+- **Output**: Per-pixel metric depth map (metres)
+- **Resize width**: 518 px (configurable via `DEPTH_RESIZE_WIDTH`)
+- **Script**: `pipeline/depth.py`
