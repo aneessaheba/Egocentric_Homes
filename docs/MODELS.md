@@ -14,3 +14,11 @@
 - **EMA smoothing**: alpha = 0.3, temporal buffer = 3 frames
 - **Confidence threshold**: 0.4 per keypoint
 - **Script**: `pipeline/arm_pose.py`
+
+## Segmentation — SAM 2.1 Hiera-Tiny
+
+- **Model**: `sam2.1_hiera_tiny.pt`
+- **Prompted by**: Hand bounding boxes from `hand_pose.py`
+- **Inference interval**: Every 9th frame (configurable via `SEG_FRAME_INTERVAL`)
+- **Quantisation**: 4-bit to reduce VRAM usage
+- **Script**: `pipeline/segmentation.py`
