@@ -105,3 +105,17 @@ which returns a `cv2.VideoWriter`.
 | `draw_depth_heatmap(depth_arr)`     | Return INFERNO-colourmap depth frame     |
 | `draw_quality_hud(frame, score)`    | Overlay score badge top-right            |
 | `open_video_writer(path, fps, w, h)`| Open VideoWriter; raises on failure      |
+
+## batch_runner.py
+
+```python
+from batch_runner import run_batch, collect_clips
+```
+
+### `collect_clips(videos_dir, resume=False) -> list[Path]`
+Return sorted `.mp4` clips from `videos_dir`. If `resume=True`, skip clips
+that already have a `*_full.json` annotation in `ANNOTATIONS_DIR`.
+
+### `run_batch(videos_dir, workers=2, resume=False, batch_size=4)`
+Process all clips using a `ProcessPoolExecutor`. Prints per-clip status and
+a summary on completion.
