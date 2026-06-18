@@ -1,6 +1,6 @@
-# Ego Homes
+# HumanLoop
 
-Ego Homes is a first-person dataset of everyday household activities captured in
+HumanLoop is a first-person dataset of everyday household activities captured in
 native home environments. Using head-mounted and body-worn cameras, we record
 unscripted interactions across the entire home — kitchen, laundry, living spaces —
 annotated with hand pose, segmentation, and action labels.
