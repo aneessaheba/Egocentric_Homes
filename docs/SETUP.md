@@ -69,3 +69,17 @@ python pipeline/exporter.py assets/processed/annotations/MyClip_full.json coco
 python pipeline/visualizer.py assets/videos/MyClip.mp4     assets/processed/annotations/MyClip_full.json
 # Output: assets/videos/MyClip_viz.mp4
 ```
+
+## Troubleshooting
+
+**`FileNotFoundError: Model checkpoint not found`**
+Download model checkpoints and place them in the `models/` directory.
+See `config.py` for expected paths.
+
+**`No .mp4 files found`**
+Ensure your clips are in `assets/videos/` (not a subdirectory) and have
+the `.mp4` extension.
+
+**Slow depth inference**
+Reduce `DEPTH_RESIZE_WIDTH` in `config.py` from 518 to 384 for ~2× speedup
+at a small accuracy cost.
