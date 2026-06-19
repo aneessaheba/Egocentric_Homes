@@ -119,3 +119,18 @@ that already have a `*_full.json` annotation in `ANNOTATIONS_DIR`.
 ### `run_batch(videos_dir, workers=2, resume=False, batch_size=4)`
 Process all clips using a `ProcessPoolExecutor`. Prints per-clip status and
 a summary on completion.
+
+## Error handling
+
+All pipeline functions raise **`ValueError`** for bad inputs (wrong file type,
+missing path, out-of-range value) and **`RuntimeError`** for unrecoverable
+runtime failures (model load error, VideoWriter open failure).
+
+Use the validators module to catch input errors before calling expensive
+inference functions:
+
+```python
+from validators import validate_video_path, validate_language
+path = validate_video_path("my_clip.mp4")
+lang = validate_language("hi")
+```
