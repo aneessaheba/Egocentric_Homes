@@ -81,3 +81,18 @@ parallel. Set `--workers` to the number of GPU streams your hardware supports.
 **What does `--resume` do?**
 With `--resume`, any clip that already has a completed `*_full.json` annotation
 is skipped. Safe to re-run after a crash without re-doing finished work.
+
+## Visualisation
+
+**How do I generate a visualised video with overlays?**
+
+```bash
+python pipeline/visualizer.py assets/videos/MyClip.mp4     assets/processed/annotations/MyClip_full.json
+```
+
+This produces `MyClip_viz.mp4` alongside the original with hand landmarks
+and quality scores drawn on each frame.
+
+**Can I customise the overlay colours?**
+Yes — edit the colour constants at the top of `pipeline/visualizer.py`
+(`_RED`, `_GREEN`, `_BLUE`, etc. are BGR tuples for OpenCV).
