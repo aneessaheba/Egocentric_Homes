@@ -61,3 +61,11 @@ python pipeline/exporter.py assets/processed/annotations/MyClip_full.json csv
 # Convert to COCO format
 python pipeline/exporter.py assets/processed/annotations/MyClip_full.json coco
 ```
+
+## Visualising annotations
+
+```bash
+# Draw hand landmarks and quality HUD on every frame
+python pipeline/visualizer.py assets/videos/MyClip.mp4     assets/processed/annotations/MyClip_full.json
+# Output: assets/videos/MyClip_viz.mp4
+```
