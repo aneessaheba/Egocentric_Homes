@@ -44,3 +44,12 @@ All notable changes to this project will be documented here.
 - MediaPipe hand pose annotation script
 - YOLOv8n arm pose annotation script
 - Basic homepage with hero, stats, and campaign card
+
+## [0.3.0] — 2026-06-17
+
+### Added
+- `docs/API.md` — full public API reference for all pipeline modules
+- `docs/MODELS.md` — detailed model cards for each inference stage
+- `docs/FAQ.md` — answers to common setup and usage questions
+- `docs/SETUP.md` — step-by-step environment setup guide
+- `docs/CONTRIBUTING.md` — contributor guidelines and clip naming rules
