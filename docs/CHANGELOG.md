@@ -53,3 +53,10 @@ All notable changes to this project will be documented here.
 - `docs/FAQ.md` — answers to common setup and usage questions
 - `docs/SETUP.md` — step-by-step environment setup guide
 - `docs/CONTRIBUTING.md` — contributor guidelines and clip naming rules
+
+### Changed
+- Incremented campaign slot display as new clips were accepted
+- Batch runner now shows per-clip status and final pass/fail summary
+
+### Fixed
+- Exporter `to_csv` no longer crashes on frames with missing keys
