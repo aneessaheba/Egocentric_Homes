@@ -107,3 +107,16 @@ CPU-only mode is supported but depth and segmentation will be very slow.
 Yes — MediaPipe and Whisper support MPS (Metal). SAM2 and Depth-Anything
 support MPS with PyTorch 2.1+. Set `PYTORCH_ENABLE_MPS_FALLBACK=1` if
 you hit unsupported ops.
+
+## Logging
+
+**Where are log files saved?**
+By default, logging goes to stdout only. To enable file logging, pass
+`log_dir="logs/"` when creating a Logger:
+
+```python
+from logger import get_logger
+log = get_logger("pipeline", log_dir="logs/")
+```
+
+Log files are named `pipeline_<session_id>.log`.
