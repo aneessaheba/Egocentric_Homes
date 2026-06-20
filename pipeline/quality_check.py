@@ -21,7 +21,13 @@ from pathlib import Path      # cross-platform file and folder paths
 # ── Third-party imports ───────────────────────────────────────────────────────
 import cv2                    # OpenCV — open video, read frames, compute blur
 import numpy as np            # NumPy — array maths for brightness/blur averages
-import mediapipe as mp        # MediaPipe — hand detection on sampled frames
+import mediapipe as mp        # MediaPipe — mp.Image/mp.ImageFormat for the Tasks API
+
+# mediapipe==0.10.35 dropped the legacy `mp.solutions` Hands API entirely —
+# this module now goes through the same HandLandmarker (Tasks API) that
+# hand_pose.py uses, instead of the removed `mp.solutions.hands.Hands`.
+sys.path.insert(0, str(Path(__file__).parent))
+import hand_pose
 
 # ── Optional Whisper import (graceful fallback if not installed) ───────────────
 try:
@@ -46,13 +52,9 @@ BRIGHT_HIGH = 180   # above this = too bright
 
 
 # ── MediaPipe hands model ─────────────────────────────────────────────────────
-# Load once at module level so every video reuses the same detector instance
-_mp_hands    = mp.solutions.hands                               # hands solution namespace
-_hand_detect = _mp_hands.Hands(                                 # create detector
-    static_image_mode=True,                                     # one frame at a time (no tracking)
-    max_num_hands=2,                                            # look for up to 2 hands
-    min_detection_confidence=0.5,                               # confidence threshold
-)
+# Load once at module level so every video reuses the same detector instance.
+# Same model + config as hand_pose.py (num_hands=2, confidence 0.5, IMAGE mode).
+_hand_detector = hand_pose.load_detector()
 
 
 # ── Helper: run ffprobe and return parsed JSON ────────────────────────────────
@@ -126,23 +128,22 @@ def check_hands(video_path: Path) -> dict:
 
         if frame_id % SAMPLE_EVERY == 0:              # only analyse every 10th frame
             sampled += 1                               # count this sample
-            small   = cv2.resize(frame, (640, 360))   # downscale for faster inference
-            rgb     = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)   # MediaPipe needs RGB
-            result  = _hand_detect.process(rgb)                # run hand detection
+            small    = cv2.resize(frame, (640, 360))   # downscale for faster inference
+            rgb      = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)   # MediaPipe needs RGB
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)   # Tasks API input
+            result   = _hand_detector.detect(mp_image)          # run hand detection
 
-            if result.multi_hand_landmarks:            # at least one hand found
-                n = len(result.multi_hand_landmarks)   # number of hands detected
-                if n >= 2:                             # both hands visible
-                    two_hands += 1
-                else:                                  # only one hand visible
-                    one_hand  += 1
-
-                # collect confidence scores for each detected hand
-                if result.multi_handedness:
-                    for h in result.multi_handedness:              # loop over each hand
-                        conf_scores.append(h.classification[0].score)   # confidence 0-1
+            n = len(result.hand_landmarks)             # number of hands detected
+            if n >= 2:                                 # both hands visible
+                two_hands += 1
+            elif n == 1:                               # only one hand visible
+                one_hand  += 1
             else:
                 zero_hands += 1                        # no hands in this frame
+
+            # collect confidence scores for each detected hand
+            for h in result.handedness:                # loop over each hand
+                conf_scores.append(h[0].score)         # confidence 0-1
 
         frame_id += 1                                  # advance frame counter
 
