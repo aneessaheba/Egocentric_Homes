@@ -96,3 +96,14 @@ and quality scores drawn on each frame.
 **Can I customise the overlay colours?**
 Yes — edit the colour constants at the top of `pipeline/visualizer.py`
 (`_RED`, `_GREEN`, `_BLUE`, etc. are BGR tuples for OpenCV).
+
+## Hardware requirements
+
+**What GPU is needed?**
+Any NVIDIA GPU with 6 GB VRAM or more (e.g. RTX 3060, RTX 4060).
+CPU-only mode is supported but depth and segmentation will be very slow.
+
+**Can I run on Apple Silicon?**
+Yes — MediaPipe and Whisper support MPS (Metal). SAM2 and Depth-Anything
+support MPS with PyTorch 2.1+. Set `PYTORCH_ENABLE_MPS_FALLBACK=1` if
+you hit unsupported ops.
