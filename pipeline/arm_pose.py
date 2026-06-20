@@ -3,8 +3,9 @@ arm_pose.py
 ───────────
 Combined hand + arm tracking for egocentric (head-mounted) video.
 
-  • MediaPipe HandLandmarker  — 21-point hand skeleton (red = left, blue = right)
-  • YOLOv8 pose              — wrist → elbow arm segment (red = left, blue = right)
+  • Hand skeleton  — delegated to hand_pose.py's HandLandmarker (no second
+                      detector instance; avoids running HandLandmarker twice)
+  • YOLOv8 pose    — wrist → elbow arm segment (red = left, blue = right)
 
 Stability features:
   • EMA smoothing            — exponential moving average on YOLO keypoint positions
@@ -39,15 +40,17 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-import mediapipe as mp
-from mediapipe.tasks import python as mp_tasks
-from mediapipe.tasks.python import vision as mp_vision
 from ultralytics import YOLO
+
+# arm_pose.py consumes hand_pose.py's HandLandmarker output directly instead of
+# running its own detector — running HandLandmarker twice per frame was pure
+# wasted compute since both modules need the same 21-point hand skeleton.
+sys.path.insert(0, str(Path(__file__).parent))
+import hand_pose
 
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-MEDIAPIPE_MODEL = Path("assets/models/hand_landmarker.task")
 YOLO_MODEL      = "yolov8n-pose.pt"
 
 ANNOTATED_ROOT  = Path("assets/processed/annotated")
@@ -71,23 +74,6 @@ COLOR_WHITE     = (255, 255, 255)
 EMA_ALPHA      = 0.4   # lower = smoother but more lag
 HOLD_FRAMES    = 5     # frames to hold last position when keypoint disappears
 CONF_THRESHOLD = 0.3   # min YOLO keypoint confidence to trust (else treated as missing)
-
-HAND_CONNECTIONS = [
-    (0,1),(1,2),(2,3),(3,4),
-    (0,5),(5,6),(6,7),(7,8),
-    (0,9),(9,10),(10,11),(11,12),
-    (0,13),(13,14),(14,15),(15,16),
-    (0,17),(17,18),(18,19),(19,20),
-    (5,9),(9,13),(13,17),
-]
-
-LANDMARK_NAMES = [
-    "WRIST","THUMB_CMC","THUMB_MCP","THUMB_IP","THUMB_TIP",
-    "INDEX_MCP","INDEX_PIP","INDEX_DIP","INDEX_TIP",
-    "MIDDLE_MCP","MIDDLE_PIP","MIDDLE_DIP","MIDDLE_TIP",
-    "RING_MCP","RING_PIP","RING_DIP","RING_TIP",
-    "PINKY_MCP","PINKY_PIP","PINKY_DIP","PINKY_TIP",
-]
 
 YOLO_LEFT_ELBOW  = 7
 YOLO_RIGHT_ELBOW = 8
@@ -135,21 +121,6 @@ class KeypointSmoother:
 
 
 # ── Model loaders ─────────────────────────────────────────────────────────────
-
-def load_mediapipe():
-    if not MEDIAPIPE_MODEL.exists():
-        print(f"[ERROR] MediaPipe model not found: {MEDIAPIPE_MODEL}")
-        sys.exit(1)
-    options = mp_vision.HandLandmarkerOptions(
-        base_options=mp_tasks.BaseOptions(model_asset_path=str(MEDIAPIPE_MODEL)),
-        num_hands=2,
-        min_hand_detection_confidence=0.5,
-        min_hand_presence_confidence=0.5,
-        min_tracking_confidence=0.5,
-        running_mode=mp_vision.RunningMode.IMAGE,
-    )
-    return mp_vision.HandLandmarker.create_from_options(options)
-
 
 def load_yolo():
     return YOLO(YOLO_MODEL)
@@ -262,61 +233,19 @@ def draw_arm_segments(img, arm_kps):
             draw_arm_dot(img, e, color)
 
 
-# ── MediaPipe helpers ─────────────────────────────────────────────────────────
-
-def draw_hand_skeleton(img, result, width, height):
-    wrist_data = []
-    for landmarks, handedness in zip(result.hand_landmarks, result.handedness):
-        label      = handedness[0].category_name
-        confidence = round(handedness[0].score, 4)
-        color      = COLOR_LEFT if label == "Left" else COLOR_RIGHT
-        side       = "L" if label == "Left" else "R"
-        pts        = [(int(lm.x * width), int(lm.y * height)) for lm in landmarks]
-
-        for a, b in HAND_CONNECTIONS:
-            cv2.line(img, pts[a], pts[b], color, BONE_WIDTH, cv2.LINE_AA)
-        for px, py in pts:
-            cv2.circle(img, (px, py), DOT_RADIUS, color,       -1, cv2.LINE_AA)
-            cv2.circle(img, (px, py), DOT_INNER,  COLOR_WHITE, -1, cv2.LINE_AA)
-
-        wx, wy = pts[0]
-        lx, ly = wx + DOT_RADIUS + 10, wy + 14
-        for dx, dy in [(-3,-3),(-3,3),(3,-3),(3,3)]:
-            cv2.putText(img, side, (lx+dx, ly+dy),
-                        cv2.FONT_HERSHEY_DUPLEX, 1.8, (0,0,0), 5, cv2.LINE_AA)
-        cv2.putText(img, side, (lx, ly),
-                    cv2.FONT_HERSHEY_DUPLEX, 1.8, color, 2, cv2.LINE_AA)
-
-        keypoints = {}
-        for i, (lm, (px, py)) in enumerate(zip(landmarks, pts)):
-            keypoints[LANDMARK_NAMES[i]] = {
-                "px": px, "py": py,
-                "x": round(lm.x, 6), "y": round(lm.y, 6), "z": round(lm.z, 6),
-            }
-        wrist_data.append({
-            "label": label, "confidence": confidence,
-            "px": pts[0][0], "py": pts[0][1], "keypoints": keypoints,
-        })
-    return wrist_data
-
-
 # ── Core: process one frame ───────────────────────────────────────────────────
 
 def process_frame(mp_detector, yolo_model, smoother, frame, width, height):
-    annotated  = frame.copy()
-
-    # MediaPipe
-    frame_rgb  = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    mp_image   = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
-    mp_result  = mp_detector.detect(mp_image)
-    wrist_data = draw_hand_skeleton(annotated, mp_result, width, height)
+    # Hand detection + skeleton drawing is delegated to hand_pose.py so the
+    # HandLandmarker only runs once per frame, not twice across both modules.
+    annotated, wrist_data = hand_pose.process_frame(mp_detector, frame, width, height)
 
     # Anchors for left/right identity, from MediaPipe's handedness (stable
-    # across frames, unlike YOLO's left/right keypoint labels)
+    # across frames, unlike YOLO's left/right keypoint labels). hand_pose.py
+    # already lowercases "label" to "left"/"right".
     mp_anchors = {"left": None, "right": None}
     for w in wrist_data:
-        side = "left" if w["label"] == "Left" else "right"
-        mp_anchors[side] = (w["px"], w["py"])
+        mp_anchors[w["label"]] = (w["px"], w["py"])
 
     # YOLO + side re-identification + smoothing
     yolo_results = yolo_model(frame, verbose=False)
@@ -333,12 +262,10 @@ def process_frame(mp_detector, yolo_model, smoother, frame, width, height):
     def pt_to_dict(pt):
         return {"px": pt[0], "py": pt[1]} if pt is not None else None
 
-    frame_data = {
-        "hands_found":   len(wrist_data),
-        "wrists":        wrist_data,
-        "arm_keypoints": {k: pt_to_dict(v) for k, v in arm_kps.items()},
-    }
-    return annotated, frame_data
+    # "hands"/wrist data is NOT duplicated here — hand_pose.py is the single
+    # owner of that data; arm_pose.py only contributes the "arm" block.
+    frame_data = {"arm": {k: pt_to_dict(v) for k, v in arm_kps.items()}}
+    return annotated, wrist_data, frame_data
 
 
 # ── Test mode ─────────────────────────────────────────────────────────────────
@@ -350,7 +277,7 @@ def run_test():
     print(f"{'=' * 60}\n")
 
     TEST_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    mp_detector = load_mediapipe()
+    mp_detector = hand_pose.load_detector()
     yolo_model  = load_yolo()
     smoother    = KeypointSmoother()
 
@@ -392,7 +319,7 @@ def run_test():
         if height == 0:
             height, width = frame.shape[:2]
         display  = frame_id + 1
-        annotated, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
+        annotated, wrist_data, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
 
         if display in TEST_SAVE_AT:
             for dx, dy in [(-2,-2),(-2,2),(2,-2),(2,2)]:
@@ -402,9 +329,9 @@ def run_test():
                         cv2.FONT_HERSHEY_DUPLEX, 2.0, (255,255,255), 3, cv2.LINE_AA)
             out = TEST_OUTPUT_DIR / f"frame_{str(display).zfill(3)}.png"
             cv2.imwrite(str(out), annotated)
-            ak = fdata["arm_keypoints"]
+            ak = fdata["arm"]
             print(f"  Frame {display:>3}  →  {out.name}")
-            print(f"          Hands (MediaPipe) : {fdata['hands_found']}")
+            print(f"          Hands (MediaPipe) : {len(wrist_data)}")
             print(f"          Left  elbow (YOLO): {'✅' if ak['left_elbow']  else '❌'}")
             print(f"          Right elbow (YOLO): {'✅' if ak['right_elbow'] else '❌'}\n")
 
@@ -438,7 +365,7 @@ def process_frames_folder(frames_dir: str, fps: float = 29.97):
     annotated_dir.mkdir(parents=True, exist_ok=True)
     ARM_POSE_ROOT.mkdir(parents=True, exist_ok=True)
 
-    mp_detector = load_mediapipe()
+    mp_detector = hand_pose.load_detector()
     yolo_model  = load_yolo()
     smoother    = KeypointSmoother()
 
@@ -451,7 +378,7 @@ def process_frames_folder(frames_dir: str, fps: float = 29.97):
         if frame is None:
             frame_id += 1
             continue
-        annotated, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
+        annotated, wrist_data, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
         cv2.imwrite(str(annotated_dir / f"frame_{str(frame_id).zfill(6)}.png"), annotated)
         all_frames.append({"frame_id": frame_id, "timestamp_sec": round(frame_id / fps, 4), **fdata})
         if frame_id % 100 == 0:
@@ -487,7 +414,7 @@ def process_video(video_path: str, output_video: bool = False):
     annotated_dir.mkdir(parents=True, exist_ok=True)
     ARM_POSE_ROOT.mkdir(parents=True, exist_ok=True)
 
-    mp_detector = load_mediapipe()
+    mp_detector = hand_pose.load_detector()
     yolo_model  = load_yolo()
     smoother    = KeypointSmoother()
 
@@ -499,7 +426,7 @@ def process_video(video_path: str, output_video: bool = False):
         ret, frame = cap.read()
         if not ret:
             break
-        annotated, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
+        annotated, wrist_data, fdata = process_frame(mp_detector, yolo_model, smoother, frame, width, height)
         cv2.imwrite(str(annotated_dir / f"frame_{str(frame_id).zfill(6)}.png"), annotated)
         all_frames.append({"frame_id": frame_id, "timestamp_sec": round(frame_id / fps, 4), **fdata})
         if frame_id % 100 == 0:

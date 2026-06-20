@@ -5,7 +5,7 @@ Master script that runs the full HomeHands dataset pipeline on every video.
 
 For each .mp4 in assets/videos/ it runs, in order:
   1. hand_pose.py     — detect hands, save keypoint JSON + annotated frames
-  2. segmentation.py  — SAM2 mask segmentation using wrist coords as prompts
+  2. segmentation.py  — SAM3 text-prompted arm segmentation
   3. transcribe.py    — local Whisper audio transcription + subtitle burning
 
 Then it combines all outputs into one final annotation JSON per clip:
@@ -18,9 +18,9 @@ Usage:
 # ── Imports ───────────────────────────────────────────────────────────────────
 
 import sys          # used to exit with an error code if something goes wrong
+import csv          # read assets/clip_metadata.csv
 import json         # read and write JSON files
 import time         # measure elapsed time
-import re           # regular expressions — used to split CamelCase clip names into words
 import traceback    # print full error details when a module fails
 from pathlib import Path   # clean cross-platform file path handling
 
@@ -44,48 +44,55 @@ VIDEOS_DIR = Path("assets/videos")
 # Folder where hand pose JSONs are stored (written by hand_pose.py)
 HAND_POSE_DIR = Path("assets/processed/hand_pose")
 
+# Folder where standalone arm pose JSONs are stored (written by arm_pose.py)
+ARM_POSE_DIR = Path("assets/processed/arm_pose")
+
 # Folder where narration JSONs are stored (written by transcribe.py)
 NARRATIONS_DIR = Path("assets/processed/narrations")
 
 # Folder where the final combined annotation JSONs will be saved
 ANNOTATIONS_DIR = Path("assets/processed/annotations")
 
+# Per-clip metadata (activity/participant/home/room/camera), keyed by filename stem
+CLIP_METADATA_CSV = Path("assets/clip_metadata.csv")
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def camel_to_task(name: str) -> str:
+def load_clip_metadata() -> dict:
     """
-    Convert a CamelCase filename stem into a lowercase task description.
+    Load assets/clip_metadata.csv into a dict keyed by filename stem.
 
-    Examples:
-      "WashingCup"      → "washing cup"
-      "FoldingClothes"  → "folding clothes"
-      "CuttingBanana"   → "cutting banana"
+    Columns: filename, activity_category, activity_label, participant_id,
+             home_id, room, camera_model.
 
-    How it works:
-      re.sub inserts a space before every uppercase letter that is preceded
-      by a lowercase letter (e.g. 'g' before 'C' in 'WashingCup').
+    Returns {} if the CSV doesn't exist — callers must handle missing
+    metadata explicitly (null fields + a printed warning), not guess.
     """
-    # Insert a space before any uppercase letter that follows a lowercase letter
-    spaced = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", name)
-    return spaced.lower()    # convert the whole string to lowercase
+    metadata = {}
+    if not CLIP_METADATA_CSV.exists():
+        print(f"  [metadata] No CSV found at {CLIP_METADATA_CSV} — "
+              f"all clips will have null activity/participant/home/room/camera fields")
+        return metadata
+    with open(CLIP_METADATA_CSV, newline="") as f:
+        for row in csv.DictReader(f):
+            metadata[Path(row["filename"]).stem] = row
+    return metadata
 
 
-def find_narration_for_frame(timestamp_sec: float, narrations: list) -> str:
+def find_narration_id_for_frame(timestamp_sec: float, narrations: list):
     """
     Given a frame's timestamp and the list of narration segments,
-    return the narration text that was being spoken at that moment.
+    return the id of the narration segment that was being spoken at that
+    moment, or None if no segment covers this timestamp.
 
     A narration covers a frame if:
       segment["start"] <= timestamp_sec < segment["end"]
-
-    Returns an empty string "" if no narration segment covers this timestamp.
     """
     for seg in narrations:
-        # Check if the frame timestamp falls inside this segment's time window
         if seg["start"] <= timestamp_sec < seg["end"]:
-            return seg["text"]    # this segment was active at this frame's time
-    return ""    # no segment covered this timestamp (silence or gap)
+            return seg["id"]
+    return None    # no segment covered this timestamp (silence or gap)
 
 
 def clip_id_from_index(index: int) -> str:
@@ -133,20 +140,22 @@ def run_module(name: str, func, video_path: Path) -> bool:
 
 # ── Combine outputs into final annotation JSON ────────────────────────────────
 
-def build_annotation(video_path: Path, clip_index: int) -> dict | None:
+def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> dict | None:
     """
-    Load the hand pose JSON and narration JSON for one clip, merge them
-    together, and return the combined annotation dict.
+    Load the hand pose, arm pose, and narration JSON for one clip, merge them
+    together under the unified schema, and return the combined annotation dict.
 
     Returns None if the required input files are missing.
 
-    The final structure adds a "narration" field to every frame entry:
-    the text of the narration segment that was active at that frame's timestamp.
+    Key rule: every frame gets the same key set every time — "hands", "arm",
+    "segmentation", "depth", "narration_id" — defaulting to null/empty rather
+    than being omitted when a given modality wasn't run for this clip.
     """
     clip_name = video_path.stem    # e.g. "WashingCup"
 
-    # Paths to the JSON files produced by hand_pose.py and transcribe.py
+    # Paths to the JSON files produced by hand_pose.py, arm_pose.py, transcribe.py
     hand_pose_json_path = HAND_POSE_DIR   / f"{clip_name}.json"
+    arm_pose_json_path  = ARM_POSE_DIR    / f"{clip_name}.json"
     narration_json_path = NARRATIONS_DIR  / f"{clip_name}.json"
 
     # ── Load hand pose JSON ───────────────────────────────────
@@ -157,6 +166,20 @@ def build_annotation(video_path: Path, clip_index: int) -> dict | None:
     with open(hand_pose_json_path, "r") as f:
         pose_data = json.load(f)    # load the full hand pose + segmentation data
 
+    # ── Load arm pose JSON ─────────────────────────────────────
+    # arm_pose.py is not yet auto-invoked by this script's module-running loop
+    # (that's Stage 7) — if its output doesn't exist for this clip, every
+    # frame's "arm" block is explicitly null, never omitted.
+    arm_by_frame_id = {}
+    if arm_pose_json_path.exists():
+        with open(arm_pose_json_path, "r") as f:
+            arm_data = json.load(f)
+        arm_by_frame_id = {fr["frame_id"]: fr.get("arm") for fr in arm_data.get("frames", [])}
+    else:
+        print(f"     [merge] No arm pose JSON found ({arm_pose_json_path}) — \"arm\" will be null")
+
+    null_arm = {"left_wrist": None, "left_elbow": None, "right_wrist": None, "right_elbow": None}
+
     # ── Load narration JSON ───────────────────────────────────
     # The narration file is optional — if Whisper found nothing, it may not exist
     narrations = []    # default to empty list if file is missing
@@ -165,21 +188,22 @@ def build_annotation(video_path: Path, clip_index: int) -> dict | None:
             narration_data = json.load(f)
         narrations = narration_data.get("narrations", [])   # list of timed segments
     else:
-        print(f"     [merge] No narration JSON found — frames will have empty narration")
+        print(f"     [merge] No narration JSON found — narrations will be empty")
 
     # ── Pull metadata from the hand pose JSON ─────────────────
     total_frames = pose_data.get("total_frames", 0)   # how many frames in the video
-    fps          = pose_data.get("fps", 0)             # frames per second
-    resolution   = pose_data.get("resolution", {})    # {"width": ..., "height": ...}
+    fps          = pose_data.get("fps", 0)             # frames per second, exact as reported by the source video
+    res          = pose_data.get("resolution", {})    # {"width": ..., "height": ...}
+    resolution   = f"{res.get('width', 0)}x{res.get('height', 0)}"   # "WxH" string per unified schema
 
     # ── Calculate hand detection rate ─────────────────────────
     # Count frames where at least one hand was detected
     frames_with_hands = sum(
-        1 for f in pose_data["frames"]    # loop over every frame entry
-        if f.get("hands_detected", 0) > 0  # count it if at least 1 hand found
+        1 for f in pose_data["frames"]
+        if f.get("hands", {}).get("hands_found", 0) > 0
     )
-    # Detection rate as a percentage, rounded to 1 decimal place
-    detection_rate = round((frames_with_hands / total_frames) * 100, 1) if total_frames > 0 else 0.0
+    # Detection rate as a 0-1 fraction, matching the unified schema
+    detection_rate = round(frames_with_hands / total_frames, 4) if total_frames > 0 else 0.0
 
     # ── Get total duration from narration (or calculate from frames/fps) ──────
     if narrations:
@@ -192,38 +216,48 @@ def build_annotation(video_path: Path, clip_index: int) -> dict | None:
         total_duration = 0.0    # unknown
 
     # ── Build the merged frames list ──────────────────────────
-    # For each frame from the hand pose JSON, find the narration that
-    # was being spoken at that frame's timestamp and add it to the frame dict.
     merged_frames = []
 
     for frame in pose_data["frames"]:
-        # Get the timestamp in seconds for this frame
+        frame_id  = frame.get("frame_id")
         timestamp = frame.get("timestamp_sec", 0.0)
 
-        # Find which narration segment (if any) covers this timestamp
-        narration_text = find_narration_for_frame(timestamp, narrations)
-
-        # Build the merged frame dict — keep all existing hand/segmentation data
-        # and add a "narration" field
         merged_frame = {
-            "frame_id":       frame.get("frame_id"),           # integer frame index
-            "timestamp_sec":  frame.get("timestamp_sec"),      # time in seconds
-            "hands":          frame.get("hands", []),          # list of hand dicts (from hand_pose.py)
-            "segmentation":   frame.get("segmentation", {}),  # segmentation dict (from segmentation.py)
-            "narration":      narration_text,                  # spoken text at this moment (or "")
+            "frame_id":      frame_id,
+            "timestamp_sec": timestamp,
+            "hands":         frame.get("hands", {"hands_found": 0, "wrists": []}),
+            "arm":           arm_by_frame_id.get(frame_id, null_arm) if arm_by_frame_id else null_arm,
+            "segmentation":  frame.get("segmentation"),    # None if segmentation.py hasn't run for this clip
+            "depth":         None,                          # populated once depth.py exists (Stage 5)
+            "narration_id":  find_narration_id_for_frame(timestamp, narrations),
         }
-        merged_frames.append(merged_frame)    # add this frame to the output list
+        merged_frames.append(merged_frame)
+
+    # ── Per-clip metadata (activity/participant/home/room/camera) from CSV ────
+    meta = clip_metadata.get(clip_name)
+    if meta is None:
+        print(f"     [metadata] No CSV row for \"{clip_name}\" — "
+              f"activity/participant/home/room/camera fields will be null")
+
+    def meta_get(key):
+        return (meta.get(key) or None) if meta else None
 
     # ── Build the top-level annotation dict ───────────────────
     annotation = {
-        "clip_id":             clip_id_from_index(clip_index),   # e.g. "HH_001"
+        "clip_id":             clip_id_from_index(clip_index),   # e.g. "HH_001" — cosmetic display ID only
         "filename":            video_path.name,                  # e.g. "WashingCup.mp4"
-        "task":                camel_to_task(clip_name),         # e.g. "washing cup"
+        "activity_category":   meta_get("activity_category"),
+        "activity_label":      meta_get("activity_label"),
+        "participant_id":      meta_get("participant_id"),
+        "home_id":             meta_get("home_id"),
+        "room":                meta_get("room"),
+        "camera_model":        meta_get("camera_model"),
         "duration_sec":        total_duration,                   # video length in seconds
         "total_frames":        total_frames,                     # total frame count
         "fps":                 fps,                              # frames per second
-        "resolution":          resolution,                       # {"width": ..., "height": ...}
-        "hand_detection_rate": detection_rate,                   # % of frames with hands
+        "resolution":          resolution,                       # "WxH" string
+        "quality_control":     None,                              # populated once the QC gate exists (Stage 3/6)
+        "hand_detection_rate": detection_rate,                   # fraction (0-1) of frames with hands
         "narrations":          narrations,                       # list of narration segments
         "frames":              merged_frames,                    # merged per-frame data
     }
@@ -268,6 +302,9 @@ def main():
 
     # Create the annotations output folder if it doesn't exist
     ANNOTATIONS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Load per-clip metadata (activity/participant/home/room/camera) once
+    clip_metadata = load_clip_metadata()
 
     # ── Step 2–5: process each video ─────────────────────────
 
@@ -339,7 +376,7 @@ def main():
 
         # ── Step 5: combine outputs into final annotation JSON ─
         print(f"\n  Building final annotation JSON ...")
-        annotation = build_annotation(video_path, clip_index)
+        annotation = build_annotation(video_path, clip_index, clip_metadata)
 
         if annotation is not None:
             # Write the combined annotation to disk
@@ -351,8 +388,8 @@ def main():
             # Accumulate global statistics for the final summary
             grand_total_frames += annotation["total_frames"]
             grand_frames_hands += int(
-                annotation["total_frames"] * annotation["hand_detection_rate"] / 100
-            )    # reverse-calculate frames_with_hands from the rate percentage
+                annotation["total_frames"] * annotation["hand_detection_rate"]
+            )    # reverse-calculate frames_with_hands from the rate fraction
             grand_narrations   += len(annotation["narrations"])
         else:
             print(f"  ⚠️  Could not build annotation — required JSON files missing.")

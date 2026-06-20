@@ -174,7 +174,7 @@ def process_frame(detector, frame: np.ndarray, width: int, height: int) -> tuple
             }
 
         wrist_data.append({
-            "label":      label,
+            "label":      label.lower(),   # "left" or "right" — canonical casing for the unified schema
             "confidence": confidence,
             "px":         pts[0][0],   # wrist pixel x
             "py":         pts[0][1],   # wrist pixel y
@@ -254,8 +254,8 @@ def run_test():
             cv2.imwrite(str(out), annotated)
 
             yes_no = lambda b: "✅ Yes" if b else "❌ No"
-            left  = any(w["label"] == "Left"  for w in wrist_data)
-            right = any(w["label"] == "Right" for w in wrist_data)
+            left  = any(w["label"] == "left"  for w in wrist_data)
+            right = any(w["label"] == "right" for w in wrist_data)
             print(f"  Frame {display:>3}  →  {out.name}")
             print(f"          Hands found  : {len(wrist_data)}")
             print(f"          Left  wrist  : {yes_no(left)}")
@@ -315,16 +315,18 @@ def process_frames(frames_dir: str, fps: float = 29.97):
 
         cv2.imwrite(str(annotated_dir / f"frame_{str(frame_id).zfill(6)}.png"), annotated)
 
-        has_left  = any(w["label"] == "Left"  for w in wrist_data)
-        has_right = any(w["label"] == "Right" for w in wrist_data)
+        has_left  = any(w["label"] == "left"  for w in wrist_data)
+        has_right = any(w["label"] == "right" for w in wrist_data)
         if has_left:  left_count  += 1
         if has_right: right_count += 1
 
         frames_data.append({
             "frame_id":      frame_id,
             "timestamp_sec": round(frame_id / fps, 4),
-            "hands_found":   len(wrist_data),
-            "wrists":        wrist_data,
+            "hands": {
+                "hands_found": len(wrist_data),
+                "wrists":      wrist_data,
+            },
         })
 
         if frame_id % 100 == 0:
@@ -424,14 +426,16 @@ def process_video(video_path: str, output_video: bool = False):
         annotated, wrist_data = process_frame(detector, frame, width, height)
         cv2.imwrite(str(annotated_dir / f"frame_{str(frame_id).zfill(6)}.png"), annotated)
 
-        if any(w["label"] == "Left"  for w in wrist_data): left_count  += 1
-        if any(w["label"] == "Right" for w in wrist_data): right_count += 1
+        if any(w["label"] == "left"  for w in wrist_data): left_count  += 1
+        if any(w["label"] == "right" for w in wrist_data): right_count += 1
 
         frames_data.append({
             "frame_id":      frame_id,
             "timestamp_sec": round(frame_id / fps, 4),
-            "hands_found":   len(wrist_data),
-            "wrists":        wrist_data,
+            "hands": {
+                "hands_found": len(wrist_data),
+                "wrists":      wrist_data,
+            },
         })
 
         if frame_id % 100 == 0:

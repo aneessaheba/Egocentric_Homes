@@ -10,7 +10,7 @@ always drawn on top so it wins when the two regions overlap.
 Outputs:
   • colored PNG per frame   →  assets/processed/segmented/<clip_name>/
   • updated hand pose JSON  →  assets/processed/hand_pose/<clip_name>.json
-    (sam3_segmentation block added to every frame entry)
+    ("segmentation" block added to every frame entry)
 
 Usage:
   python pipeline/segmentation.py assets/videos/WashingCup.mp4
@@ -121,6 +121,24 @@ def arm_info(mask, frame_h: int, frame_w: int) -> dict:
     px  = int(mask.sum())
     cov = round((px / (frame_h * frame_w)) * 100, 4)
     return {"found": True, "pixel_count": px, "coverage_pct": cov}
+
+
+def mask_entry(category: str, label: str, info: dict) -> dict:
+    """Build one entry of the unified `segmentation.masks[]` list.
+
+    mask_path/mask_format are None in this stage — SAM3 only paints solid
+    color onto frames, it never writes a real mask file. Real PNG mask
+    files land in Stage 4 when this swaps to SAM2 box-prompting.
+    """
+    return {
+        "category":     category,
+        "label":        label,
+        "found":        info["found"],
+        "pixel_count":  info["pixel_count"],
+        "coverage_pct": info["coverage_pct"],
+        "mask_path":    None,
+        "mask_format":  None,
+    }
 
 
 # ── Per-frame segmentation ────────────────────────────────────────────────────
@@ -245,10 +263,13 @@ def process_video(video_path_str: str, output_video: bool = False):
 
         # Attach to JSON
         if frame_id in frame_lookup:
-            frame_lookup[frame_id]["sam3_segmentation"] = {
-                "method":    "SAM3-8bit-MLX",
-                "left_arm":  left_info,
-                "right_arm": right_info,
+            frame_lookup[frame_id]["segmentation"] = {
+                "method":      "SAM3-8bit-MLX",
+                "prompted_by": "text_prompt",
+                "masks": [
+                    mask_entry("arm", "left",  left_info),
+                    mask_entry("arm", "right", right_info),
+                ],
             }
 
         # Accumulate stats
