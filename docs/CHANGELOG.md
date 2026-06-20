@@ -60,3 +60,10 @@ All notable changes to this project will be documented here.
 
 ### Fixed
 - Exporter `to_csv` no longer crashes on frames with missing keys
+
+## [0.3.1] — 2026-06-20
+
+### Added
+- Model size and VRAM usage reference table in `docs/MODELS.md`
+- Hardware requirements FAQ entries for NVIDIA and Apple Silicon
+- Troubleshooting section in `docs/SETUP.md`
