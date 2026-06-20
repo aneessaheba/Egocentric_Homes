@@ -45,3 +45,15 @@ No pretrained model — computed from frame statistics:
 - **Hand visibility**: Fraction of frames with detected hands
 - **Motion coverage**: Optical flow magnitude distribution
 - **Script**: `pipeline/quality_check.py`
+
+## Model size comparison
+
+| Stage          | Model                             | Size    | VRAM  |
+|----------------|-----------------------------------|---------|-------|
+| Hand pose      | MediaPipe Hands Lite              | ~9 MB   | CPU   |
+| Arm pose       | YOLOv8n-pose                      | ~6 MB   | ~0.5 GB |
+| Segmentation   | SAM 2.1 Hiera-Tiny (4-bit)        | ~38 MB  | ~1 GB |
+| Depth          | Depth-Anything-V2 Indoor-S        | ~99 MB  | ~1.5 GB |
+| Transcription  | Whisper base                      | ~150 MB | ~1 GB |
+
+All stages can run on a single GPU with 6 GB VRAM.
