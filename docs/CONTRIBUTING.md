@@ -64,3 +64,15 @@ Currently accepting clips in these categories:
 
 Check the active campaign on the EgoLoop portal for specific task prompts
 and any restrictions (e.g. required props or environment).
+
+## Payout structure
+
+Payouts are per accepted clip and vary by campaign:
+
+| Tier     | Acceptance Rate | Bonus per clip |
+|----------|----------------|----------------|
+| Bronze   | 60 – 74%       | Base rate       |
+| Silver   | 75 – 89%       | +10%            |
+| Gold     | 90%+           | +20%            |
+
+Payouts are processed monthly. See the campaign page for the base rate.
