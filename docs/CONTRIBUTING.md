@@ -53,3 +53,14 @@ Open an issue on GitHub with:
 2. Create a feature branch (`git checkout -b feature/my-fix`)
 3. Commit your changes with clear messages
 4. Open a pull request describing what you changed and why
+
+## Activity categories
+
+Currently accepting clips in these categories:
+
+- **Kitchen Activities**: washing, chopping, cooking, cleaning dishes
+- **Laundry & Tidying**: folding, ironing, sorting, putting away
+- **Cleaning & Organising**: mopping, sweeping, dusting, organising shelves
+
+Check the active campaign on the EgoLoop portal for specific task prompts
+and any restrictions (e.g. required props or environment).
