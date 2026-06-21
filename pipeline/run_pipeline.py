@@ -5,8 +5,12 @@ Master script that runs the full HomeHands dataset pipeline on every video.
 
 For each .mp4 in assets/videos/ it runs, in order:
   1. hand_pose.py     — detect hands, save keypoint JSON + annotated frames
-  2. segmentation.py  — SAM3 text-prompted arm segmentation
-  3. transcribe.py    — local Whisper audio transcription + subtitle burning
+  2. arm_pose.py      — YOLOv8 wrist→elbow arm tracking
+  3. segmentation.py  — SAM2.1 box-prompted hand + active-object masks
+  4. depth.py         — Depth-Anything-V2 metric depth per frame
+  5. transcribe.py    — local Whisper audio transcription + subtitle burning
+  6. quality_gate.py  — score the clip; move it to assets/videos/rejected/
+                         if it scores below 60 (never deleted)
 
 Then it combines all outputs into one final annotation JSON per clip:
   assets/processed/annotations/[clip_name]_full.json
@@ -24,16 +28,20 @@ import time         # measure elapsed time
 import traceback    # print full error details when a module fails
 from pathlib import Path   # clean cross-platform file path handling
 
-# Import the three pipeline modules directly so we can call their functions.
+# Import the pipeline modules directly so we can call their functions.
 # Because the pipeline/ folder contains these files, we need to make sure Python
 # can find them. We add the pipeline folder to sys.path below.
 # sys.path is the list of folders Python searches when you do "import something".
 sys.path.insert(0, str(Path(__file__).parent))   # add pipeline/ directory to search path
 
-# Now we can import our three modules as if they were installed libraries
-import hand_pose     # hand_pose.process_video()
-import segmentation  # segmentation.process_video()
-import transcribe    # transcribe.process_video()
+# Now we can import our modules as if they were installed libraries
+import hand_pose      # hand_pose.process_video()
+import arm_pose       # arm_pose.process_video()
+import segmentation   # segmentation.process_video()
+import depth          # depth.process_video()
+import transcribe     # transcribe.process_video()
+import quality_check  # quality_check.QUALITY_ROOT (used to load saved reports for the merge step)
+import quality_gate   # quality_gate.gate_video()
 
 
 # ── Folder paths ──────────────────────────────────────────────────────────────
@@ -167,9 +175,8 @@ def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> 
         pose_data = json.load(f)    # load the full hand pose + segmentation data
 
     # ── Load arm pose JSON ─────────────────────────────────────
-    # arm_pose.py is not yet auto-invoked by this script's module-running loop
-    # (that's Stage 7) — if its output doesn't exist for this clip, every
-    # frame's "arm" block is explicitly null, never omitted.
+    # If arm_pose.py's output doesn't exist for this clip (e.g. it failed),
+    # every frame's "arm" block is explicitly null, never omitted.
     arm_by_frame_id = {}
     if arm_pose_json_path.exists():
         with open(arm_pose_json_path, "r") as f:
@@ -242,6 +249,23 @@ def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> 
     def meta_get(key):
         return (meta.get(key) or None) if meta else None
 
+    # ── Quality control report (written by quality_gate.py via quality_check.py) ──
+    # Loaded by clip_name regardless of whether the clip passed or was moved to
+    # assets/videos/rejected/ — the report's filename is independent of the
+    # video's current location, so this lookup works either way.
+    quality_control = None
+    quality_report_path = quality_check.QUALITY_ROOT / f"{clip_name}_quality.json"
+    if quality_report_path.exists():
+        with open(quality_report_path, "r") as f:
+            qc = json.load(f)
+        quality_control = {
+            "score":   qc.get("score"),
+            "verdict": qc.get("verdict"),
+            "issues":  qc.get("issues"),
+        }
+    else:
+        print(f"     [merge] No quality report found ({quality_report_path}) — \"quality_control\" will be null")
+
     # ── Build the top-level annotation dict ───────────────────
     annotation = {
         "clip_id":             clip_id_from_index(clip_index),   # e.g. "HH_001" — cosmetic display ID only
@@ -256,7 +280,7 @@ def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> 
         "total_frames":        total_frames,                     # total frame count
         "fps":                 fps,                              # frames per second
         "resolution":          resolution,                       # "WxH" string
-        "quality_control":     None,                              # populated once the QC gate exists (Stage 3/6)
+        "quality_control":     quality_control,                  # {"score", "verdict", "issues"} or null
         "hand_detection_rate": detection_rate,                   # fraction (0-1) of frames with hands
         "narrations":          narrations,                       # list of narration segments
         "frames":              merged_frames,                    # merged per-frame data
@@ -342,7 +366,19 @@ def main():
             failed_any = True
             failed_modules.append("hand_pose")
 
-        # ── Step 2b: run segmentation.py ─────────────────────
+        # ── Step 2b: run arm_pose.py ──────────────────────────
+        # arm_pose.py runs its own hand detector internally (not via the JSON
+        # file), so it doesn't depend on hand_pose having succeeded.
+        ok_arm = run_module(
+            "Arm pose",
+            arm_pose.process_video,
+            video_path,
+        )
+        if not ok_arm:
+            failed_any = True
+            failed_modules.append("arm_pose")
+
+        # ── Step 2c: run segmentation.py ──────────────────────
         # Segmentation reads the hand pose JSON, so we only run it if hand pose succeeded.
         # If hand pose failed there are no wrist coordinates to use as SAM2 prompts.
         if ok_pose:
@@ -360,7 +396,24 @@ def main():
             ok_seg = False
             failed_modules.append("segmentation (skipped)")
 
-        # ── Step 2c: run transcribe.py ────────────────────────
+        # ── Step 2d: run depth.py ─────────────────────────────
+        # depth.py writes into the hand pose JSON, so it also requires that
+        # file to exist — same dependency as segmentation.
+        if ok_pose:
+            ok_depth = run_module(
+                "Depth",
+                depth.process_video,
+                video_path,
+            )
+            if not ok_depth:
+                failed_any = True
+                failed_modules.append("depth")
+        else:
+            print(f"  ⏭  {'Depth':<20} — skipped (hand pose failed)")
+            ok_depth = False
+            failed_modules.append("depth (skipped)")
+
+        # ── Step 2e: run transcribe.py ────────────────────────
         # Transcription is independent of hand pose and segmentation,
         # so we always run it regardless of whether the above succeeded.
         ok_trans = run_module(
@@ -371,6 +424,20 @@ def main():
         if not ok_trans:
             failed_any = True
             failed_modules.append("transcription")
+
+        # ── Step 2f: run quality_gate.py ──────────────────────
+        # Scores the clip and moves it to assets/videos/rejected/ if it scores
+        # below 60 — never deleted. Runs last, after every other module has
+        # already had a chance to process the clip while it still lived in
+        # assets/videos/.
+        try:
+            quality_gate.gate_video(video_path)
+        except Exception as e:
+            print(f"  ❌ {'Quality gate':<20} FAILED — {video_path.stem}")
+            print(f"     Error: {e}")
+            traceback.print_exc()
+            failed_any = True
+            failed_modules.append("quality_gate")
 
         clip_elapsed = time.time() - clip_start    # how long this clip took
 
