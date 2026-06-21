@@ -27,6 +27,7 @@ assets/models/sam3-4bit/
 assets/processed/arm_pose/
 assets/processed/arm_pose_test/
 assets/processed/quality/
+assets/processed/masks/
 assets/processed/*.mp4
 assets/videos/*.jpg
 pose_debug.jpg
