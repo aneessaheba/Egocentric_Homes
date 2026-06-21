@@ -57,3 +57,18 @@ No pretrained model — computed from frame statistics:
 | Transcription  | Whisper base                      | ~150 MB | ~1 GB |
 
 All stages can run on a single GPU with 6 GB VRAM.
+
+## Updating models
+
+To swap in a newer checkpoint:
+
+1. Download the new weights file
+2. Place it at the path expected by `config.py` (e.g. `models/sam2.1_hiera_tiny.pt`)
+3. Run the pipeline — no code changes needed
+
+To use a different Whisper model size, change `WHISPER_MODEL` in `config.py`:
+
+```python
+WHISPER_MODEL = "small"   # trades accuracy for speed
+WHISPER_MODEL = "medium"  # best quality, slower
+```
