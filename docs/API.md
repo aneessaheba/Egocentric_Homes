@@ -134,3 +134,19 @@ from validators import validate_video_path, validate_language
 path = validate_video_path("my_clip.mp4")
 lang = validate_language("hi")
 ```
+
+## Configuration override
+
+All `config.py` constants can be overridden at runtime by setting environment
+variables before importing the module:
+
+```bash
+QUALITY_REJECT_THRESHOLD=70 python pipeline/quality_gate.py assets/videos/
+```
+
+Or by patching the module after import:
+
+```python
+import config
+config.QUALITY_REJECT_THRESHOLD = 70
+```
