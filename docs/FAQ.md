@@ -120,3 +120,13 @@ log = get_logger("pipeline", log_dir="logs/")
 ```
 
 Log files are named `pipeline_<session_id>.log`.
+
+## Privacy
+
+**Are contributor identities visible in the dataset?**
+No — clips are anonymised during processing. Contributor usernames are
+stored internally only for payout tracking.
+
+**What happens to my raw video footage?**
+Raw clips are stored on encrypted servers and never shared publicly.
+Only derived annotations (poses, depth, transcripts) will be released.
