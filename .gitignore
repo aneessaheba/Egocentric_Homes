@@ -28,6 +28,8 @@ assets/processed/arm_pose/
 assets/processed/arm_pose_test/
 assets/processed/quality/
 assets/processed/masks/
+assets/processed/depth/
+assets/processed/depth_preview_spotcheck/
 assets/processed/*.mp4
 assets/videos/*.jpg
 pose_debug.jpg

@@ -228,7 +228,7 @@ def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> 
             "hands":         frame.get("hands", {"hands_found": 0, "wrists": []}),
             "arm":           arm_by_frame_id.get(frame_id, null_arm) if arm_by_frame_id else null_arm,
             "segmentation":  frame.get("segmentation"),    # None if segmentation.py hasn't run for this clip
-            "depth":         None,                          # populated once depth.py exists (Stage 5)
+            "depth":         frame.get("depth"),            # None if depth.py hasn't run for this clip
             "narration_id":  find_narration_id_for_frame(timestamp, narrations),
         }
         merged_frames.append(merged_frame)
