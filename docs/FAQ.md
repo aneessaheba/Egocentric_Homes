@@ -142,3 +142,15 @@ Only derived annotations (poses, depth, transcripts) will be released.
 - Keep hands within the camera's field of view throughout the clip
 - Avoid holding objects that completely obscure the hands
 - Trim clips that start/end with hands out of frame
+
+## Technical requirements for contributors
+
+**What video specs are required?**
+
+| Parameter    | Minimum          | Recommended      |
+|--------------|------------------|------------------|
+| Resolution   | 720p (1280×720)  | 1080p (1920×1080)|
+| Frame rate   | 24 fps           | 30 fps           |
+| Duration     | 10 seconds       | 20–60 seconds    |
+| Format       | .mp4             | .mp4 (H.264)     |
+| Orientation  | Landscape        | Landscape        |
