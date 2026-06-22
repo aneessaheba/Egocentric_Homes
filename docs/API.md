@@ -150,3 +150,18 @@ Or by patching the module after import:
 import config
 config.QUALITY_REJECT_THRESHOLD = 70
 ```
+
+## Thread safety
+
+`Logger` instances are **not** thread-safe. Create one instance per worker
+process in parallel workloads:
+
+```python
+def process_clip(clip_path):
+    log = get_logger("worker")
+    log.stage_start("hand_pose")
+    # ...
+```
+
+All other utility functions (`load_json`, `save_json`, `video_info`) are
+stateless and safe to call from multiple threads.
