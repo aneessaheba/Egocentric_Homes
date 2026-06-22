@@ -67,3 +67,14 @@ All notable changes to this project will be documented here.
 - Model size and VRAM usage reference table in `docs/MODELS.md`
 - Hardware requirements FAQ entries for NVIDIA and Apple Silicon
 - Troubleshooting section in `docs/SETUP.md`
+
+## [0.3.2] — 2026-06-22
+
+### Added
+- `docs/MODELS.md` model swap guide and Whisper size selection
+- Activity categories and payout structure in `docs/CONTRIBUTING.md`
+- Privacy and logging FAQ entries
+- Configuration override documentation in `docs/API.md`
+
+### Changed
+- Campaign slot counter updated daily as clips are accepted
