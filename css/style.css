@@ -1122,6 +1122,18 @@ body {
   font-size: 0.72rem;
   font-weight: 700;
 }
+.pl-flow__note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 1rem;
+}
+.pl-flow__note code {
+  background: #f2f2f2;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.8rem;
+}
 .pl-flow__v {
   color: #FF4500;
   font-size: 1.1rem;
