@@ -130,3 +130,15 @@ stored internally only for payout tracking.
 **What happens to my raw video footage?**
 Raw clips are stored on encrypted servers and never shared publicly.
 Only derived annotations (poses, depth, transcripts) will be released.
+
+## Clip quality tips
+
+**How do I improve my blur score?**
+- Mount the camera firmly to avoid hand-shake
+- Ensure good lighting (blurry footage correlates with low light)
+- Keep the subject (hands + task) at a consistent distance from the lens
+
+**How do I improve my hand visibility score?**
+- Keep hands within the camera's field of view throughout the clip
+- Avoid holding objects that completely obscure the hands
+- Trim clips that start/end with hands out of frame
