@@ -72,3 +72,16 @@ To use a different Whisper model size, change `WHISPER_MODEL` in `config.py`:
 WHISPER_MODEL = "small"   # trades accuracy for speed
 WHISPER_MODEL = "medium"  # best quality, slower
 ```
+
+## Licence notes
+
+| Model                    | Licence           | Commercial use |
+|--------------------------|-------------------|----------------|
+| MediaPipe Hands          | Apache 2.0        | Yes            |
+| YOLOv8n-pose             | AGPL-3.0          | Requires care  |
+| SAM 2.1                  | Apache 2.0        | Yes            |
+| Depth-Anything-V2        | Apache 2.0        | Yes            |
+| Whisper                  | MIT               | Yes            |
+
+Check the respective repositories for the latest licence terms before
+using these models in a commercial product.
