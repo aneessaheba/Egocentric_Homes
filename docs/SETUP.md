@@ -83,3 +83,12 @@ the `.mp4` extension.
 **Slow depth inference**
 Reduce `DEPTH_RESIZE_WIDTH` in `config.py` from 518 to 384 for ~2× speedup
 at a small accuracy cost.
+
+## Linting and formatting
+
+The pipeline codebase uses:
+- `black` for code formatting (`black pipeline/`)
+- `ruff` for linting (`ruff check pipeline/`)
+- `mypy` for type checking (`mypy pipeline/ --ignore-missing-imports`)
+
+These are not enforced by CI yet but are recommended before opening PRs.
