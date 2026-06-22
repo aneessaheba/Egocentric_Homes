@@ -76,3 +76,12 @@ Payouts are per accepted clip and vary by campaign:
 | Gold     | 90%+           | +20%            |
 
 Payouts are processed monthly. See the campaign page for the base rate.
+
+## Data privacy guidelines
+
+- Do **not** record in locations where other people appear without consent
+- Do **not** include personally identifiable documents, screens, or text in frame
+- Do **not** record financial or medical materials
+- Clip metadata (timestamps, device info) is stripped on upload
+
+Violations may result in clip rejection and account suspension.
