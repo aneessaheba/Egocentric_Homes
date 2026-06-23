@@ -16,915 +16,117 @@
         .brand-blue { color: #2563EB; }
         .bg-brand { background-color: #2563EB; }
         .bg-brand-cyan { background-color: #38BDF8; }
-        .tab-active {
-            border-bottom: 4px solid #2563EB;
-            color: #2563EB;
-            font-weight: 600;
-        }
-        .dot-bg {
-            background-image: radial-gradient(circle, #e5e7eb 1.5px, transparent 1.5px);
-            background-size: 18px 18px;
-        }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col">
 
-    <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 py-4 flex justify-between items-center z-50 sticky top-0">
-        <div class="flex items-center space-x-2">
-            <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
-                H
+    <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 md:px-12 py-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+                    H
+                </div>
+                <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
             </div>
-            <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
-        </div>
-        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
-            <a href="#" onclick="switchTab('overview-tab'); return false;" class="hover:text-gray-900 transition">Overview</a>
-            <a href="#" onclick="switchTab('data-tab'); return false;" class="hover:text-gray-900 transition">Dataset</a>
-            <a href="pipeline.html" class="hover:text-gray-900 transition">Pipeline</a>
-            <a href="https://github.com/aneessaheba/Egocentric_Homes" target="_blank" rel="noopener" class="hover:text-gray-900 transition">GitHub</a>
-        </div>
-        <div class="flex items-center space-x-5">
-            <a href="#contact" class="hidden sm:inline text-sm text-gray-400 hover:text-gray-700 transition">Contact</a>
-            <button onclick="switchTab('submit-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition cursor-pointer">
-                Submit Data
-            </button>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+                <a href="index.html" class="hover:text-gray-900 transition">Overview</a>
+                <a href="campaigns.html" class="hover:text-gray-900 transition">Competitions</a>
+                <a href="dataset.html" class="hover:text-gray-900 transition">Datasets</a>
+                <a href="pipeline.html" class="hover:text-gray-900 transition">Models</a>
+            </div>
+            <div id="nav-auth" class="flex items-center space-x-5">
+                <a href="auth.html" class="hidden sm:inline text-sm font-semibold text-gray-700 hover:text-gray-900 transition">Sign In</a>
+                <a href="auth.html?tab=register" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+                    Register
+                </a>
+            </div>
         </div>
     </nav>
 
-    <header class="dot-bg bg-white border-b border-gray-200 px-6 md:px-12 py-20 md:py-28 text-center">
-        <div class="max-w-3xl mx-auto space-y-6">
-            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-blue-600 uppercase font-mono bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Open Research Dataset &middot; Actively Collecting
-            </span>
-            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
-                Sourcing the largest open<br class="hidden md:block"> egocentric home dataset.
-            </h1>
-            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
-                First-person recordings of everyday household activities &mdash; annotated with hand pose,
-                segmentation, depth, and audio narration. Built by real contributors, for hand-pose,
-                manipulation, and VLA / robotics research.
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 pt-2">
-                <button onclick="switchTab('submit-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-900 hover:bg-black text-white font-semibold px-6 py-3 rounded-full transition shadow-sm cursor-pointer">
-                    Become a Contributor
-                </button>
-                <button onclick="switchTab('data-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-full transition inline-flex items-center gap-2 cursor-pointer">
-                    Explore Dataset <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="max-w-3xl mx-auto mt-14">
-            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 md:p-8 text-left md:flex md:items-center md:justify-between gap-6">
-                <div class="space-y-1">
-                    <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-100 px-2 py-1 rounded">Data Collection Challenge</span>
-                    <h3 class="text-lg font-bold text-gray-900">Submit a recording, win cash prizes.</h3>
-                    <p class="text-xs text-gray-600 max-w-md">Top-scoring submissions on the automated quality-check pipeline win. Open to all contributors.</p>
-                </div>
-                <div class="flex gap-4 mt-4 md:mt-0 shrink-0 justify-center">
-                    <div class="text-center">
-                        <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
-                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize</span>
-                    </div>
-                    <div class="w-px bg-amber-200"></div>
-                    <div class="text-center">
-                        <span class="block text-xl font-black text-gray-900">&#8377;25,000</span>
-                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">Runner-Up</span>
-                    </div>
+    <header class="bg-white border-b border-gray-200 px-6 md:px-12 py-16 md:py-24">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                    Sourcing the largest robotics training dataset on the planet.
+                </h1>
+                <p class="text-gray-500 text-base md:text-lg max-w-lg">
+                    Powering the world's leading Physical AI companies with egocentric human demonstration
+                    data sourced from verified contributors.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="campaigns.html" class="bg-gray-900 hover:bg-black text-white font-semibold px-6 py-3 rounded-full transition shadow-sm">
+                        Become a Contributor
+                    </a>
+                    <a href="dataset.html" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-full transition inline-flex items-center gap-2">
+                        Explore Dataset <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <div class="max-w-7xl mx-auto mt-16">
-            <div class="flex justify-center space-x-8 border-b border-gray-200 text-sm overflow-x-auto">
-                <button id="btn-overview-tab" onclick="switchTab('overview-tab')" class="py-3 px-1 tab-active border-b-4 text-gray-800 transition cursor-pointer">
-                    <i class="fa-solid fa-circle-info mr-1.5 text-gray-400"></i>Overview
-                </button>
-                <button id="btn-data-tab" onclick="switchTab('data-tab')" class="py-3 px-1 text-gray-500 hover:text-gray-800 border-b-4 border-transparent transition cursor-pointer">
-                    <i class="fa-solid fa-database mr-1.5 text-gray-400"></i>Dataset
-                </button>
-                <button id="btn-leaderboard-tab" onclick="switchTab('leaderboard-tab')" class="py-3 px-1 text-gray-500 hover:text-gray-800 border-b-4 border-transparent transition cursor-pointer">
-                    <i class="fa-solid fa-trophy mr-1.5 text-gray-400"></i>Session Quality
-                </button>
-                <button id="btn-submit-tab" onclick="switchTab('submit-tab')" class="py-3 px-1 text-gray-500 hover:text-gray-800 border-b-4 border-transparent transition cursor-pointer">
-                    <i class="fa-solid fa-cloud-arrow-up mr-1.5 text-gray-400"></i>Contribute
-                </button>
+            <div class="hidden md:flex justify-center">
+                <img src="assets/image.png" alt="" class="max-w-lg w-full">
             </div>
         </div>
     </header>
 
-    <div id="main-content" class="flex-grow max-w-7xl w-full mx-auto p-6 md:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-        <main class="lg:col-span-3 bg-white p-6 rounded-xl border border-gray-200 shadow-xs">
-
-            <section id="overview-tab" class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-xl font-bold text-gray-900">What is HumanLoop?</h2>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        HumanLoop is a first-person dataset of everyday household activities captured in native home
-                        environments. Using head-mounted and body-worn cameras, we record unscripted interactions across
-                        the entire home &mdash; kitchen, laundry, living spaces &mdash; annotated with hand pose,
-                        segmentation, and action labels.
-                    </p>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider font-mono">Example Activities</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/washing_cup.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">washing a cup</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/cutting_banana.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">cutting banana</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/arranging_shoes.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">arranging shoes</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/folding_clothes.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">folding clothes</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/washing_clothes.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">washing clothes</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/making_tea.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">making tea</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/mopping.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">mopping</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/sweeping.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">sweeping</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/pouring_water.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">pouring water</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/coffee_cupboard.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">coffee from cupboard</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/milk_from_fridge.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">milk from fridge</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/milk_in_fridge.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">milk in fridge</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/organising_clothes.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">organising clothes</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/throwing_trash.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">throwing trash</span>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-xl p-2 bg-gray-50">
-                            <div class="aspect-video bg-black rounded-lg overflow-hidden border border-gray-300">
-                                <video class="w-full h-full object-cover" autoplay loop muted playsinline>
-                                    <source src="assets/videos/web/washing_whisk.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <span class="block mt-2 font-mono text-[11px] text-gray-500 text-center">washing a whisk</span>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-base font-bold text-gray-900">Data Quality Gates</h3>
-                    <p class="text-gray-500 text-xs">
-                        Every recording is scored 0&ndash;100 by
-                        <code class="font-mono bg-gray-100 px-1 py-0.5 rounded">pipeline/quality_check.py</code> before it's
-                        added to the dataset.
-                    </p>
-                    <div class="overflow-x-auto border border-gray-200 rounded-lg">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead class="bg-gray-50 border-b border-gray-200 text-gray-700 font-semibold">
-                                <tr>
-                                    <th class="p-3">Check</th>
-                                    <th class="p-3">Threshold</th>
-                                    <th class="p-3 text-right">Score Weight</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 text-gray-600 text-xs">
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Frame Rate</td>
-                                    <td class="p-3">&ge; 29.9 FPS (GoPro standard)</td>
-                                    <td class="p-3 text-right text-blue-600 font-bold font-mono">+10 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Resolution</td>
-                                    <td class="p-3">Height &ge; 1080p</td>
-                                    <td class="p-3 text-right text-blue-600 font-bold font-mono">+5 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Hand Detection Rate</td>
-                                    <td class="p-3">&ge; 80% of sampled frames (MediaPipe Hands)</td>
-                                    <td class="p-3 text-right text-emerald-600 font-bold font-mono">+25 / &minus;20 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Both Hands Visible</td>
-                                    <td class="p-3">&ge; 50% of sampled frames</td>
-                                    <td class="p-3 text-right text-emerald-600 font-bold font-mono">+15 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Sharpness (Blur Score)</td>
-                                    <td class="p-3">Laplacian variance &ge; 500</td>
-                                    <td class="p-3 text-right text-indigo-600 font-bold font-mono">+20 / &minus;25 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Brightness</td>
-                                    <td class="p-3">Avg pixel value between 80&ndash;180</td>
-                                    <td class="p-3 text-right text-indigo-600 font-bold font-mono">+15 pts</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 font-medium text-gray-900">Audio Narration</td>
-                                    <td class="p-3">Speech detected via Whisper (no_speech_prob &lt; 0.5)</td>
-                                    <td class="p-3 text-right text-gray-500 font-bold font-mono">+10 / &minus;15 pts</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <section id="data-tab" class="hidden space-y-8">
-
-                <div class="hh1-card">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <span class="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">Core Data</span>
-                            <h3 class="text-xl font-bold text-gray-900">HomeHands-50</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                Egocentric footage of everyday household activities captured from a first-person wearable
-                                camera. The foundation for all subsequent HomeHands derived datasets.
-                            </p>
-
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">50</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Hours</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">5.4M</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Frames</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">2,700</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Videos</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">1.8M</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Hands Tracked</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">7,600</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Narrations</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">8.9M</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Seg. Masks</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">25</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Tasks</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">100</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Action Classes</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <span class="inline-block bg-gray-900 text-white text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">RGB Videos</span>
-                            <div class="grid grid-cols-3 gap-2">
-
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/washing_cup.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">washing a cup</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/cutting_banana.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">cutting banana</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/folding_clothes.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">folding clothes</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/making_tea.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">making tea</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/organising_clothes.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">organising clothes</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/washing_clothes.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">washing clothes</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/mopping.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">mopping</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/sweeping.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">sweeping</span>
-                                </div>
-                                <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
-                                    <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
-                                        <source src="assets/videos/web/arranging_shoes.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">arranging shoes</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <div class="flex-grow h-px bg-gray-200"></div>
-                    <span class="text-xs font-bold font-mono text-gray-400 uppercase tracking-wider">Derived Datasets</span>
-                    <div class="flex-grow h-px bg-gray-200"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-                    <div class="border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="relative aspect-video bg-black">
-                            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                <source src="assets/videos/web/chopping_onion_tracked.mp4" type="video/mp4">
-                            </video>
-                            <span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Hand Tracking</span>
-                        </div>
-                        <div class="p-4 space-y-2">
-                            <span class="font-bold text-gray-900 block">HomeTrace</span>
-                            <p class="text-gray-500 text-xs leading-relaxed">21-point hand skeleton tracked per frame using MediaPipe HandLandmarker. Wrist, knuckles, and fingertips detected on both hands.</p>
-                            <div class="grid grid-cols-4 gap-1 pt-1 text-center">
-                                <div><span class="block text-sm font-bold text-gray-900">21</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Keypoints</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">82%</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Detect Rate</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">2</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Hands</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">x,y,z</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Coords</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="relative aspect-video bg-black">
-                            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                <source src="assets/videos/web/WashingCup_segmented.mp4" type="video/mp4">
-                            </video>
-                            <span class="absolute top-2 left-2 bg-indigo-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Segmentation</span>
-                        </div>
-                        <div class="p-4 space-y-2">
-                            <span class="font-bold text-gray-900 block">HomeMask</span>
-                            <p class="text-gray-500 text-xs leading-relaxed">Per-frame instance masks for hands, objects, and surfaces using a fine-tuned segmentation model across all activity clips.</p>
-                            <div class="grid grid-cols-4 gap-1 pt-1 text-center">
-                                <div><span class="block text-sm font-bold text-gray-900">4</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Masks/Frame</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">20</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Classes</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">PNG</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Format</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">Binary</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Mask Type</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="relative aspect-video bg-black">
-                            <video id="voice-video" class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                <source src="assets/videos/web/washing_clothes_subtitled.mp4" type="video/mp4">
-                            </video>
-                            <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Audio Narration</span>
-                            <span class="absolute top-2 right-9 bg-black/70 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">CC</span>
-                            <button class="absolute top-1.5 right-2 bg-black/70 text-white p-1.5 rounded-full" onclick="toggleVoiceAudio(this)" aria-label="Toggle audio">
-                                <svg class="voice-icon voice-icon--muted" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                    <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-                                </svg>
-                                <svg class="voice-icon voice-icon--on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="p-4 space-y-2">
-                            <span class="font-bold text-gray-900 block">HomeVoice</span>
-                            <p class="text-gray-500 text-xs leading-relaxed">Live-narrated egocentric recordings with burned-in captions. The person performing each task describes their own actions in real time.</p>
-                            <div class="grid grid-cols-4 gap-1 pt-1 text-center">
-                                <div><span class="block text-sm font-bold text-gray-900">2,700</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Clips</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">7,600</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Sentences</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">JSON</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Format</span></div>
-                                <div><span class="block text-sm font-bold text-gray-900">SRT</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Subtitles</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="hh1-card">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <h3 class="text-xl font-bold text-gray-900">HomeDepth</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                Per-frame depth maps estimated from monocular RGB frames, capturing spatial layout and
-                                object distances for each household activity clip.
-                            </p>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">5.4M</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Frames</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">25</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Activities</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">640&times;480</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Resolution</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">2.1</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Avg Depth (m)</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">PNG</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Format</span>
-                                </div>
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                                    <span class="block text-xl font-black text-gray-900">16-bit</span>
-                                    <span class="block text-[10px] text-gray-500 uppercase font-mono">Bit Depth</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <span class="inline-block bg-gray-900 text-white text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">Depth Frames</span>
-                            <div class="grid grid-cols-3 gap-2">
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                                <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl space-y-4">
-                    <h3 class="text-md font-bold text-blue-900 flex items-center">
-                        <i class="fa-solid fa-wand-magic-sparkles mr-2 text-blue-600"></i>
-                        Want to Contribute Recordings or Pipeline Tools?
-                    </h3>
-                    <p class="text-xs text-blue-800 leading-relaxed">
-                        We accept new egocentric recordings and pipeline tooling contributions (preprocessing, validation,
-                        annotation scripts). Submissions are scored by the same quality-check pipeline used internally
-                        &mdash; see the <button onclick="switchTab('submit-tab')" class="underline font-semibold">Contribute</button> tab.
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2">
-                        <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
-                            <span class="font-bold text-gray-900 block mb-1">Annotation Quality (50%)</span>
-                            Hand visibility, sharpness, and lighting must clear the gates above.
-                        </div>
-                        <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
-                            <span class="font-bold text-gray-900 block mb-1">Coverage (50%)</span>
-                            Preference for new activities, rooms, or tasks not yet represented.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="leaderboard-tab" class="hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-lg font-bold text-gray-900">Recording Session Quality</h2>
-                    <span class="text-xs text-gray-500 font-mono">Scored by pipeline/quality_check.py</span>
-                </div>
-                <p class="text-gray-500 text-xs">
-                    Sample sessions ranked by automated quality score. Replace with live results from
-                    <code class="font-mono bg-gray-100 px-1 py-0.5 rounded">assets/processed/quality/*.json</code>.
-                </p>
-
-                <div class="overflow-x-auto border border-gray-200 rounded-lg">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead class="bg-gray-50 border-b border-gray-200 text-gray-700 font-semibold">
-                            <tr>
-                                <th class="p-3 text-center w-16">Rank</th>
-                                <th class="p-3">Clip / Session</th>
-                                <th class="p-3 text-center">Hand Detection</th>
-                                <th class="p-3 text-center">Blur Score</th>
-                                <th class="p-3 text-center">Verdict</th>
-                                <th class="p-3 text-right">Quality Score</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leaderboard-tbody" class="divide-y divide-gray-100 text-gray-700 font-mono text-xs">
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="submit-tab" class="hidden space-y-6">
-                <h2 class="text-xl font-bold text-gray-900">Contribute to HumanLoop</h2>
-                <p class="text-xs text-gray-500">
-                    This sandbox is an interactive demo of the quality-check pipeline. For real contributions, run
-                    <code class="font-mono bg-gray-100 px-1 py-0.5 rounded">pipeline/quality_check.py</code> locally or
-                    reach out via the contact card.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <form id="upload-form" onsubmit="runAutomatedValidationPipeline(event)" class="md:col-span-1 space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 text-xs">
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">Contributor Name</label>
-                            <input type="text" id="input-username" required placeholder="e.g., Jane Doe" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:border-blue-500 font-mono">
-                        </div>
-
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">Submission Type</label>
-                            <select id="input-submission-type" onchange="toggleSubmissionFields()" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:border-blue-500 font-mono">
-                                <option value="data">New Recording (Data Entry)</option>
-                                <option value="script">Pipeline Tool / Script</option>
-                            </select>
-                        </div>
-
-                        <div id="category-wrapper">
-                            <label class="block font-bold text-gray-700 mb-1">Activity Category</label>
-                            <select id="input-category" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:border-blue-500 font-mono">
-                                <option value="Kitchen">Kitchen</option>
-                                <option value="Laundry">Laundry</option>
-                                <option value="Cleaning">Cleaning</option>
-                                <option value="Sorting/Logistics">Sorting / Logistics</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label id="file-label-text" class="block font-bold text-gray-700 mb-1">Recording File</label>
-                            <div class="border-2 border-dashed border-gray-300 hover:border-blue-500 rounded-lg p-4 text-center cursor-pointer relative bg-white" id="drop-zone">
-                                <input type="file" id="input-file" required class="absolute inset-0 opacity-0 cursor-pointer" onchange="processSandboxFileSelection(this)">
-                                <div class="space-y-1 text-gray-500" id="drop-zone-prompt">
-                                    <i id="upload-icon" class="fa-solid fa-cloud-arrow-up text-xl text-gray-400"></i>
-                                    <p class="font-medium" id="upload-prompt-highlight">Drop a recording (.mp4)</p>
-                                    <p class="text-[10px]" id="upload-subtext">Raw GoPro footage, any length</p>
-                                </div>
-                                <div class="hidden text-emerald-600 font-medium" id="drop-zone-selected">
-                                    <i class="fa-solid fa-circle-check text-lg mb-1 block"></i>
-                                    <span id="selected-file-name" class="font-mono text-[11px]">clip.mp4</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition shadow-xs cursor-pointer">
-                            Run Quality Check
-                        </button>
-                    </form>
-
-                    <div class="md:col-span-2 flex flex-col h-[380px] bg-gray-900 border border-gray-800 rounded-xl overflow-hidden font-mono text-xs shadow-md">
-                        <div class="bg-gray-800 border-b border-gray-700 px-4 py-2 text-[10px] text-gray-400 font-bold tracking-wider uppercase flex justify-between items-center">
-                            <span>quality_check.py &mdash; console</span>
-                            <span class="text-blue-400">demo mode</span>
-                        </div>
-                        <div class="p-4 flex-grow overflow-y-auto space-y-2 text-gray-300 shadow-inner" id="pipeline-logs">
-                            <div class="text-gray-500">// Ready. Submit a recording or script to simulate the pipeline...</div>
-                        </div>
-                        <div class="bg-gray-950 border-t border-gray-800 px-4 py-3 grid grid-cols-3 gap-2 border-collapse text-center" id="pipeline-metrics">
-                            <div class="p-1">
-                                <span id="gauge-1-title" class="block text-[9px] text-gray-500 font-sans font-bold uppercase">Frame Rate</span>
-                                <span class="text-xs font-bold text-gray-400 font-mono" id="metric-fps">--</span>
-                            </div>
-                            <div class="p-1">
-                                <span id="gauge-2-title" class="block text-[9px] text-gray-500 font-sans font-bold uppercase">Hand Detection</span>
-                                <span class="text-xs font-bold text-gray-400 font-mono" id="metric-lux">--</span>
-                            </div>
-                            <div class="p-1">
-                                <span id="gauge-3-title" class="block text-[9px] text-gray-500 font-sans font-bold uppercase">Quality Score</span>
-                                <span class="text-xs font-bold text-gray-400 font-mono" id="metric-score">--</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <aside class="space-y-6">
-            <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-xs text-sm">
-                <h3 class="font-bold text-gray-900 pb-2 border-b border-gray-100 flex items-center">
-                    <i class="fa-solid fa-clipboard-list mr-2 text-gray-400"></i>Dataset Facts
-                </h3>
-                <div class="space-y-2 font-mono text-xs">
-                    <div>
-                        <span class="text-gray-400 block font-sans text-[11px] font-bold uppercase">Status</span>
-                        <span class="text-gray-800 font-bold">Actively Collecting</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block font-sans text-[11px] font-bold uppercase">Institution</span>
-                        <span class="text-gray-600">SJSU Research</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block font-sans text-[11px] font-bold uppercase">Modalities</span>
-                        <span class="text-gray-600">RGB &middot; Hand Pose &middot; Segmentation &middot; Audio</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block font-sans text-[11px] font-bold uppercase">Access</span>
-                        <span class="text-gray-600">Available to research collaborators</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="contact" class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-xs text-sm">
-                <h3 class="font-bold text-gray-900 pb-2 border-b border-gray-100 flex items-center">
-                    <i class="fa-solid fa-envelope mr-2 text-gray-400"></i>Access &amp; Contact
-                </h3>
-                <p class="text-xs text-gray-600 leading-relaxed">
-                    If you're a researcher or industry partner, reach out and we'll share dataset samples and pipeline
-                    access. Currently available: RGB, Hand Pose, Segmentation, and Audio Narrations.
-                </p>
-                <a href="mailto:aneessaheba04@gmail.com" class="block text-xs font-bold text-blue-600 font-mono">aneessaheba04@gmail.com</a>
-                <a href="https://github.com/aneessaheba/Egocentric_Homes" target="_blank" rel="noopener" class="block w-full text-center bg-gray-900 hover:bg-black text-white font-bold text-xs py-2 rounded-lg transition">
-                    <i class="fa-brands fa-github mr-1"></i>View on GitHub
+    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 px-6 md:px-12 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
+            <div class="col-span-2 md:col-span-1 space-y-4">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">H</div>
+                    <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
                 </a>
+                <div class="flex items-center gap-4 text-gray-800 text-lg">
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
             </div>
-        </aside>
 
-    </div>
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Product</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">Competitions</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Benchmarks</a></li>
+                    <li><a href="dataset.html" class="hover:text-gray-900 transition">Datasets</a></li>
+                    <li><a href="pipeline.html" class="hover:text-gray-900 transition">Models</a></li>
+                </ul>
+            </div>
 
-    <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500 font-mono mt-auto">
-        Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Resources</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">Documentation</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Blog</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">API Access</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Research</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Community Guidelines</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Company</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Our Team</a></li>
+                    <li><a href="mailto:aneessaheba04@gmail.com" class="hover:text-gray-900 transition">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-gray-100 mt-10 pt-6 text-center text-xs text-gray-400 font-mono">
+            Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
+        </div>
     </footer>
 
+    <script src="js/auth.js"></script>
     <script>
-        // Sample session-quality records (replace with live pipeline/quality_check.py output)
-        let leaderboardRecords = [
-            { rank: 1, name: "making_tea_S04", hands: "94.1%", blur: 612, verdict: "✅ GOOD", score: 91 },
-            { rank: 2, name: "folding_clothes_S02", hands: "90.7%", blur: 540, verdict: "✅ GOOD", score: 88 },
-            { rank: 3, name: "washing_cup_S01", hands: "88.3%", blur: 505, verdict: "✅ GOOD", score: 85 },
-            { rank: 4, name: "mopping_S03", hands: "76.4%", blur: 410, verdict: "⚠️ OKAY", score: 68 },
-            { rank: 5, name: "cutting_banana_S05", hands: "61.2%", blur: 260, verdict: "⚠️ OKAY", score: 60 }
-        ];
-
-        function switchTab(tabId) {
-            const panels = ['overview-tab', 'data-tab', 'leaderboard-tab', 'submit-tab'];
-            panels.forEach(p => {
-                document.getElementById(p).classList.add('hidden');
-                document.getElementById(`btn-${p}`).classList.remove('tab-active');
-                document.getElementById(`btn-${p}`).classList.add('text-gray-500');
-            });
-            document.getElementById(tabId).classList.remove('hidden');
-            document.getElementById(`btn-${tabId}`).classList.add('tab-active');
-            document.getElementById(`btn-${tabId}`).classList.remove('text-gray-500');
-        }
-
-        function toggleSubmissionFields() {
-            const type = document.getElementById('input-submission-type').value;
-            const catWrapper = document.getElementById('category-wrapper');
-            const fileLabel = document.getElementById('file-label-text');
-            const icon = document.getElementById('upload-icon');
-            const promptText = document.getElementById('upload-prompt-highlight');
-            const subtext = document.getElementById('upload-subtext');
-
-            if (type === 'script') {
-                catWrapper.classList.add('hidden');
-                fileLabel.textContent = "Pipeline Script";
-                icon.className = "fa-solid fa-code text-xl text-gray-400";
-                promptText.textContent = "Drop a pipeline script (.py, .sh)";
-                subtext.textContent = "Preprocessing, validation, or annotation tooling";
-            } else {
-                catWrapper.classList.remove('hidden');
-                fileLabel.textContent = "Recording File";
-                icon.className = "fa-solid fa-cloud-arrow-up text-xl text-gray-400";
-                promptText.textContent = "Drop a recording (.mp4)";
-                subtext.textContent = "Raw GoPro footage, any length";
-            }
-            document.getElementById('upload-form').reset();
-            document.getElementById('input-submission-type').value = type;
-            document.getElementById('drop-zone-prompt').classList.remove('hidden');
-            document.getElementById('drop-zone-selected').classList.add('hidden');
-        }
-
-        function processSandboxFileSelection(input) {
-            const promptView = document.getElementById('drop-zone-prompt');
-            const matchView = document.getElementById('drop-zone-selected');
-            const fileText = document.getElementById('selected-file-name');
-            if (input.files && input.files[0]) {
-                promptView.classList.add('hidden');
-                matchView.classList.remove('hidden');
-                fileText.textContent = input.files[0].name;
-            }
-        }
-
-        function renderLeaderboardView() {
-            const tbody = document.getElementById('leaderboard-tbody');
-            tbody.innerHTML = '';
-            leaderboardRecords.sort((a, b) => b.score - a.score).forEach((row, idx) => {
-                let medal = idx === 0 ? 'text-amber-500 font-bold' : idx === 1 ? 'text-slate-400 font-bold' : idx === 2 ? 'text-amber-700 font-bold' : 'text-gray-400';
-                tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50 border-b border-gray-100 transition">
-                        <td class="p-3 text-center ${medal}">${idx + 1}</td>
-                        <td class="p-3 font-sans text-gray-900 font-semibold">${row.name}</td>
-                        <td class="p-3 text-center text-gray-600">${row.hands}</td>
-                        <td class="p-3 text-center text-gray-600">${row.blur}</td>
-                        <td class="p-3 text-center">${row.verdict}</td>
-                        <td class="p-3 text-right text-gray-900 font-bold font-sans">${row.score}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        function appendLog(msg, style = "text-gray-300") {
-            const box = document.getElementById('pipeline-logs');
-            box.innerHTML += `<div class="${style}"><span class="text-gray-600 mr-2">[LOG]</span>${msg}</div>`;
-            box.scrollTop = box.scrollHeight;
-        }
-
-        function runAutomatedValidationPipeline(event) {
-            event.preventDefault();
-            const user = document.getElementById('input-username').value.trim();
-            const file = document.getElementById('input-file').files[0];
-            const clipName = file ? file.name.replace(/\.[^/.]+$/, '') : `${user.replace(/\s+/g, '_')}_clip`;
-            const type = document.getElementById('input-submission-type').value;
-            document.getElementById('pipeline-logs').innerHTML = '';
-
-            if (type === 'data') {
-                document.getElementById('gauge-1-title').textContent = "Frame Rate";
-                document.getElementById('gauge-2-title').textContent = "Hand Detection";
-                document.getElementById('gauge-3-title').textContent = "Quality Score";
-                appendLog(`Running check_basic(), check_hands(), check_blur(), check_brightness()...`, "text-blue-400 font-bold");
-
-                setTimeout(() => {
-                    const fps = Math.random() > 0.1 ? 30 : 15;
-                    document.getElementById('metric-fps').textContent = `${fps} FPS`;
-                    document.getElementById('metric-fps').className = fps >= 29.9 ? "text-emerald-600 font-bold" : "text-rose-600 font-bold";
-                    if (fps < 29.9) {
-                        appendLog(`Frame rate ${fps} FPS is below the 29.9 FPS gate. Recording flagged for review.`, "text-rose-500 font-bold");
-                        return;
-                    }
-                    appendLog(`Frame rate check passed at ${fps} FPS.`);
-
-                    setTimeout(() => {
-                        const handRate = (Math.random() * 25 + 70).toFixed(1);
-                        const score = Math.min(100, Math.round(handRate * 0.7 + 25));
-                        document.getElementById('metric-lux').textContent = `${handRate}%`;
-                        document.getElementById('metric-lux').className = handRate >= 80 ? "text-emerald-600 font-bold" : "text-amber-600 font-bold";
-                        document.getElementById('metric-score').textContent = `${score}`;
-                        document.getElementById('metric-score').className = "text-blue-600 font-bold";
-                        appendLog(`Quality report saved to assets/processed/quality/${clipName}_quality.json`, "text-emerald-500 font-bold");
-
-                        updateRecords(clipName, handRate, score);
-                    }, 1000);
-                }, 1000);
-            } else {
-                document.getElementById('gauge-1-title').textContent = "Runtime";
-                document.getElementById('gauge-2-title').textContent = "Lint / Style";
-                document.getElementById('gauge-3-title').textContent = "Test Coverage";
-                appendLog(`Booting sandbox script validation environment...`, "text-cyan-400 font-bold");
-
-                setTimeout(() => {
-                    const speed = (Math.random() * 30 + 10).toFixed(0);
-                    const lint = (Math.random() * 10 + 88).toFixed(1);
-                    const coverage = (Math.random() * 20 + 70).toFixed(1);
-
-                    document.getElementById('metric-fps').textContent = `${speed}ms/ep`;
-                    document.getElementById('metric-lux').textContent = `${lint}%`;
-                    document.getElementById('metric-score').textContent = `${coverage}%`;
-
-                    document.getElementById('metric-fps').className = "text-teal-600 font-bold";
-                    document.getElementById('metric-lux').className = "text-indigo-600 font-bold";
-                    document.getElementById('metric-score').className = "text-emerald-600 font-bold";
-
-                    appendLog(`Script validated against the sample clip set. No errors found.`, "text-emerald-500 font-bold");
-                    setTimeout(resetFormView, 1500);
-                }, 1200);
-            }
-        }
-
-        function updateRecords(clipName, handRate, score) {
-            const verdict = score >= 80 ? "✅ GOOD" : score >= 60 ? "⚠️ OKAY" : "❌ BAD";
-            leaderboardRecords.push({
-                name: clipName,
-                hands: `${parseFloat(handRate).toFixed(1)}%`,
-                blur: Math.round(parseFloat(handRate) * 6),
-                verdict,
-                score
-            });
-            renderLeaderboardView();
-            setTimeout(resetFormView, 1500);
-        }
-
-        function resetFormView() {
-            document.getElementById('upload-form').reset();
-            document.getElementById('drop-zone-prompt').classList.remove('hidden');
-            document.getElementById('drop-zone-selected').classList.add('hidden');
-            document.getElementById('input-submission-type').value = "data";
-            toggleSubmissionFields();
-        }
-
-        function toggleVoiceAudio(btn) {
-            const video = document.getElementById('voice-video');
-            video.muted = !video.muted;
-            btn.querySelector('.voice-icon--muted').style.display = video.muted ? '' : 'none';
-            btn.querySelector('.voice-icon--on').style.display = video.muted ? 'none' : '';
-        }
-
-        // Allow cross-page links like pipeline.html's "index.html#dataset" to land on the right tab
-        const TAB_HASH_MAP = { overview: 'overview-tab', dataset: 'data-tab', leaderboard: 'leaderboard-tab', submit: 'submit-tab', contribute: 'submit-tab' };
-
         window.onload = function() {
-            renderLeaderboardView();
-            const hash = window.location.hash.slice(1);
-            if (TAB_HASH_MAP[hash]) switchTab(TAB_HASH_MAP[hash]);
+            // Old #dataset links now point to the standalone dataset.html page
+            if (window.location.hash.slice(1) === 'dataset') window.location.replace('dataset.html');
         }
     </script>
 </body>

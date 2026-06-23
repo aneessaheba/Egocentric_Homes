@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataset — HumanLoop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVBAR — same pattern as index.html / pipeline.html, Dataset active
+       ═══════════════════════════════════════════════════════ -->
+  <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 md:px-12 py-4 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+          <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+              H
+          </div>
+          <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+      </a>
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+          <a href="index.html" class="hover:text-gray-900 transition">Overview</a>
+          <a href="campaigns.html" class="hover:text-gray-900 transition">Competitions</a>
+          <a href="dataset.html" class="text-blue-600 font-semibold">Datasets</a>
+          <a href="pipeline.html" class="hover:text-gray-900 transition">Models</a>
+      </div>
+      <div id="nav-auth" class="flex items-center space-x-5">
+          <a href="auth.html" class="hidden sm:inline text-sm font-semibold text-gray-700 hover:text-gray-900 transition">Sign In</a>
+          <a href="auth.html?tab=register" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+              Register
+          </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════ -->
+  <main class="section">
+
+    <!-- ── Hero ─────────────────────────────────────────── -->
+    <div class="pl-hero">
+      <span class="pl-badge">OPEN DATASET</span>
+      <h1 class="pl-hero__title">HomeHands-50</h1>
+      <p class="pl-hero__sub">
+        Egocentric household activity footage, plus the derived hand pose, segmentation,
+        depth, and narration datasets built on top of it.
+      </p>
+    </div>
+
+    <div class="hh1-card">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <span class="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">Core Data</span>
+          <h3 class="text-xl font-bold text-gray-900">HomeHands-50</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Egocentric footage of everyday household activities captured from a first-person wearable
+            camera. The foundation for all subsequent HomeHands derived datasets.
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">50</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Hours</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">5.4M</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Frames</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">2,700</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Videos</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">1.8M</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Hands Tracked</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">7,600</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Narrations</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">8.9M</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Seg. Masks</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">25</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Tasks</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">100</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Action Classes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <span class="inline-block bg-gray-900 text-white text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">RGB Videos</span>
+          <div class="grid grid-cols-3 gap-2">
+
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/washing_cup.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">washing a cup</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/cutting_banana.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">cutting banana</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/folding_clothes.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">folding clothes</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/making_tea.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">making tea</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/organising_clothes.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">organising clothes</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/washing_clothes.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">washing clothes</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/mopping.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">mopping</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/sweeping.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">sweeping</span>
+            </div>
+            <div class="rounded-lg overflow-hidden border border-gray-200 relative group">
+              <video class="w-full aspect-square object-cover" autoplay muted loop playsinline>
+                <source src="assets/videos/web/arranging_shoes.mp4" type="video/mp4">
+              </video>
+              <span class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">arranging shoes</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="flex-grow h-px bg-gray-200"></div>
+      <span class="text-xs font-bold font-mono text-gray-400 uppercase tracking-wider">Derived Datasets</span>
+      <div class="flex-grow h-px bg-gray-200"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <div class="relative aspect-video bg-black">
+          <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+            <source src="assets/videos/web/chopping_onion_tracked.mp4" type="video/mp4">
+          </video>
+          <span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Hand Tracking</span>
+        </div>
+        <div class="p-4 space-y-2">
+          <span class="font-bold text-gray-900 block">HomeTrace</span>
+          <p class="text-gray-500 text-xs leading-relaxed">21-point hand skeleton tracked per frame using MediaPipe HandLandmarker. Wrist, knuckles, and fingertips detected on both hands.</p>
+          <div class="grid grid-cols-4 gap-1 pt-1 text-center">
+            <div><span class="block text-sm font-bold text-gray-900">21</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Keypoints</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">82%</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Detect Rate</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">2</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Hands</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">x,y,z</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Coords</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <div class="relative aspect-video bg-black">
+          <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+            <source src="assets/videos/web/WashingCup_segmented.mp4" type="video/mp4">
+          </video>
+          <span class="absolute top-2 left-2 bg-indigo-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Segmentation</span>
+        </div>
+        <div class="p-4 space-y-2">
+          <span class="font-bold text-gray-900 block">HomeMask</span>
+          <p class="text-gray-500 text-xs leading-relaxed">Per-frame instance masks for hands, objects, and surfaces using a fine-tuned segmentation model across all activity clips.</p>
+          <div class="grid grid-cols-4 gap-1 pt-1 text-center">
+            <div><span class="block text-sm font-bold text-gray-900">4</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Masks/Frame</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">20</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Classes</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">PNG</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Format</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">Binary</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Mask Type</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <div class="relative aspect-video bg-black">
+          <video id="voice-video" class="w-full h-full object-cover" autoplay muted loop playsinline>
+            <source src="assets/videos/web/washing_clothes_subtitled.mp4" type="video/mp4">
+          </video>
+          <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Audio Narration</span>
+          <span class="absolute top-2 right-9 bg-black/70 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">CC</span>
+          <button class="absolute top-1.5 right-2 bg-black/70 text-white p-1.5 rounded-full" onclick="toggleVoiceAudio(this)" aria-label="Toggle audio">
+            <svg class="voice-icon voice-icon--muted" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg class="voice-icon voice-icon--on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          </button>
+        </div>
+        <div class="p-4 space-y-2">
+          <span class="font-bold text-gray-900 block">HomeVoice</span>
+          <p class="text-gray-500 text-xs leading-relaxed">Live-narrated egocentric recordings with burned-in captions. The person performing each task describes their own actions in real time.</p>
+          <div class="grid grid-cols-4 gap-1 pt-1 text-center">
+            <div><span class="block text-sm font-bold text-gray-900">2,700</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Clips</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">7,600</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Sentences</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">JSON</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Format</span></div>
+            <div><span class="block text-sm font-bold text-gray-900">SRT</span><span class="block text-[9px] text-gray-500 uppercase font-mono">Subtitles</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hh1-card">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-gray-900">HomeDepth</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Per-frame depth maps estimated from monocular RGB frames, capturing spatial layout and
+            object distances for each household activity clip.
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">5.4M</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Frames</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">25</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Activities</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">640&times;480</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Resolution</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">2.1</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Avg Depth (m)</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">PNG</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Format</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+              <span class="block text-xl font-black text-gray-900">16-bit</span>
+              <span class="block text-[10px] text-gray-500 uppercase font-mono">Bit Depth</span>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <span class="inline-block bg-gray-900 text-white text-[10px] font-bold font-mono px-2 py-1 rounded uppercase tracking-wider">Depth Frames</span>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+            <div class="aspect-square rounded-lg border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 bg-gray-50"><span class="text-lg">+</span><span class="text-[9px] font-mono">soon</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl space-y-4">
+      <h3 class="text-md font-bold text-blue-900 flex items-center">
+        <i class="fa-solid fa-wand-magic-sparkles mr-2 text-blue-600"></i>
+        Want to Contribute Recordings or Pipeline Tools?
+      </h3>
+      <p class="text-xs text-blue-800 leading-relaxed">
+        We accept new egocentric recordings and pipeline tooling contributions (preprocessing, validation,
+        annotation scripts). Submissions are scored by the same quality-check pipeline used internally
+        &mdash; see the <a href="campaigns.html" class="underline font-semibold">Competitions</a> page.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2">
+        <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
+          <span class="font-bold text-gray-900 block mb-1">Annotation Quality (50%)</span>
+          Hand visibility, sharpness, and lighting must clear the gates above.
+        </div>
+        <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
+          <span class="font-bold text-gray-900 block mb-1">Coverage (50%)</span>
+          Preference for new activities, rooms, or tasks not yet represented.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ -->
+  <footer class="bg-white border-t border-gray-200 pt-12 pb-8 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
+      <div class="col-span-2 md:col-span-1 space-y-4">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">H</div>
+          <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+        </a>
+        <div class="flex items-center gap-4 text-gray-800 text-lg">
+          <a href="#" class="hover:text-blue-600 transition" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="hover:text-blue-600 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="hover:text-blue-600 transition" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" class="hover:text-blue-600 transition" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="font-bold text-gray-900 text-sm">Product</h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li><a href="#" class="hover:text-gray-900 transition">Competitions</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Benchmarks</a></li>
+          <li><a href="dataset.html" class="hover:text-gray-900 transition">Datasets</a></li>
+          <li><a href="pipeline.html" class="hover:text-gray-900 transition">Models</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="font-bold text-gray-900 text-sm">Resources</h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li><a href="#" class="hover:text-gray-900 transition">Documentation</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Blog</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">API Access</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Research</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Community Guidelines</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="font-bold text-gray-900 text-sm">Company</h3>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li><a href="#" class="hover:text-gray-900 transition">About Us</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Our Team</a></li>
+          <li><a href="mailto:aneessaheba04@gmail.com" class="hover:text-gray-900 transition">Contact Us</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-gray-900 transition">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto border-t border-gray-100 mt-10 pt-6 text-center text-xs text-gray-400 font-mono">
+      Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
+    </div>
+  </footer>
+
+  <script>
+    function toggleVoiceAudio(btn) {
+        const video = document.getElementById('voice-video');
+        video.muted = !video.muted;
+        btn.querySelector('.voice-icon--muted').style.display = video.muted ? '' : 'none';
+        btn.querySelector('.voice-icon--on').style.display = video.muted ? 'none' : '';
+    }
+  </script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

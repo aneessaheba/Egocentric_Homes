@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns — HumanLoop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #111111; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 md:px-12 py-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+                    H
+                </div>
+                <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+                <a href="index.html" class="hover:text-gray-900 transition">Overview</a>
+                <a href="campaigns.html" class="text-blue-600 font-semibold">Competitions</a>
+                <a href="dataset.html" class="hover:text-gray-900 transition">Datasets</a>
+                <a href="pipeline.html" class="hover:text-gray-900 transition">Models</a>
+            </div>
+            <div id="nav-auth" class="flex items-center space-x-5">
+                <a href="auth.html" class="hidden sm:inline text-sm font-semibold text-gray-700 hover:text-gray-900 transition">Sign In</a>
+                <a href="auth.html?tab=register" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+                    Register
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl w-full mx-auto px-6 md:px-12 py-4">
+        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold font-mono text-gray-500 uppercase tracking-wider bg-gray-100 border border-gray-200 px-2.5 py-1 rounded-full">
+            <i class="fa-solid fa-flask text-gray-400"></i> Sample data &mdash; design preview only, not live
+        </span>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1 — Page Header
+         ══════════════════════════════════════════════════════ -->
+    <header class="px-6 md:px-12 pt-8 pb-12 text-center">
+        <div class="max-w-2xl mx-auto space-y-3">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Active Campaigns</h1>
+            <p class="text-gray-500 text-base">Pick a task, record your submission, earn rewards.</p>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-6 md:px-12 pb-16 space-y-16">
+
+        <!-- ══════════════════════════════════════════════════════
+             SECTION 2 — Campaign Cards Grid
+             ══════════════════════════════════════════════════════ -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Campaign 1 -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
+                <div class="p-5 space-y-3 flex-1">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-blue-700 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Kitchen</span>
+                        <span class="inline-block text-[10px] font-bold font-mono text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded">Easy</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Kitchen Activities Collection</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Record everyday kitchen tasks &mdash; washing dishes, cutting produce, making tea or coffee &mdash;
+                        from a first-person wearable camera.
+                    </p>
+                    <div class="flex items-end justify-between pt-1">
+                        <div>
+                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
+                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Aug 31, 2026</span></span>
+                    </div>
+                    <div class="space-y-1 pt-1">
+                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
+                            <span>34 / 100 submissions</span>
+                            <span>34%</span>
+                        </div>
+                        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" style="width: 34%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-5 pt-0 flex gap-2">
+                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
+                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
+                </div>
+            </div>
+
+            <!-- Campaign 2 -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
+                <div class="p-5 space-y-3 flex-1">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-indigo-700 uppercase tracking-wider bg-indigo-50 px-2 py-1 rounded">Laundry</span>
+                        <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">Medium</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Laundry &amp; Tidying Tasks</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Folding clothes, loading a washer, organizing a closet &mdash; egocentric footage of routine
+                        laundry and tidying work.
+                    </p>
+                    <div class="flex items-end justify-between pt-1">
+                        <div>
+                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
+                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Sep 15, 2026</span></span>
+                    </div>
+                    <div class="space-y-1 pt-1">
+                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
+                            <span>18 / 100 submissions</span>
+                            <span>18%</span>
+                        </div>
+                        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" style="width: 18%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-5 pt-0 flex gap-2">
+                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
+                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
+                </div>
+            </div>
+
+            <!-- Campaign 3 -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
+                <div class="p-5 space-y-3 flex-1">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-rose-700 uppercase tracking-wider bg-rose-50 px-2 py-1 rounded">Cleaning</span>
+                        <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">Medium</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Cleaning &amp; Organizing</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Mopping, sweeping, arranging shoes or shelves &mdash; first-person recordings of home cleaning
+                        and organizing routines.
+                    </p>
+                    <div class="flex items-end justify-between pt-1">
+                        <div>
+                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
+                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Oct 1, 2026</span></span>
+                    </div>
+                    <div class="space-y-1 pt-1">
+                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
+                            <span>7 / 100 submissions</span>
+                            <span>7%</span>
+                        </div>
+                        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" style="width: 7%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-5 pt-0 flex gap-2">
+                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
+                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════
+             SECTION 3 — Leaderboard
+             ══════════════════════════════════════════════════════ -->
+        <section class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Top Contributors</h2>
+            </div>
+
+            <div class="overflow-x-auto border border-gray-200 rounded-xl bg-white">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead class="bg-gray-50 border-b border-gray-200 text-gray-700 font-semibold">
+                        <tr>
+                            <th class="p-3 text-center w-16">Rank</th>
+                            <th class="p-3">Contributor</th>
+                            <th class="p-3">University</th>
+                            <th class="p-3 text-center">Clips Submitted</th>
+                            <th class="p-3 text-center">Acceptance Rate</th>
+                            <th class="p-3 text-right">Total Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-gray-700">
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="p-3 text-center"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-100 text-amber-700 font-bold text-xs">1</span></td>
+                            <td class="p-3"><a href="contributor.html" class="font-semibold text-gray-900 hover:text-blue-600">priya.k</a></td>
+                            <td class="p-3 text-gray-500 font-mono text-xs">San Jose State University</td>
+                            <td class="p-3 text-center font-mono">42</td>
+                            <td class="p-3 text-center font-mono">91%</td>
+                            <td class="p-3 text-right font-mono font-bold text-gray-900">&#8377;1,25,000</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="p-3 text-center"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 font-bold text-xs">2</span></td>
+                            <td class="p-3"><a href="contributor.html" class="font-semibold text-gray-900 hover:text-blue-600">arjun.m</a></td>
+                            <td class="p-3 text-gray-500 font-mono text-xs">UC Davis</td>
+                            <td class="p-3 text-center font-mono">35</td>
+                            <td class="p-3 text-center font-mono">87%</td>
+                            <td class="p-3 text-right font-mono font-bold text-gray-900">&#8377;95,000</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="p-3 text-center"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-orange-100 text-orange-700 font-bold text-xs">3</span></td>
+                            <td class="p-3"><a href="contributor.html" class="font-semibold text-gray-900 hover:text-blue-600">sofia.r</a></td>
+                            <td class="p-3 text-gray-500 font-mono text-xs">Arizona State University</td>
+                            <td class="p-3 text-center font-mono">29</td>
+                            <td class="p-3 text-center font-mono">83%</td>
+                            <td class="p-3 text-right font-mono font-bold text-gray-900">&#8377;72,500</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="p-3 text-center text-gray-400">4</td>
+                            <td class="p-3"><a href="contributor.html" class="font-semibold text-gray-900 hover:text-blue-600">devon.w</a></td>
+                            <td class="p-3 text-gray-500 font-mono text-xs">Georgia Tech</td>
+                            <td class="p-3 text-center font-mono">21</td>
+                            <td class="p-3 text-center font-mono">76%</td>
+                            <td class="p-3 text-right font-mono font-bold text-gray-900">&#8377;48,000</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="p-3 text-center text-gray-400">5</td>
+                            <td class="p-3"><a href="contributor.html" class="font-semibold text-gray-900 hover:text-blue-600">lena.h</a></td>
+                            <td class="p-3 text-gray-500 font-mono text-xs">University of Washington</td>
+                            <td class="p-3 text-center font-mono">17</td>
+                            <td class="p-3 text-center font-mono">71%</td>
+                            <td class="p-3 text-right font-mono font-bold text-gray-900">&#8377;34,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 px-6 md:px-12 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
+            <div class="col-span-2 md:col-span-1 space-y-4">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">H</div>
+                    <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+                </a>
+                <div class="flex items-center gap-4 text-gray-800 text-lg">
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Product</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">Competitions</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Benchmarks</a></li>
+                    <li><a href="dataset.html" class="hover:text-gray-900 transition">Datasets</a></li>
+                    <li><a href="pipeline.html" class="hover:text-gray-900 transition">Models</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Resources</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">Documentation</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Blog</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">API Access</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Research</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Community Guidelines</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-bold text-gray-900 text-sm">Company</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:text-gray-900 transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Our Team</a></li>
+                    <li><a href="mailto:aneessaheba04@gmail.com" class="hover:text-gray-900 transition">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-gray-900 transition">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-gray-100 mt-10 pt-6 text-center text-xs text-gray-400 font-mono">
+            Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

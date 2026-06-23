@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Register — HumanLoop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #111111; }
+        .auth-tab { color: #9ca3af; font-weight: 600; padding-bottom: 0.6rem; border-bottom: 2px solid transparent; }
+        .auth-tab--active { color: #111111; border-bottom-color: #111111; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col items-center justify-center px-4 py-12">
+
+    <div class="w-full max-w-sm space-y-6">
+
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-xs p-8 relative overflow-hidden">
+
+            <!-- Decorative corner accent -->
+            <div class="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 via-emerald-400 to-amber-300 opacity-70"></div>
+
+            <div class="relative z-10 space-y-6">
+                <a href="index.html" class="flex items-center justify-center gap-2">
+                    <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+                        H
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+                </a>
+
+                <h1 class="text-2xl font-bold text-gray-900 text-center">Welcome!</h1>
+
+                <div class="flex items-center justify-center gap-8 border-b border-gray-200">
+                    <button id="tab-signin" onclick="showAuthTab('signin')" class="auth-tab auth-tab--active text-sm cursor-pointer">Sign In</button>
+                    <button id="tab-register" onclick="showAuthTab('register')" class="auth-tab text-sm cursor-pointer">Register</button>
+                </div>
+
+                <!-- ══════════════════════════════════════════════
+                     Sign In panel
+                     ══════════════════════════════════════════════ -->
+                <div id="panel-signin" class="space-y-3">
+                    <button onclick="hlOAuthPlaceholder('Google')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-brands fa-google text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Sign in with Google</span>
+                    </button>
+                    <button onclick="document.getElementById('signin-email-form').classList.toggle('hidden')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-solid fa-envelope text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Sign in with Email</span>
+                    </button>
+
+                    <form id="signin-email-form" onsubmit="hlSignIn(event)" class="hidden space-y-2 pt-1">
+                        <input id="signin-email" type="email" required placeholder="Email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <input id="signin-password" type="password" required placeholder="Password" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <p id="signin-error" class="hidden text-xs text-rose-600 font-medium"></p>
+                        <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Sign In</button>
+                    </form>
+
+                    <button onclick="hlOAuthPlaceholder('Facebook')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-brands fa-facebook text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Sign in with Facebook</span>
+                    </button>
+                    <button onclick="hlOAuthPlaceholder('Yahoo')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-brands fa-yahoo text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Sign in with Yahoo</span>
+                    </button>
+
+                    <p class="text-center text-sm text-gray-600 pt-1">
+                        Don't have an account?
+                        <a href="#" onclick="showAuthTab('register'); return false;" class="underline font-medium text-gray-900">Create one</a>
+                    </p>
+                </div>
+
+                <!-- ══════════════════════════════════════════════
+                     Register panel
+                     ══════════════════════════════════════════════ -->
+                <div id="panel-register" class="space-y-3 hidden">
+                    <button onclick="hlOAuthPlaceholder('Google')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-brands fa-google text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Register with Google</span>
+                    </button>
+                    <button onclick="document.getElementById('register-email-form').classList.toggle('hidden')" class="w-full flex items-center gap-3 border border-gray-300 hover:bg-gray-50 rounded-full px-4 py-2.5 transition cursor-pointer">
+                        <i class="fa-solid fa-envelope text-gray-700"></i>
+                        <span class="flex-1 text-center font-bold text-sm text-gray-900">Register with Email</span>
+                    </button>
+
+                    <form id="register-email-form" onsubmit="hlRegister(event)" class="hidden space-y-2 pt-1">
+                        <input id="register-name" type="text" required placeholder="Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <input id="register-email" type="email" required placeholder="Email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <input id="register-password" type="password" required placeholder="Password" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <p id="register-error" class="hidden text-xs text-rose-600 font-medium"></p>
+                        <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Create Account</button>
+                    </form>
+
+                    <p class="text-center text-sm text-gray-600 pt-1">
+                        Have an account?
+                        <a href="#" onclick="showAuthTab('signin'); return false;" class="underline font-medium text-gray-900">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p id="register-disclosure" class="hidden text-center text-xs text-gray-500 leading-relaxed px-4">
+            When you link your Google account, HumanLoop collects certain information stored in that account
+            that you have configured to make available. By linking your accounts, you authorize HumanLoop to
+            access and use your account on the third-party service in connection with your use of HumanLoop.
+        </p>
+
+        <p class="text-center text-sm">
+            <a href="mailto:aneessaheba04@gmail.com" class="underline text-gray-700 hover:text-gray-900">Contact Us / Support</a>
+        </p>
+
+        <p class="text-center text-[11px] text-gray-400 leading-relaxed px-4">
+            Email accounts are stored locally in this browser only (no server yet) &mdash; for testing, not real
+            security. Google / Facebook / Yahoo aren't connected yet.
+        </p>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        function hlOAuthPlaceholder(provider) {
+            alert(provider + ' sign-in isn\'t connected yet — it needs a real OAuth Client ID first.');
+        }
+
+        function showAuthTab(tab) {
+            const isSignin = tab === 'signin';
+            document.getElementById('panel-signin').classList.toggle('hidden', !isSignin);
+            document.getElementById('panel-register').classList.toggle('hidden', isSignin);
+            document.getElementById('register-disclosure').classList.toggle('hidden', isSignin);
+            document.getElementById('tab-signin').classList.toggle('auth-tab--active', isSignin);
+            document.getElementById('tab-register').classList.toggle('auth-tab--active', !isSignin);
+        }
+
+        const initialTab = new URLSearchParams(window.location.search).get('tab');
+        if (initialTab === 'register') showAuthTab('register');
+    </script>
+</body>
+</html>

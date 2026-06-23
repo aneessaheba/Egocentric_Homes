@@ -1,3 +1,14 @@
+/* Wrapped in the "base" cascade layer so it cooperates with the Tailwind
+   CDN script's own layered utilities (pipeline.html/dataset.html load both).
+   The Tailwind CDN script injects its utilities inside @layer utilities;
+   per the CSS cascade-layers spec, any unlayered stylesheet rule beats a
+   layered one regardless of specificity. Left unlayered, this file's plain
+   `* { margin:0; padding:0 }` reset was unconditionally winning over
+   Tailwind's spacing utilities (space-x-*, px-*, py-*, gap-*, rounded-full,
+   etc.), collapsing the navbar on every page that loads both this file and
+   the Tailwind CDN. */
+@layer base {
+
 /* ============================================================
    DESIGN TOKENS — single source of truth for colors and spacing
    ============================================================ */
@@ -1449,3 +1460,5 @@ body {
     grid-template-columns: repeat(2, 1fr); /* 2-col on narrow screens */
   }
 }
+
+} /* end @layer base */
