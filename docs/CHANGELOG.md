@@ -78,3 +78,15 @@ All notable changes to this project will be documented here.
 
 ### Changed
 - Campaign slot counter updated daily as clips are accepted
+
+## [0.3.3] — 2026-06-23
+
+### Added
+- Thread safety notes for Logger in `docs/API.md`
+- Model licence reference table in `docs/MODELS.md`
+- Data privacy guidelines for contributors
+- Video technical requirements table in FAQ
+- Linting/formatting guide in SETUP.md
+
+### Changed
+- Campaign acceptance rate display updated
