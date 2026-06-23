@@ -164,3 +164,12 @@ accepted clips. Processing takes 3–5 business days.
 **What payment methods are supported?**
 UPI (India), bank transfer, and PayPal. Set your preferred method in the
 contributor portal under Settings → Payout.
+
+## Leaderboard
+
+**How is the leaderboard ranked?**
+By total accepted clips in the current campaign period, with tie-breaking
+by average quality score (higher is better).
+
+**How often is the leaderboard updated?**
+The leaderboard refreshes every 24 hours.
