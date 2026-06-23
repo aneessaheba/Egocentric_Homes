@@ -154,3 +154,13 @@ Only derived annotations (poses, depth, transcripts) will be released.
 | Duration     | 10 seconds       | 20–60 seconds    |
 | Format       | .mp4             | .mp4 (H.264)     |
 | Orientation  | Landscape        | Landscape        |
+
+## Payments
+
+**When are payouts processed?**
+Payouts are calculated on the 1st of each month for the previous month's
+accepted clips. Processing takes 3–5 business days.
+
+**What payment methods are supported?**
+UPI (India), bank transfer, and PayPal. Set your preferred method in the
+contributor portal under Settings → Payout.
