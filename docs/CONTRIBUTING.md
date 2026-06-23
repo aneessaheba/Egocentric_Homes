@@ -85,3 +85,17 @@ Payouts are processed monthly. See the campaign page for the base rate.
 - Clip metadata (timestamps, device info) is stripped on upload
 
 Violations may result in clip rejection and account suspension.
+
+## Testing your setup
+
+Before recording full sessions, test your setup with a 10-second clip:
+
+```bash
+# Run the full pipeline on a test clip
+python pipeline/run_pipeline.py
+
+# Check the quality score
+cat assets/processed/quality/MyClip_quality.json
+```
+
+Aim for a score above 70 to leave a comfortable buffer above the 60 threshold.
