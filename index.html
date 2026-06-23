@@ -21,58 +21,81 @@
             color: #2563EB;
             font-weight: 600;
         }
+        .dot-bg {
+            background-image: radial-gradient(circle, #e5e7eb 1.5px, transparent 1.5px);
+            background-size: 18px 18px;
+        }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-gray-200 px-6 py-3 flex justify-between items-center z-50 shadow-xs sticky top-0">
-        <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-2">
-                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
-                    H
-                </div>
-                <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+    <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 py-4 flex justify-between items-center z-50 sticky top-0">
+        <div class="flex items-center space-x-2">
+            <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+                H
             </div>
-            <div class="hidden md:flex space-x-4 text-sm font-medium text-gray-500">
-                <a href="#" onclick="switchTab('overview-tab'); return false;" class="hover:text-gray-900 transition">Overview</a>
-                <a href="#" onclick="switchTab('data-tab'); return false;" class="hover:text-gray-900 transition">Dataset</a>
-                <a href="pipeline.html" class="hover:text-gray-900 transition">Pipeline</a>
-                <a href="https://github.com/aneessaheba/Egocentric_Homes" target="_blank" rel="noopener" class="hover:text-gray-900 transition">GitHub</a>
-                <a href="#contact" class="hover:text-gray-900 transition">Contact</a>
-            </div>
+            <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
         </div>
-        <div class="flex items-center space-x-3 font-mono text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span>2,700 clips &middot; 50 hrs captured</span>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+            <a href="#" onclick="switchTab('overview-tab'); return false;" class="hover:text-gray-900 transition">Overview</a>
+            <a href="#" onclick="switchTab('data-tab'); return false;" class="hover:text-gray-900 transition">Dataset</a>
+            <a href="pipeline.html" class="hover:text-gray-900 transition">Pipeline</a>
+            <a href="https://github.com/aneessaheba/Egocentric_Homes" target="_blank" rel="noopener" class="hover:text-gray-900 transition">GitHub</a>
+        </div>
+        <div class="flex items-center space-x-5">
+            <a href="#contact" class="hidden sm:inline text-sm text-gray-400 hover:text-gray-700 transition">Contact</a>
+            <button onclick="switchTab('submit-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition cursor-pointer">
+                Submit Data
+            </button>
         </div>
     </nav>
 
-    <header class="bg-white border-b border-gray-200 pt-8 pb-0 px-6 md:px-12">
-        <div class="max-w-7xl mx-auto space-y-6">
-            <div class="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase font-mono">
-                <i class="fa-solid fa-house-laptop"></i> Open Research Dataset &bull; <span class="text-blue-600">Actively Collecting</span>
+    <header class="dot-bg bg-white border-b border-gray-200 px-6 md:px-12 py-20 md:py-28 text-center">
+        <div class="max-w-3xl mx-auto space-y-6">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-blue-600 uppercase font-mono bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Open Research Dataset &middot; Actively Collecting
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                Sourcing the largest open<br class="hidden md:block"> egocentric home dataset.
+            </h1>
+            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
+                First-person recordings of everyday household activities &mdash; annotated with hand pose,
+                segmentation, depth, and audio narration. Built by real contributors, for hand-pose,
+                manipulation, and VLA / robotics research.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 pt-2">
+                <button onclick="switchTab('submit-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-900 hover:bg-black text-white font-semibold px-6 py-3 rounded-full transition shadow-sm cursor-pointer">
+                    Become a Contributor
+                </button>
+                <button onclick="switchTab('data-tab'); document.getElementById('main-content').scrollIntoView({behavior:'smooth'});" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-full transition inline-flex items-center gap-2 cursor-pointer">
+                    Explore Dataset <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
             </div>
+        </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6">
-                <div class="space-y-2">
-                    <h1 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
-                        HumanLoop Egocentric Dataset
-                    </h1>
-                    <p class="text-gray-600 text-sm md:text-base max-w-3xl">
-                        First-person recordings of everyday household activities, captured with head-mounted and body-worn
-                        cameras and annotated with hand pose, segmentation, and audio narration &mdash; built for hand-pose,
-                        manipulation, and VLA / robotics research.
-                    </p>
+        <div class="max-w-3xl mx-auto mt-14">
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 md:p-8 text-left md:flex md:items-center md:justify-between gap-6">
+                <div class="space-y-1">
+                    <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-100 px-2 py-1 rounded">Data Collection Challenge</span>
+                    <h3 class="text-lg font-bold text-gray-900">Submit a recording, win cash prizes.</h3>
+                    <p class="text-xs text-gray-600 max-w-md">Top-scoring submissions on the automated quality-check pipeline win. Open to all contributors.</p>
                 </div>
-                <div class="flex items-center space-x-3 font-mono bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl">
-                    <div class="text-right">
-                        <span class="block text-[10px] text-gray-500 font-sans uppercase font-bold tracking-wider">Footage Captured</span>
-                        <span class="text-2xl font-black text-emerald-700">50+ Hours</span>
+                <div class="flex gap-4 mt-4 md:mt-0 shrink-0 justify-center">
+                    <div class="text-center">
+                        <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
+                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize</span>
+                    </div>
+                    <div class="w-px bg-amber-200"></div>
+                    <div class="text-center">
+                        <span class="block text-xl font-black text-gray-900">&#8377;25,000</span>
+                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">Runner-Up</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="flex space-x-8 border-b border-gray-200 text-sm overflow-x-auto">
+        <div class="max-w-7xl mx-auto mt-16">
+            <div class="flex justify-center space-x-8 border-b border-gray-200 text-sm overflow-x-auto">
                 <button id="btn-overview-tab" onclick="switchTab('overview-tab')" class="py-3 px-1 tab-active border-b-4 text-gray-800 transition cursor-pointer">
                     <i class="fa-solid fa-circle-info mr-1.5 text-gray-400"></i>Overview
                 </button>
@@ -89,7 +112,7 @@
         </div>
     </header>
 
-    <div class="flex-grow max-w-7xl w-full mx-auto p-6 md:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div id="main-content" class="flex-grow max-w-7xl w-full mx-auto p-6 md:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
 
         <main class="lg:col-span-3 bg-white p-6 rounded-xl border border-gray-200 shadow-xs">
 

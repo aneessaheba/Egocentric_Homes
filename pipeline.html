@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="pipeline">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,22 +9,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <!-- ═══════════════════════════════════════════════════════
-       NAVBAR — Pipeline is active
+       NAVBAR — same pattern as index.html, Pipeline active
        ═══════════════════════════════════════════════════════ -->
-  <nav class="navbar">
-    <span class="navbar__logo">HumanLoop</span>
-    <ul class="navbar__links">
-      <li><a href="index.html#overview"   class="nav-link">Overview</a></li>
-      <li><a href="index.html#dataset"    class="nav-link">Dataset</a></li>
-      <li><a href="pipeline.html"         class="nav-link nav-link--active">Pipeline</a></li>
-      <li><a href="index.html#contribute" class="nav-link">Contribute</a></li>
-      <li><a href="index.html#contact"    class="nav-link">Contact</a></li>
-    </ul>
+  <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 py-4 flex justify-between items-center z-50 sticky top-0">
+    <a href="index.html" class="flex items-center space-x-2">
+        <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
+            H
+        </div>
+        <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+    </a>
+    <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+        <a href="index.html#overview" class="hover:text-gray-900 transition">Overview</a>
+        <a href="index.html#dataset" class="hover:text-gray-900 transition">Dataset</a>
+        <a href="pipeline.html" class="text-blue-600 font-semibold">Pipeline</a>
+        <a href="https://github.com/aneessaheba/Egocentric_Homes" target="_blank" rel="noopener" class="hover:text-gray-900 transition">GitHub</a>
+    </div>
+    <div class="flex items-center space-x-5">
+        <a href="index.html#contact" class="hidden sm:inline text-sm text-gray-400 hover:text-gray-700 transition">Contact</a>
+        <a href="index.html#contribute" class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+            Submit Data
+        </a>
+    </div>
   </nav>
 
 
@@ -579,13 +591,8 @@ python pipeline/run_pipeline.py
   <!-- ═══════════════════════════════════════════════════════
        FOOTER
        ═══════════════════════════════════════════════════════ -->
-  <footer class="footer">
-    <span class="footer__text">© 2026 HumanLoop · SJSU Research</span>
-    <div class="footer__links">
-      <a href="index.html#overview" class="footer__link">Overview</a>
-      <a href="index.html#dataset"  class="footer__link">Dataset</a>
-      <a href="pipeline.html"       class="footer__link">Pipeline</a>
-    </div>
+  <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500 font-mono">
+    Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
   </footer>
 
 

@@ -53,45 +53,6 @@ body {
 
 
 /* ============================================================
-   NAVBAR
-   ============================================================ */
-.navbar {
-  position: sticky;                      /* Sticks to top of viewport on scroll */
-  top: 0;                                /* Sits at the very top */
-  z-index: 100;                          /* Above all page content */
-  background: var(--white);             /* White fill so content scrolls under it */
-  border-bottom: 2px solid var(--accent); /* Orange-red accent line at bottom */
-  display: flex;                         /* Logo left, links right */
-  align-items: center;                   /* Vertically center both sides */
-  justify-content: space-between;        /* Push logo and links to opposite ends */
-  padding: 1rem 2.5rem;                  /* Comfortable vertical and horizontal padding */
-}
-
-.navbar__logo {
-  font-size: 1.2rem;        /* Slightly larger than body text */
-  font-weight: 800;         /* Heavy weight for brand feel */
-  letter-spacing: -0.03em;  /* Tight tracking for a modern logotype look */
-  color: var(--black);      /* Solid black logo */
-}
-
-.navbar__links {
-  display: flex;  /* Horizontal link row */
-  gap: 2.5rem;    /* Generous spacing between links */
-}
-
-.navbar__links a {
-  font-size: 0.875rem;   /* Slightly smaller than body text */
-  font-weight: 500;      /* Medium weight */
-  color: var(--black);   /* Black link text */
-}
-
-.navbar__links a:hover {
-  color: var(--accent); /* Accent color on hover for interactivity cue */
-}
-
-
-
-/* ============================================================
    BUTTONS — shared base + filled and outlined variants
    ============================================================ */
 .btn {
@@ -108,8 +69,8 @@ body {
 }
 
 .btn--filled {
-  background: var(--accent);  /* Solid orange-red fill */
-  color: var(--white);        /* White label on orange-red */
+  background: var(--accent);  /* Solid blue fill */
+  color: var(--white);        /* White label on blue */
   border-color: var(--accent); /* Border matches fill so hover works cleanly */
 }
 
@@ -167,12 +128,6 @@ body {
 
 .page--active {
   display: block;
-}
-
-/* Active nav link highlight */
-.nav-link--active {
-  color: var(--accent) !important;
-  font-weight: 700;
 }
 
 /* Subheadings inside the Dataset section: Modalities, Download */
@@ -277,12 +232,12 @@ body {
 
 
 /* ============================================================
-   BADGE — orange-red pill label for card tagging
+   BADGE — blue pill label for card tagging
    ============================================================ */
 .badge {
   display: inline-block;          /* Shrinks to content size */
   background: var(--accent);      /* Orange-red background */
-  color: var(--white);            /* White text on orange-red */
+  color: var(--white);            /* White text on blue */
   font-size: 0.68rem;             /* Very small type */
   font-weight: 700;               /* Bold */
   letter-spacing: 0.1em;         /* Wide-spaced all-caps text */
@@ -391,7 +346,7 @@ body {
 }
 
 .frame-item--more:hover {
-  background: #fff3ee;      /* Very faint orange tint on hover */
+  background: #eff6ff;      /* Very faint blue tint on hover */
   border-color: var(--accent); /* Accent border on hover */
 }
 
@@ -416,7 +371,7 @@ body {
   overflow: hidden;             /* Top strip clips to border-radius */
 }
 
-/* 3px orange-red top strip */
+/* 3px blue top strip */
 .mod-card__border {
   height: 3px;               /* Thin accent strip */
   background: var(--accent); /* Orange-red */
@@ -576,7 +531,7 @@ body {
 }
 
 .code-block__copy:hover {
-  background: var(--accent); /* Fill orange-red on hover */
+  background: var(--accent); /* Fill blue on hover */
   color: var(--white);       /* White text on fill */
 }
 
@@ -589,39 +544,6 @@ body {
   line-height: 1.75;                     /* Loose line height for code readability */
   color: var(--black);                   /* Black code text */
   tab-size: 4;                           /* 4-space tabs */
-}
-
-
-/* ============================================================
-   FOOTER — black bar, tagline left, links right
-   ============================================================ */
-.footer {
-  background: var(--black);     /* Solid black footer */
-  color: var(--white);          /* White text */
-  padding: 1.5rem 2.5rem;       /* Comfortable padding */
-  display: flex;                 /* Tagline left, links right */
-  justify-content: space-between; /* Push them to opposite ends */
-  align-items: center;           /* Vertically center */
-}
-
-.footer__text {
-  font-size: 0.875rem;  /* Small print */
-  color: #AAAAAA;       /* Muted light gray on black */
-}
-
-.footer__links {
-  display: flex;  /* Side-by-side links */
-  gap: 1.75rem;   /* Gap between footer links */
-}
-
-.footer__link {
-  font-size: 0.875rem;  /* Match tagline text size */
-  font-weight: 500;      /* Medium weight */
-  color: #AAAAAA;        /* Muted gray to start */
-}
-
-.footer__link:hover {
-  color: var(--accent); /* Accent color highlight on hover */
 }
 
 
@@ -691,7 +613,7 @@ body {
   gap: 0.15rem;             /* Tight gap between number and label */
 }
 
-/* Large orange-red stat number */
+/* Large blue stat number */
 .cd-stat__value {
   font-size: 1.4rem;       /* Large and readable */
   font-weight: 800;         /* Extra-bold */
@@ -995,19 +917,6 @@ body {
   }
 }
 
-/* ============================================================
-   PIPELINE PAGE — orange-red theme override (#FF4500)
-   ============================================================ */
-
-/* Override accent to orange-red on pipeline page */
-[data-theme="pipeline"] {
-  --accent: #FF4500;
-}
-[data-theme="pipeline"] .btn--filled:hover {
-  background: #cc3700;
-  border-color: #cc3700;
-}
-
 /* ── Pipeline hero ─────────────────────────────────────── */
 .pl-hero {
   text-align: center;
@@ -1017,7 +926,7 @@ body {
 }
 .pl-badge {
   display: inline-block;
-  background: #FF4500;
+  background: #2563EB;
   color: #fff;
   font-size: 0.65rem;
   font-weight: 700;
@@ -1041,14 +950,14 @@ body {
   margin-bottom: 2rem;
 }
 .pl-btn {
-  background: #FF4500;
+  background: #2563EB;
   color: #fff !important;
-  border-color: #FF4500;
+  border-color: #2563EB;
   text-decoration: none;
 }
 .pl-btn:hover {
-  background: #cc3700;
-  border-color: #cc3700;
+  background: #1d4ed8;
+  border-color: #1d4ed8;
 }
 
 /* ── Pipeline section wrapper + heading ────────────────── */
@@ -1060,7 +969,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--black);
-  border-left: 4px solid #FF4500;
+  border-left: 4px solid #2563EB;
   padding-left: 0.85rem;
   margin-bottom: 2rem;
 }
@@ -1091,7 +1000,7 @@ body {
 .pl-flow__box {
   background: var(--white);
   border: 1.5px solid #222;
-  border-top: 3px solid #FF4500;
+  border-top: 3px solid #2563EB;
   border-radius: 6px;
   padding: 0.55rem 1rem;
   font-size: 0.78rem;
@@ -1103,22 +1012,22 @@ body {
   background: #111;
   color: var(--white);
   border-color: #111;
-  border-top-color: #FF4500;
+  border-top-color: #2563EB;
   font-size: 0.85rem;
   padding: 0.65rem 1.75rem;
 }
 .pl-flow__box--out {
   background: var(--gray-bg);
   border-color: #ccc;
-  border-top-color: #FF4500;
+  border-top-color: #2563EB;
   font-size: 0.72rem;
   color: #555;
 }
 .pl-flow__box--combined {
-  background: #FF4500;
+  background: #2563EB;
   color: var(--white);
-  border-color: #FF4500;
-  border-top-color: #cc3700;
+  border-color: #2563EB;
+  border-top-color: #1d4ed8;
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -1135,13 +1044,13 @@ body {
   font-size: 0.8rem;
 }
 .pl-flow__v {
-  color: #FF4500;
+  color: #2563EB;
   font-size: 1.1rem;
   line-height: 2;
   font-weight: 700;
 }
 .pl-flow__h {
-  color: #FF4500;
+  color: #2563EB;
   font-size: 1.3rem;
   font-weight: 700;
   padding: 0 0.35rem;
@@ -1159,7 +1068,7 @@ body {
 .pl-tool {
   background: var(--white);
   border: 1.5px solid #ddd;
-  border-top: 3px solid #FF4500;
+  border-top: 3px solid #2563EB;
   border-radius: 8px;
   padding: 1.5rem;
   display: flex;
@@ -1172,7 +1081,7 @@ body {
 }
 .pl-tool__badge {
   display: inline-block;
-  background: #FF4500;
+  background: #2563EB;
   color: var(--white);
   font-size: 0.58rem;
   font-weight: 700;
@@ -1238,7 +1147,7 @@ body {
 .pl-tool__link {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #FF4500;
+  color: #2563EB;
   text-decoration: none;
   letter-spacing: 0.01em;
 }
@@ -1271,8 +1180,8 @@ body {
   transition: border-color 0.15s, color 0.15s;
 }
 .pl-quickstart__copy:hover {
-  border-color: #FF4500;
-  color: #FF4500;
+  border-color: #2563EB;
+  color: #2563EB;
 }
 .pl-quickstart pre {
   color: #fff;
@@ -1283,7 +1192,7 @@ body {
   white-space: pre;
 }
 .pl-comment {
-  color: #FF4500;
+  color: #2563EB;
 }
 
 /* ── Models table ───────────────────────────────────────── */
