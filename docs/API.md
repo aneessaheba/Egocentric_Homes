@@ -165,3 +165,14 @@ def process_clip(clip_path):
 
 All other utility functions (`load_json`, `save_json`, `video_info`) are
 stateless and safe to call from multiple threads.
+
+## Extending the pipeline
+
+To add a new annotation stage:
+
+1. Create `pipeline/my_stage.py` with a `process_video(path) -> list[dict]` function
+2. Add `"my_stage"` to `STAGE_ORDER` in `config.py`
+3. Import and call it in `run_pipeline.py` after the appropriate existing stage
+4. Merge its output into the `full_annotations` dict under a new key
+
+The per-frame dicts can carry any JSON-serialisable values.
