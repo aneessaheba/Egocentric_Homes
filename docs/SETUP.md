@@ -92,3 +92,13 @@ The pipeline codebase uses:
 - `mypy` for type checking (`mypy pipeline/ --ignore-missing-imports`)
 
 These are not enforced by CI yet but are recommended before opening PRs.
+
+## Running tests
+
+```bash
+# Validate a clip through all stages (no GPU required for this check)
+python pipeline/validators.py  # not yet a standalone script; use in Python
+
+# Quick quality preview
+python pipeline/quality_gate.py assets/videos/ --dry-run
+```
