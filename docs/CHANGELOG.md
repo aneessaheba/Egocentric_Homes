@@ -90,3 +90,11 @@ All notable changes to this project will be documented here.
 
 ### Changed
 - Campaign acceptance rate display updated
+
+## [0.3.4] — 2026-06-24
+
+### Added
+- FAQ sections for payments, leaderboard, and video specifications
+- Pipeline extension guide in `docs/API.md`
+- Setup testing guide in `docs/SETUP.md`
+- Contributor setup test workflow in `docs/CONTRIBUTING.md`
