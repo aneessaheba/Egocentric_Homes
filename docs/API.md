@@ -176,3 +176,16 @@ To add a new annotation stage:
 4. Merge its output into the `full_annotations` dict under a new key
 
 The per-frame dicts can carry any JSON-serialisable values.
+
+## Testing utilities
+
+There is no formal test suite yet. To verify a module works correctly,
+run the module directly with a sample clip:
+
+```bash
+python pipeline/hand_pose.py assets/videos/MyClip.mp4
+python pipeline/arm_pose.py  assets/videos/MyClip.mp4
+python pipeline/quality_gate.py assets/videos/ --dry-run
+```
+
+Each module prints a summary of what it processed and whether it succeeded.
