@@ -102,3 +102,12 @@ python pipeline/validators.py  # not yet a standalone script; use in Python
 # Quick quality preview
 python pipeline/quality_gate.py assets/videos/ --dry-run
 ```
+
+## Environment variables
+
+| Variable                    | Default | Effect                                  |
+|-----------------------------|---------|------------------------------------------|
+| `PYTORCH_ENABLE_MPS_FALLBACK` | unset | Enable PyTorch MPS fallback ops (macOS)  |
+| `CUDA_VISIBLE_DEVICES`       | all    | Restrict to specific GPU indices         |
+
+Set these before running any pipeline script if needed.
