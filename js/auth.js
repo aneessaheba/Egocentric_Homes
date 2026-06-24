@@ -1,5 +1,5 @@
 /*
- * Local-only account system for HumanLoop.
+ * Local-only account system for EgoLoop.
  *
  * No backend exists yet, so accounts and sessions are stored in this
  * browser's localStorage — passwords included, in plain text. This is

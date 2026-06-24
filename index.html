@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HumanLoop — Egocentric Household Activity Dataset</title>
+    <title>EgoLoop — Egocentric Household Activity Dataset</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #111111; }
         .brand-blue { color: #2563EB; }
@@ -23,10 +23,7 @@
     <nav class="bg-white/90 backdrop-blur border-b border-gray-200 px-6 md:px-12 py-4 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">
-                    H
-                </div>
-                <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+                <span class="font-bold text-3xl tracking-tight"><span class="text-blue-400">ego</span><span class="text-yellow-400">loop</span></span>
             </div>
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
                 <a href="index.html" class="hover:text-gray-900 transition">Overview</a>
@@ -69,12 +66,68 @@
         </div>
     </header>
 
+    <section class="bg-white border-b border-gray-200 px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="space-y-2">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-blue-600"></i> What's Happening
+                </h2>
+                <p class="text-gray-500">The latest from egoloop &mdash; campaigns, partnerships and platform updates.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="campaigns.html" class="border border-gray-200 rounded-xl p-5 space-y-3 hover:shadow-sm hover:border-gray-300 active:shadow-md transition">
+                    <div class="flex items-start justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-blue-700 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Campaign</span>
+                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 text-blue-600 rounded-[60%_40%_30%_70%/60%_30%_70%_40%]">
+                            <i class="fa-solid fa-trophy text-sm"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-snug">Tool Usage Sprint is Live</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Grab a screwdriver, hammer or wrench and show us how you use it. 500 slots open, closes July 15.</p>
+                </a>
+
+                <div class="border border-gray-200 rounded-xl p-5 space-y-3">
+                    <div class="flex items-start justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">Announcement</span>
+                        <div class="w-10 h-10 flex items-center justify-center bg-amber-100 text-amber-600 rounded-[40%_60%_70%_30%/50%_60%_40%_50%]">
+                            <i class="fa-solid fa-tower-broadcast text-sm"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-snug">First University Node Activated</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">egoloop's first campus contributor network is live. One partnership, hundreds of verified contributors, zero cold outreach.</p>
+                </div>
+
+                <a href="dataset.html" class="border border-gray-200 rounded-xl p-5 space-y-3 hover:shadow-sm hover:border-gray-300 active:shadow-md transition">
+                    <div class="flex items-start justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded">Dataset</span>
+                        <div class="w-10 h-10 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-[60%_40%_40%_60%/40%_60%_60%_40%]">
+                            <i class="fa-solid fa-shirt text-sm"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-snug">Egocentric Folding Dataset Released</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">72 verified clips of folding and packing behavior, fully annotated with hand pose, depth and narration. Available now.</p>
+                </a>
+
+                <a href="pipeline.html" class="border border-gray-200 rounded-xl p-5 space-y-3 hover:shadow-sm hover:border-gray-300 active:shadow-md transition">
+                    <div class="flex items-start justify-between">
+                        <span class="inline-block text-[10px] font-bold font-mono text-purple-700 uppercase tracking-wider bg-purple-50 px-2 py-1 rounded">Product Update</span>
+                        <div class="w-10 h-10 flex items-center justify-center bg-purple-100 text-purple-600 rounded-[50%_50%_30%_70%/60%_40%_60%_40%]">
+                            <i class="fa-solid fa-robot text-sm"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-snug">Zero Manual Review Milestone</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Every clip submitted to egoloop now passes through 6 automated annotation modules before a human ever sees it.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-white border-t border-gray-200 pt-12 pb-8 px-6 md:px-12 mt-auto">
         <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
             <div class="col-span-2 md:col-span-1 space-y-4">
                 <a href="index.html" class="flex items-center gap-2">
-                    <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-lg text-white font-black text-lg tracking-tighter flex items-center justify-center h-9 w-9">H</div>
-                    <span class="font-bold text-lg tracking-tight text-gray-800">Human<span class="text-blue-600">Loop</span></span>
+                    <span class="font-bold text-3xl tracking-tight"><span class="text-blue-400">ego</span><span class="text-yellow-400">loop</span></span>
                 </a>
                 <div class="flex items-center gap-4 text-gray-800 text-lg">
                     <a href="#" class="hover:text-blue-600 transition" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
@@ -118,7 +171,7 @@
         </div>
 
         <div class="max-w-7xl mx-auto border-t border-gray-100 mt-10 pt-6 text-center text-xs text-gray-400 font-mono">
-            Powered by HumanLoop Data Pipelines &bull; SJSU Research &copy; 2026
+            Powered by EgoLoop Data Pipelines &bull; SJSU Research &copy; 2026
         </div>
     </footer>
 
