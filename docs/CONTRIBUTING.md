@@ -99,3 +99,12 @@ cat assets/processed/quality/MyClip_quality.json
 ```
 
 Aim for a score above 70 to leave a comfortable buffer above the 60 threshold.
+
+## After your clip is accepted
+
+Once a clip passes the quality gate:
+
+1. You will receive a notification via email
+2. The clip is added to the dataset and counted toward your campaign total
+3. Your contributor stats (acceptance rate, total clips) update within 24 hours
+4. Payout for the clip is included in the next monthly cycle
