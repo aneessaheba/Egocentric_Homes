@@ -184,3 +184,14 @@ for release announcements.
 **Will the full videos be released or just annotations?**
 Annotations only. Raw video clips will remain private to protect
 contributor privacy and comply with data regulations.
+
+## Account management
+
+**How do I change my payout email?**
+Go to Settings → Payout in the contributor portal and update your
+email address. Changes take effect from the next payout cycle.
+
+**What happens if I delete my account?**
+Your accepted clip annotations remain in the dataset (anonymised).
+Pending payouts are processed on the next cycle before the account
+is removed.
