@@ -85,3 +85,20 @@ WHISPER_MODEL = "medium"  # best quality, slower
 
 Check the respective repositories for the latest licence terms before
 using these models in a commercial product.
+
+## Inference pipeline flow
+
+```
+raw .mp4
+   │
+   ├─► hand_pose.py     →  hand_pose/*.json  (MediaPipe)
+   ├─► arm_pose.py      →  arm_pose/*.json   (YOLOv8n-pose)
+   ├─► segmentation.py  →  segmentation/*.json (SAM 2.1)
+   ├─► depth.py         →  depth/*.npy        (Depth-Anything-V2)
+   ├─► transcribe.py    →  transcripts/*.json  (Whisper)
+   └─► quality_check.py →  quality/*.json     (OpenCV metrics)
+          │
+          └─► quality_gate.py (quarantine if score < 60)
+                   │
+                   └─► run_pipeline.py merges all → annotations/*.json
+```
