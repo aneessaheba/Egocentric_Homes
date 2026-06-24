@@ -173,3 +173,14 @@ by average quality score (higher is better).
 
 **How often is the leaderboard updated?**
 The leaderboard refreshes every 24 hours.
+
+## Dataset release
+
+**When will HomeHands-50 be publicly released?**
+The dataset is planned for release once the Kitchen Activities campaign
+closes and annotations are validated. Follow the EgoLoop newsletter
+for release announcements.
+
+**Will the full videos be released or just annotations?**
+Annotations only. Raw video clips will remain private to protect
+contributor privacy and comply with data regulations.
