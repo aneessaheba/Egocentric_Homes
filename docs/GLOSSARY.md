@@ -37,3 +37,13 @@ pose landmarks per person.
 
 **EMA (Exponential Moving Average)**: A smoothing technique applied to arm
 keypoints over time to reduce jitter from frame-to-frame detection noise.
+
+**SAM (Segment Anything Model)**: Meta's promptable segmentation model.
+The pipeline uses SAM 2.1 Hiera-Tiny, prompted with hand bounding boxes,
+to produce binary masks of the hands and nearby objects in each frame.
+
+**Depth map**: A per-pixel array of distances (in metres) from the camera
+produced by Depth-Anything-V2. Stored as `.npy` arrays alongside JSON metadata.
+
+**Whisper**: OpenAI's automatic speech recognition model used to transcribe
+narration or speech in submitted clips. Supports 99 languages.
