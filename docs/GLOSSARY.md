@@ -26,3 +26,14 @@ hand is detected. One of five metrics contributing to the quality score.
 **Motion coverage**: A measure of how much of the frame contains meaningful
 motion across the clip. Low motion coverage may indicate the subject was
 stationary or the camera was not recording the intended activity.
+
+**COCO format**: A standardised JSON structure for computer vision datasets
+(images, categories, annotations). See https://cocodataset.org for the spec.
+EgoLoop supports COCO export via `pipeline/exporter.py`.
+
+**Landmark**: A 2D or 3D point representing a joint or anatomical location.
+MediaPipe Hands produces 21 landmarks per hand; YOLOv8 produces 17 COCO
+pose landmarks per person.
+
+**EMA (Exponential Moving Average)**: A smoothing technique applied to arm
+keypoints over time to reduce jitter from frame-to-frame detection noise.
