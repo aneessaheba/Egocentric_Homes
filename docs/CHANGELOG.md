@@ -98,3 +98,14 @@ All notable changes to this project will be documented here.
 - Pipeline extension guide in `docs/API.md`
 - Setup testing guide in `docs/SETUP.md`
 - Contributor setup test workflow in `docs/CONTRIBUTING.md`
+
+## [0.4.0] — 2026-06-25
+
+### Added
+- `docs/MODELS.md` inference pipeline flow diagram
+- Environment variable reference table in `docs/SETUP.md`
+- Post-acceptance contributor workflow in `docs/CONTRIBUTING.md`
+- Dataset release timeline and account management FAQ entries
+
+### Changed
+- Campaign count tracking now incremented daily
