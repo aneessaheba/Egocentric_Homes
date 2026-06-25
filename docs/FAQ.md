@@ -195,3 +195,14 @@ email address. Changes take effect from the next payout cycle.
 Your accepted clip annotations remain in the dataset (anonymised).
 Pending payouts are processed on the next cycle before the account
 is removed.
+
+## Clips in review
+
+**What does "In Review" mean?**
+After upload, clips go through automated quality scoring followed by
+a brief manual spot-check. "In Review" means both steps are in progress.
+Expect a final status within 48 hours of submission.
+
+**Can I withdraw a clip that's in review?**
+Yes — visit the contributor portal, find the submission, and click
+"Withdraw". If the clip has already been accepted, withdrawal is not possible.
