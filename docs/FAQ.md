@@ -221,3 +221,16 @@ where hands are out of frame.
 **What if my clip has multiple people in it?**
 Only the person closest to the camera is tracked. Other people in the
 background are ignored by the hand pose and arm pose stages.
+
+## Supported activities
+
+**What activities are currently being collected?**
+
+The current Kitchen Activities campaign collects:
+- Washing dishes / cups / pots
+- Chopping vegetables and fruit
+- Making tea or coffee
+- Cooking on a hob or using a microwave
+- Cleaning the kitchen counter or sink
+
+Future campaigns will cover laundry, home office tasks, and bathroom cleaning.
