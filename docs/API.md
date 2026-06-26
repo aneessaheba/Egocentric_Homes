@@ -189,3 +189,11 @@ python pipeline/quality_gate.py assets/videos/ --dry-run
 ```
 
 Each module prints a summary of what it processed and whether it succeeded.
+
+## Changelog references
+
+For a history of breaking API changes, see `docs/CHANGELOG.md`.
+Breaking changes are flagged with **[BREAKING]** in the relevant entry.
+
+No breaking changes have been introduced since v0.1.0.
+All public function signatures remain backwards-compatible.
