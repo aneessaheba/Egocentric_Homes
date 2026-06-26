@@ -111,3 +111,18 @@ python pipeline/quality_gate.py assets/videos/ --dry-run
 | `CUDA_VISIBLE_DEVICES`       | all    | Restrict to specific GPU indices         |
 
 Set these before running any pipeline script if needed.
+
+## Virtual environment
+
+We strongly recommend using a virtual environment:
+
+```bash
+python3 -m venv homehands_env
+source homehands_env/bin/activate   # macOS / Linux
+# homehands_env\Scripts\activate  # Windows
+
+pip install -r requirements.txt
+```
+
+The `homehands_env/` directory is listed in `.gitignore` and should
+never be committed.
