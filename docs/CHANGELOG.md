@@ -109,3 +109,10 @@ All notable changes to this project will be documented here.
 
 ### Changed
 - Campaign count tracking now incremented daily
+
+## [0.4.1] — 2026-06-26
+
+### Added
+- `docs/GLOSSARY.md` — key terminology definitions
+- In-review status and FAQ for clips under manual review
+- Model licence and inference flow documentation updates
