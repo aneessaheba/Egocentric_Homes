@@ -47,3 +47,13 @@ produced by Depth-Anything-V2. Stored as `.npy` arrays alongside JSON metadata.
 
 **Whisper**: OpenAI's automatic speech recognition model used to transcribe
 narration or speech in submitted clips. Supports 99 languages.
+
+**Batch runner**: `pipeline/batch_runner.py` — processes multiple clips in
+parallel using Python's `ProcessPoolExecutor`.
+
+**Resume mode**: When `--resume` is passed to `run_pipeline.py` or
+`batch_runner.py`, already-processed clips (those with an existing
+`*_full.json`) are skipped, allowing a run to continue after interruption.
+
+**Dry run**: The `--dry-run` flag for `quality_gate.py` — scores clips
+and prints what *would* be rejected without actually moving any files.
