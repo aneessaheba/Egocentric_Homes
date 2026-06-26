@@ -108,3 +108,16 @@ Once a clip passes the quality gate:
 2. The clip is added to the dataset and counted toward your campaign total
 3. Your contributor stats (acceptance rate, total clips) update within 24 hours
 4. Payout for the clip is included in the next monthly cycle
+
+## Syncing with the main branch
+
+If your fork falls behind `main`:
+
+```bash
+git fetch upstream
+git checkout main
+git merge upstream/main
+```
+
+Always create a new feature branch from the latest `main` to avoid
+merge conflicts.
