@@ -102,3 +102,15 @@ raw .mp4
                    │
                    └─► run_pipeline.py merges all → annotations/*.json
 ```
+
+## Updating to SAM 2.1 from SAM 2
+
+If you have the older SAM 2 checkpoint (`sam2_hiera_tiny.pt`), upgrade to
+SAM 2.1 for better mask quality:
+
+1. Download `sam2.1_hiera_tiny.pt` from the Meta AI repository
+2. Replace the file at `models/sam2.1_hiera_tiny.pt`
+3. No code changes are needed — the pipeline uses the path from `config.py`
+
+SAM 2.1 improves boundary precision and reduces mask leakage on cluttered
+backgrounds common in kitchen environments.
