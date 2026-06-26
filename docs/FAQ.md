@@ -206,3 +206,18 @@ Expect a final status within 48 hours of submission.
 **Can I withdraw a clip that's in review?**
 Yes — visit the contributor portal, find the submission, and click
 "Withdraw". If the clip has already been accepted, withdrawal is not possible.
+
+## Edge cases
+
+**What if my clip has no audio?**
+That is fine — the transcription stage will produce an empty transcript
+(`{"segments": [], "text": ""}`) and the other stages are unaffected.
+
+**What if hands are not visible for most of the clip?**
+The clip will likely score low on hand visibility (25% of total score)
+and may fail the quality gate. Consider trimming or re-recording sections
+where hands are out of frame.
+
+**What if my clip has multiple people in it?**
+Only the person closest to the camera is tracked. Other people in the
+background are ignored by the hand pose and arm pose stages.
