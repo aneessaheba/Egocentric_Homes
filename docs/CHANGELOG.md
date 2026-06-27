@@ -116,3 +116,14 @@ All notable changes to this project will be documented here.
 - `docs/GLOSSARY.md` — key terminology definitions
 - In-review status and FAQ for clips under manual review
 - Model licence and inference flow documentation updates
+
+## [0.4.2] — 2026-06-27
+
+### Added
+- Edge case FAQ entries (no audio, low hand visibility, multiple people)
+- SAM 2 to SAM 2.1 upgrade guide
+- Virtual environment setup instructions
+- API changelog reference and stability note
+
+### Fixed
+- Corrected weight column alignment in quality scoring FAQ table
