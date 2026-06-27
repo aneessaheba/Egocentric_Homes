@@ -197,3 +197,26 @@ Breaking changes are flagged with **[BREAKING]** in the relevant entry.
 
 No breaking changes have been introduced since v0.1.0.
 All public function signatures remain backwards-compatible.
+
+## Annotation schema
+
+Each frame annotation dict follows this structure:
+
+```json
+{
+  "frame_id": 0,
+  "timestamp_sec": 0.033,
+  "hands": [
+    {
+      "handedness": "Right",
+      "confidence": 0.94,
+      "landmarks": [{"x": 0.5, "y": 0.6, "z": -0.02}, ...]
+    }
+  ],
+  "arm_keypoints": [...],
+  "quality_score": 78.4,
+  "transcript_segment": "I'm going to wash this cup now."
+}
+```
+
+Keys are optional — a stage that did not run simply leaves its key absent.
