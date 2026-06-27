@@ -57,3 +57,11 @@ parallel using Python's `ProcessPoolExecutor`.
 
 **Dry run**: The `--dry-run` flag for `quality_gate.py` — scores clips
 and prints what *would* be rejected without actually moving any files.
+
+**Quality weight**: The fractional importance assigned to each quality metric
+when computing the composite quality score. Weights are defined in
+`config.py` under `QUALITY_WEIGHTS` and must sum to 1.0.
+
+**Quarantine**: When a clip fails the quality gate, it is *quarantined* by
+moving it to `assets/videos/rejected/`. The clip is not deleted — it can
+be recovered and re-submitted after improvements.
