@@ -121,3 +121,15 @@ git merge upstream/main
 
 Always create a new feature branch from the latest `main` to avoid
 merge conflicts.
+
+## Recording equipment tips
+
+**Lighting**
+- Use diffuse, even lighting to avoid harsh shadows on your hands
+- Avoid backlighting (camera pointing at a window)
+- A ring light or two desk lamps work well for kitchen setups
+
+**Camera mounting**
+- Head-mount: GoPro chest harness or head strap gives stable first-person view
+- Wrist-mount: captures hand interactions more closely but may be shakier
+- Tripod: acceptable for stationary tasks (washing, chopping) if overhead angle
