@@ -126,3 +126,21 @@ pip install -r requirements.txt
 
 The `homehands_env/` directory is listed in `.gitignore` and should
 never be committed.
+
+## GPU acceleration
+
+### NVIDIA (CUDA)
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+```
+
+### Apple Silicon (MPS)
+```bash
+pip install torch torchvision  # MPS support built-in since PyTorch 2.0
+export PYTORCH_ENABLE_MPS_FALLBACK=1
+```
+
+### CPU only
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+```
