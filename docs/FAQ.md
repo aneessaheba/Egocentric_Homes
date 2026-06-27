@@ -234,3 +234,13 @@ The current Kitchen Activities campaign collects:
 - Cleaning the kitchen counter or sink
 
 Future campaigns will cover laundry, home office tasks, and bathroom cleaning.
+
+## Onboarding
+
+**How long does it take to get started?**
+1. Register on the EgoLoop portal (~2 minutes)
+2. Read the recording guidelines in CONTRIBUTING.md (~5 minutes)
+3. Record and upload your first test clip (~15 minutes)
+4. Receive quality score feedback within 48 hours
+
+Most contributors submit their first accepted clip within a week.
