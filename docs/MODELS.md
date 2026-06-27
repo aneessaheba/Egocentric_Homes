@@ -114,3 +114,23 @@ SAM 2.1 for better mask quality:
 
 SAM 2.1 improves boundary precision and reduces mask leakage on cluttered
 backgrounds common in kitchen environments.
+
+## Depth model output format
+
+Depth-Anything-V2 produces metric depth in metres (not disparity).
+The pipeline saves:
+
+- `depth/<clip>_depth.npy` — float32 array of shape `(H, W)`
+- `depth/<clip>_depth.json` — metadata: `{min_depth, max_depth, mean_depth, shape}`
+
+To load and visualise:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+depth = np.load("assets/processed/depth/MyClip_depth.npy")
+plt.imshow(depth, cmap="inferno")
+plt.colorbar(label="Depth (m)")
+plt.show()
+```
