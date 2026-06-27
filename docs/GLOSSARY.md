@@ -65,3 +65,11 @@ when computing the composite quality score. Weights are defined in
 **Quarantine**: When a clip fails the quality gate, it is *quarantined* by
 moving it to `assets/videos/rejected/`. The clip is not deleted — it can
 be recovered and re-submitted after improvements.
+
+**Landmark confidence**: A float in [0, 1] indicating how confident the
+detector is in a keypoint's location. Arm keypoints with confidence < 0.4
+are filtered out before saving (see `config.py` / `ARM_CONFIDENCE_MIN`).
+
+**Segmentation mask**: A binary per-pixel array (0 = background, 1 = foreground)
+produced by SAM 2.1. Saved as a list of run-length encoded segments in JSON,
+or as a numpy bool array when loaded for downstream use.
