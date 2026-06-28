@@ -134,3 +134,26 @@ plt.imshow(depth, cmap="inferno")
 plt.colorbar(label="Depth (m)")
 plt.show()
 ```
+
+## Transcript output format
+
+Whisper produces word-level timestamps when the `word_timestamps=True`
+option is set (default in the pipeline). The JSON structure:
+
+```json
+{
+  "text": "I'm going to wash the cup now.",
+  "language": "en",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.2,
+      "text": "I'm going to wash the cup now.",
+      "words": [
+        {"word": "I'm",   "start": 0.0,  "end": 0.3},
+        {"word": "going", "start": 0.3,  "end": 0.6}
+      ]
+    }
+  ]
+}
+```
