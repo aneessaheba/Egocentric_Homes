@@ -133,3 +133,15 @@ merge conflicts.
 - Head-mount: GoPro chest harness or head strap gives stable first-person view
 - Wrist-mount: captures hand interactions more closely but may be shakier
 - Tripod: acceptable for stationary tasks (washing, chopping) if overhead angle
+
+## Common rejection reasons
+
+Based on historical submissions, these are the most common reasons clips
+are rejected:
+
+1. **Blur** (score < 20/30): shaky camera or low light
+2. **Hand visibility** (score < 10/25): hands frequently out of frame
+3. **Brightness** (score < 5/15): too dark or overexposed environment
+4. **Duration too short**: clip under 10 seconds after trimming silence
+
+Reviewing your clip in the portal before submitting catches most issues.
