@@ -244,3 +244,18 @@ Future campaigns will cover laundry, home office tasks, and bathroom cleaning.
 4. Receive quality score feedback within 48 hours
 
 Most contributors submit their first accepted clip within a week.
+
+## Debugging
+
+**How do I check which stage failed?**
+Run `quality_gate.py --dry-run` to see quality scores, then rerun
+individual stages manually:
+
+```bash
+python pipeline/hand_pose.py  assets/videos/MyClip.mp4
+python pipeline/arm_pose.py   assets/videos/MyClip.mp4
+python pipeline/quality_check.py assets/videos/MyClip.mp4
+```
+
+Each script prints a summary. If a stage errors, the traceback will
+point to the failing model or input.
