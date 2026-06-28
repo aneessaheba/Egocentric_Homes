@@ -259,3 +259,21 @@ python pipeline/quality_check.py assets/videos/MyClip.mp4
 
 Each script prints a summary. If a stage errors, the traceback will
 point to the failing model or input.
+
+## Comparing clips
+
+**How do I compare quality scores across clips?**
+
+```python
+import json
+from pathlib import Path
+
+scores = []
+for f in Path("assets/processed/quality").glob("*_quality.json"):
+    d = json.loads(f.read_text())
+    scores.append((f.stem, d["score"]))
+
+scores.sort(key=lambda x: x[1], reverse=True)
+for name, score in scores[:10]:
+    print(f"{score:5.1f}  {name}")
+```
