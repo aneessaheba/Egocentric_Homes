@@ -127,3 +127,13 @@ All notable changes to this project will be documented here.
 
 ### Fixed
 - Corrected weight column alignment in quality scoring FAQ table
+
+## [0.4.3] — 2026-06-28
+
+### Added
+- Depth output format and numpy visualisation example in MODELS.md
+- Full annotation JSON schema in API.md
+- GPU acceleration install commands in SETUP.md
+- Recording equipment and lighting tips in CONTRIBUTING.md
+- Debugging guide for stage failures in FAQ.md
+- GLOSSARY: landmark confidence, segmentation mask definitions
