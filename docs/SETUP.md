@@ -144,3 +144,21 @@ export PYTORCH_ENABLE_MPS_FALLBACK=1
 ```bash
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```
+
+## Checking your installation
+
+After installing, verify each component:
+
+```bash
+# Check Python and torch
+python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+
+# Check MediaPipe
+python -c "import mediapipe; print('MediaPipe OK')"
+
+# Check Whisper
+python -c "import whisper; print('Whisper OK')"
+
+# Check OpenCV
+python -c "import cv2; print(cv2.__version__)"
+```
