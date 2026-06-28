@@ -220,3 +220,22 @@ Each frame annotation dict follows this structure:
 ```
 
 Keys are optional — a stage that did not run simply leaves its key absent.
+
+## Logging integration example
+
+```python
+from logger import get_logger
+from validators import validate_video_path
+from utils import Timer
+
+log   = get_logger("my_stage", log_dir="logs/")
+timer = Timer()
+
+video = validate_video_path("assets/videos/MyClip.mp4")
+log.stage_start("my_stage")
+
+# ... do work ...
+
+log.stage_done("my_stage")
+log.info(f"Total elapsed: {timer.elapsed_str()}")
+```
