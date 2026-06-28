@@ -73,3 +73,11 @@ are filtered out before saving (see `config.py` / `ARM_CONFIDENCE_MIN`).
 **Segmentation mask**: A binary per-pixel array (0 = background, 1 = foreground)
 produced by SAM 2.1. Saved as a list of run-length encoded segments in JSON,
 or as a numpy bool array when loaded for downstream use.
+
+**Run-length encoding (RLE)**: A compact format for binary masks where
+consecutive identical values are stored as (value, count) pairs.
+SAM 2.1 segmentation masks are stored in COCO RLE format in the JSON output.
+
+**Optical flow**: A computer vision technique measuring per-pixel motion
+between consecutive frames. Used by `quality_check.py` to compute the
+motion coverage metric.
