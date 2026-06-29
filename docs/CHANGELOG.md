@@ -137,3 +137,13 @@ All notable changes to this project will be documented here.
 - Recording equipment and lighting tips in CONTRIBUTING.md
 - Debugging guide for stage failures in FAQ.md
 - GLOSSARY: landmark confidence, segmentation mask definitions
+
+## [0.4.4] — 2026-06-29
+
+### Added
+- Whisper transcript JSON structure example in MODELS.md
+- Installation verification commands in SETUP.md
+- Logging integration example in API.md
+- Common rejection reasons guide in CONTRIBUTING.md
+- RLE and optical flow glossary definitions
+- International contributors FAQ section
