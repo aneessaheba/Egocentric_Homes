@@ -287,3 +287,12 @@ pipeline, and annotation process are the same globally.
 **Are there region-specific activity prompts?**
 Not currently. All active campaigns use the same task prompts. Future
 campaigns may include region-specific domestic activity collections.
+
+## Segment length
+
+**Should I submit one long clip or several shorter clips?**
+Shorter clips (20–60 seconds) are preferred. They are faster to process,
+easier to annotate precisely, and score better on motion coverage because
+they focus on a single continuous action.
+
+Clips longer than 3 minutes will be automatically split at the upload stage.
