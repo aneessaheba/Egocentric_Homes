@@ -277,3 +277,13 @@ scores.sort(key=lambda x: x[1], reverse=True)
 for name, score in scores[:10]:
     print(f"{score:5.1f}  {name}")
 ```
+
+## Contributors from outside India
+
+**Is EgoLoop open to international contributors?**
+Yes — contributors from any country can participate. The quality gate,
+pipeline, and annotation process are the same globally.
+
+**Are there region-specific activity prompts?**
+Not currently. All active campaigns use the same task prompts. Future
+campaigns may include region-specific domestic activity collections.
