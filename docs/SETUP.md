@@ -162,3 +162,15 @@ python -c "import whisper; print('Whisper OK')"
 # Check OpenCV
 python -c "import cv2; print(cv2.__version__)"
 ```
+
+## Updating dependencies
+
+To update all packages to their latest compatible versions:
+
+```bash
+pip install --upgrade -r requirements.txt
+```
+
+If a model checkpoint format changes after an update, the relevant
+pipeline script will raise a clear error pointing to the affected file.
+Pin versions in `requirements.txt` to avoid unexpected breakage.
