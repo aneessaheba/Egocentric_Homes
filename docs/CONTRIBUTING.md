@@ -145,3 +145,15 @@ are rejected:
 4. **Duration too short**: clip under 10 seconds after trimming silence
 
 Reviewing your clip in the portal before submitting catches most issues.
+
+## Review process
+
+1. **Upload**: Clip lands in the review queue
+2. **Auto-score**: Quality gate runs within minutes; clips scoring < 60 are
+   rejected immediately with a quality report
+3. **Spot-check**: A random 10% of passing clips receive a manual review
+   for content guidelines compliance
+4. **Accepted**: Clip is added to the dataset and your stats update
+
+Total review time: under 48 hours for auto-scored clips; up to 5 days if
+selected for manual review.
