@@ -81,3 +81,10 @@ SAM 2.1 segmentation masks are stored in COCO RLE format in the JSON output.
 **Optical flow**: A computer vision technique measuring per-pixel motion
 between consecutive frames. Used by `quality_check.py` to compute the
 motion coverage metric.
+
+**Annotation schema**: The structure of a per-frame annotation dict.
+See `docs/API.md` for the full schema with example values.
+
+**Stage**: One step in the pipeline (e.g. `hand_pose`, `segmentation`).
+Each stage is implemented as a separate script in `pipeline/` and produces
+one JSON file per input clip.
