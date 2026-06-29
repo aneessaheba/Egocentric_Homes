@@ -239,3 +239,12 @@ log.stage_start("my_stage")
 log.stage_done("my_stage")
 log.info(f"Total elapsed: {timer.elapsed_str()}")
 ```
+
+## Deprecation policy
+
+Functions prefixed with `_` (e.g. `_ensure` in `exporter.py`) are private
+implementation details and may change without notice.
+
+Public functions (no leading underscore) will not have breaking changes
+within a minor version. Breaking changes will be announced in `CHANGELOG.md`
+and bumped to a new minor version.
