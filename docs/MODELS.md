@@ -157,3 +157,20 @@ option is set (default in the pipeline). The JSON structure:
   ]
 }
 ```
+
+## Arm pose keypoint indices
+
+YOLOv8 follows the COCO 17-keypoint convention:
+
+| Index | Body part     | Used |
+|-------|---------------|------|
+| 5     | Left shoulder | ✓    |
+| 6     | Right shoulder| ✓    |
+| 7     | Left elbow    | ✓    |
+| 8     | Right elbow   | ✓    |
+| 9     | Left wrist    | ✓    |
+| 10    | Right wrist   | ✓    |
+| 0–4   | Face          | ✗    |
+| 11–16 | Hips/knees/ankles | ✗ |
+
+Only indices 5–10 are stored; face and lower-body keypoints are discarded.
