@@ -174,3 +174,23 @@ YOLOv8 follows the COCO 17-keypoint convention:
 | 11–16 | Hips/knees/ankles | ✗ |
 
 Only indices 5–10 are stored; face and lower-body keypoints are discarded.
+
+## Hand landmark schema
+
+MediaPipe Hands outputs 21 landmarks per hand in normalised image coordinates:
+
+```json
+{
+  "handedness": "Right",
+  "confidence": 0.96,
+  "landmarks": [
+    {"id": 0, "name": "WRIST",           "x": 0.50, "y": 0.80, "z": 0.0},
+    {"id": 1, "name": "THUMB_CMC",       "x": 0.48, "y": 0.75, "z": -0.03},
+    {"id": 4, "name": "THUMB_TIP",       "x": 0.42, "y": 0.65, "z": -0.06},
+    {"id": 8, "name": "INDEX_FINGER_TIP","x": 0.55, "y": 0.55, "z": -0.05}
+  ]
+}
+```
+
+`x` and `y` are in [0, 1] relative to frame dimensions. `z` is depth
+relative to the wrist (negative = closer to camera).
