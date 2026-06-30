@@ -157,3 +157,14 @@ Reviewing your clip in the portal before submitting catches most issues.
 
 Total review time: under 48 hours for auto-scored clips; up to 5 days if
 selected for manual review.
+
+## Getting help
+
+If you're stuck, reach out via:
+
+- **GitHub Issues**: For bugs, feature requests, or pipeline errors
+- **Email**: aneessaheba04@gmail.com for account or payout questions
+- **Discussions**: GitHub Discussions for general questions and tips
+
+Please include your clip name and quality report JSON when reporting
+submission issues, so we can investigate faster.
