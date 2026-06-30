@@ -296,3 +296,10 @@ easier to annotate precisely, and score better on motion coverage because
 they focus on a single continuous action.
 
 Clips longer than 3 minutes will be automatically split at the upload stage.
+
+## Multi-camera setups
+
+**Can I submit clips recorded with two cameras simultaneously?**
+Not in the current campaign. Only a single egocentric view per submission
+is supported. Synchronised multi-camera support is planned for a future
+campaign covering more complex activities.
