@@ -174,3 +174,16 @@ pip install --upgrade -r requirements.txt
 If a model checkpoint format changes after an update, the relevant
 pipeline script will raise a clear error pointing to the affected file.
 Pin versions in `requirements.txt` to avoid unexpected breakage.
+
+## Running on a headless server
+
+For server environments without a display:
+
+```bash
+export DISPLAY=:0          # if Xvfb is running
+# or use headless OpenCV:
+pip install opencv-python-headless
+```
+
+Whisper and PyTorch run fine without a display. OpenCV `imshow` calls
+are not used by any pipeline script — all output is to JSON files.
