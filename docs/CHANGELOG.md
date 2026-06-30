@@ -147,3 +147,16 @@ All notable changes to this project will be documented here.
 - Common rejection reasons guide in CONTRIBUTING.md
 - RLE and optical flow glossary definitions
 - International contributors FAQ section
+
+## [0.5.0] — 2026-06-30
+
+### Added
+- Arm pose COCO keypoint index table in MODELS.md
+- Dependency update guide in SETUP.md
+- Deprecation and versioning policy in API.md
+- Detailed review process steps in CONTRIBUTING.md
+- Multi-camera FAQ entry
+- Glossary additions: annotation schema, stage, optical flow, RLE
+
+### Changed
+- Campaign slot count now at 72 accepted clips
