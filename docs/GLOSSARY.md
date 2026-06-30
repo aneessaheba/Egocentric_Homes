@@ -88,3 +88,10 @@ See `docs/API.md` for the full schema with example values.
 **Stage**: One step in the pipeline (e.g. `hand_pose`, `segmentation`).
 Each stage is implemented as a separate script in `pipeline/` and produces
 one JSON file per input clip.
+
+**Clip stem**: The filename without extension. Used as the base name for
+all output files from the pipeline. For `WashingCup.mp4`, the stem is
+`WashingCup` and outputs are `WashingCup_hand_pose.json`, etc.
+
+**Processed directory**: `assets/processed/` — the root output directory
+for all pipeline annotation files, organised into sub-directories per stage.
