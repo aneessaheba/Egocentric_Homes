@@ -303,3 +303,18 @@ Clips longer than 3 minutes will be automatically split at the upload stage.
 Not in the current campaign. Only a single egocentric view per submission
 is supported. Synchronised multi-camera support is planned for a future
 campaign covering more complex activities.
+
+## Score breakdown
+
+**How is the quality score calculated exactly?**
+
+```
+score = (blur_score  × 0.30)
+      + (brightness  × 0.15)
+      + (contrast    × 0.15)
+      + (hand_vis    × 0.25)
+      + (motion_cov  × 0.15)
+```
+
+Each sub-score is normalised to 0–100. The composite score is also 0–100.
+Sub-scores are available in the `*_quality.json` report for each clip.
