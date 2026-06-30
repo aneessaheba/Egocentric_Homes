@@ -318,3 +318,17 @@ score = (blur_score  × 0.30)
 
 Each sub-score is normalised to 0–100. The composite score is also 0–100.
 Sub-scores are available in the `*_quality.json` report for each clip.
+
+## Reprocessing clips
+
+**Can I rerun the pipeline on a clip that was already processed?**
+
+By default, `run_pipeline.py` overwrites existing output files.
+Use `--resume` to skip already-completed clips:
+
+```bash
+python pipeline/run_pipeline.py --resume
+```
+
+To force reprocessing of a specific clip, delete its `*_full.json`
+from `assets/processed/annotations/` and rerun.
