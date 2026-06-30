@@ -56,30 +56,36 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-6 md:px-12 pb-16 space-y-16">
 
         <!-- ══════════════════════════════════════════════════════
-             SECTION 2 — Campaign Cards Grid
+             SECTION 2 — Featured Campaign (single, full-width)
              ══════════════════════════════════════════════════════ -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <!-- Campaign 1 -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
-                <div class="p-5 space-y-3 flex-1">
-                    <div class="flex items-center justify-between">
+        <section class="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
+            <div class="p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="md:col-span-2 space-y-5">
+                    <div class="flex items-center gap-2">
                         <span class="inline-block text-[10px] font-bold font-mono text-blue-700 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Kitchen</span>
                         <span class="inline-block text-[10px] font-bold font-mono text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded">Easy</span>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900">Kitchen Activities Collection</h3>
-                    <p class="text-gray-500 text-xs leading-relaxed">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Kitchen Activities Collection</h2>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed max-w-xl">
                         Record everyday kitchen tasks &mdash; washing dishes, cutting produce, making tea or coffee &mdash;
                         from a first-person wearable camera.
                     </p>
-                    <div class="flex items-end justify-between pt-1">
-                        <div>
-                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
-                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
-                        </div>
-                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Aug 31, 2026</span></span>
+                    <div class="flex gap-3 pt-2">
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold px-5 py-2.5 rounded-lg transition cursor-pointer">View Details</button>
+                        <button class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition cursor-pointer">Join Campaign</button>
                     </div>
-                    <div class="space-y-1 pt-1">
+                </div>
+
+                <div class="space-y-6 md:border-l md:border-gray-100 md:pl-10">
+                    <div>
+                        <span class="block text-3xl font-black text-gray-900">&#8377;50,000</span>
+                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold mt-1">1st Prize &middot; &#8377;25,000 runner-up</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">Deadline</span>
+                        <span class="block text-gray-900 font-semibold">Aug 31, 2026</span>
+                    </div>
+                    <div class="space-y-1">
                         <div class="flex justify-between text-[11px] text-gray-500 font-mono">
                             <span>34 / 100 submissions</span>
                             <span>34%</span>
@@ -89,82 +95,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-5 pt-0 flex gap-2">
-                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
-                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
-                </div>
             </div>
-
-            <!-- Campaign 2 -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
-                <div class="p-5 space-y-3 flex-1">
-                    <div class="flex items-center justify-between">
-                        <span class="inline-block text-[10px] font-bold font-mono text-indigo-700 uppercase tracking-wider bg-indigo-50 px-2 py-1 rounded">Laundry</span>
-                        <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">Medium</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Laundry &amp; Tidying Tasks</h3>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Folding clothes, loading a washer, organizing a closet &mdash; egocentric footage of routine
-                        laundry and tidying work.
-                    </p>
-                    <div class="flex items-end justify-between pt-1">
-                        <div>
-                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
-                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
-                        </div>
-                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Sep 15, 2026</span></span>
-                    </div>
-                    <div class="space-y-1 pt-1">
-                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
-                            <span>18 / 100 submissions</span>
-                            <span>18%</span>
-                        </div>
-                        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-blue-600 rounded-full" style="width: 18%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-5 pt-0 flex gap-2">
-                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
-                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
-                </div>
-            </div>
-
-            <!-- Campaign 3 -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-xs flex flex-col overflow-hidden">
-                <div class="p-5 space-y-3 flex-1">
-                    <div class="flex items-center justify-between">
-                        <span class="inline-block text-[10px] font-bold font-mono text-rose-700 uppercase tracking-wider bg-rose-50 px-2 py-1 rounded">Cleaning</span>
-                        <span class="inline-block text-[10px] font-bold font-mono text-amber-700 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">Medium</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900">Cleaning &amp; Organizing</h3>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Mopping, sweeping, arranging shoes or shelves &mdash; first-person recordings of home cleaning
-                        and organizing routines.
-                    </p>
-                    <div class="flex items-end justify-between pt-1">
-                        <div>
-                            <span class="block text-xl font-black text-gray-900">&#8377;50,000</span>
-                            <span class="block text-[10px] text-gray-500 uppercase font-mono font-bold">1st Prize &middot; &#8377;25,000 runner-up</span>
-                        </div>
-                        <span class="text-xs text-gray-500 font-mono">Deadline<br><span class="text-gray-800 font-semibold">Oct 1, 2026</span></span>
-                    </div>
-                    <div class="space-y-1 pt-1">
-                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
-                            <span>7 / 100 submissions</span>
-                            <span>7%</span>
-                        </div>
-                        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-blue-600 rounded-full" style="width: 7%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-5 pt-0 flex gap-2">
-                    <button class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition cursor-pointer">View Details</button>
-                    <button class="flex-1 bg-gray-900 hover:bg-black text-white text-sm font-semibold py-2 rounded-lg transition cursor-pointer">Join Campaign</button>
-                </div>
-            </div>
-
         </section>
 
         <!-- ══════════════════════════════════════════════════════
