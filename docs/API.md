@@ -248,3 +248,15 @@ implementation details and may change without notice.
 Public functions (no leading underscore) will not have breaking changes
 within a minor version. Breaking changes will be announced in `CHANGELOG.md`
 and bumped to a new minor version.
+
+## Type annotations
+
+The pipeline codebase uses Python type hints throughout for IDE support
+and `mypy` compatibility. Key types used:
+
+| Type                  | Meaning                                      |
+|-----------------------|----------------------------------------------|
+| `Path`                | `pathlib.Path` — always use instead of `str` for file paths |
+| `list[dict]`          | Per-frame annotation list                    |
+| `dict[str, Any]`      | Generic JSON-compatible object               |
+| `tuple[str, bool, str]` | `(clip_name, success, message)` from batch runner |
