@@ -16,7 +16,8 @@ Then it combines all outputs into one final annotation JSON per clip:
   assets/processed/annotations/[clip_name]_full.json
 
 Usage:
-  python pipeline/run_pipeline.py
+  python pipeline/run_pipeline.py              # process all videos
+  python pipeline/run_pipeline.py --resume     # skip clips that already have a _full.json
 """
 
 # ── Imports ───────────────────────────────────────────────────────────────────
@@ -291,14 +292,19 @@ def build_annotation(video_path: Path, clip_index: int, clip_metadata: dict) -> 
 
 # ── Main pipeline ─────────────────────────────────────────────────────────────
 
-def main():
+def main(resume: bool = False):
     """
     Entry point — discovers all videos, runs the three pipeline modules on each,
     merges outputs into final annotations, and prints the summary.
+
+    resume=True skips any clip that already has a _full.json in ANNOTATIONS_DIR,
+    so a crashed run can be continued without re-processing finished clips.
     """
 
     print(f"\n{'═' * 54}")
     print(f"       HomeHands Dataset Pipeline")
+    if resume:
+        print(f"       (resume mode — skipping completed clips)")
     print(f"{'═' * 54}\n")
 
     # ── Step 1: find all .mp4 videos ─────────────────────────
@@ -348,6 +354,11 @@ def main():
     for clip_index, video_path in enumerate(videos):
         # ── Print a header for this video ────────────────────
         clip_name = video_path.stem   # filename without extension
+
+        if resume and (ANNOTATIONS_DIR / f"{clip_name}_full.json").exists():
+            print(f"  ⏭  [{clip_index + 1}/{len(videos)}]  {video_path.name}  — already done, skipping")
+            continue
+
         print(f"\n{'─' * 54}")
         print(f"  [{clip_index + 1}/{len(videos)}]  {video_path.name}")
         print(f"{'─' * 54}")
@@ -502,4 +513,4 @@ def main():
 #
 # It does NOT run when another script does "import run_pipeline".
 if __name__ == "__main__":
-    main()    # call the main function to start everything
+    main(resume="--resume" in sys.argv)
