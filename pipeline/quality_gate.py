@@ -19,6 +19,7 @@ skipped without needing an explicit exclude list.
 Usage:
   Single video : python pipeline/quality_gate.py assets/videos/WashingCup.mp4
   All videos   : python pipeline/quality_gate.py assets/videos/
+  Dry run      : python pipeline/quality_gate.py assets/videos/ --dry-run
 """
 
 import sys
@@ -31,8 +32,11 @@ REJECTED_DIR      = Path("assets/videos/rejected")
 REJECT_THRESHOLD  = 60
 
 
-def gate_video(video_path: Path) -> dict:
-    """Score one video; move it to rejected/ if below threshold. Returns the quality report."""
+def gate_video(video_path: Path, dry_run: bool = False) -> dict:
+    """Score one video; move it to rejected/ if below threshold. Returns the quality report.
+
+    dry_run=True scores and prints the verdict but never moves any files.
+    """
     if video_path.resolve().parent == REJECTED_DIR.resolve():
         print(f"  ⏭️  SKIPPED  — {video_path.name} is already in {REJECTED_DIR}/")
         report_path = quality_check.QUALITY_ROOT / f"{video_path.stem}_quality.json"
@@ -45,17 +49,20 @@ def gate_video(video_path: Path) -> dict:
     report = quality_check.analyse_video(video_path)
 
     if report["score"] < REJECT_THRESHOLD:
-        REJECTED_DIR.mkdir(parents=True, exist_ok=True)
+        if dry_run:
+            print(f"  🔍 DRY-RUN  — {video_path.name} (score {report['score']}) would be REJECTED")
+        else:
+            REJECTED_DIR.mkdir(parents=True, exist_ok=True)
 
-        dest_video = REJECTED_DIR / video_path.name
-        shutil.move(str(video_path), str(dest_video))
+            dest_video = REJECTED_DIR / video_path.name
+            shutil.move(str(video_path), str(dest_video))
 
-        src_report  = quality_check.QUALITY_ROOT / f"{video_path.stem}_quality.json"
-        dest_report = REJECTED_DIR / f"{video_path.stem}_quality.json"
-        if src_report.exists():
-            shutil.copy(str(src_report), str(dest_report))
+            src_report  = quality_check.QUALITY_ROOT / f"{video_path.stem}_quality.json"
+            dest_report = REJECTED_DIR / f"{video_path.stem}_quality.json"
+            if src_report.exists():
+                shutil.copy(str(src_report), str(dest_report))
 
-        print(f"  🚫 REJECTED — {video_path.name} (score {report['score']}) → {dest_video}")
+            print(f"  🚫 REJECTED — {video_path.name} (score {report['score']}) → {dest_video}")
     else:
         print(f"  ✅ PASSED   — {video_path.name} (score {report['score']})")
 
@@ -69,14 +76,21 @@ def print_summary(reports: list):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    dry_run  = "--dry-run" in sys.argv
+    clean_argv = [a for a in sys.argv if a != "--dry-run"]
+
+    if len(clean_argv) != 2:
         print("Usage:")
         print("  Single video : python pipeline/quality_gate.py assets/videos/WashingCup.mp4")
         print("  All videos   : python pipeline/quality_gate.py assets/videos/")
+        print("  Dry run      : python pipeline/quality_gate.py assets/videos/ --dry-run")
         sys.exit(1)
 
-    target  = Path(sys.argv[1])
+    target  = Path(clean_argv[1])
     reports = []
+
+    if dry_run:
+        print(f"\n  DRY-RUN mode — no files will be moved\n")
 
     if target.is_dir():
         videos = sorted(target.glob("*.mp4"))    # non-recursive — never descends into rejected/
@@ -85,13 +99,13 @@ if __name__ == "__main__":
             sys.exit(1)
         print(f"\n  Found {len(videos)} video(s) in {target}")
         for v in videos:
-            reports.append(gate_video(v))
+            reports.append(gate_video(v, dry_run=dry_run))
 
     elif target.is_file():
         if target.suffix.lower() != ".mp4":
             print(f"[ERROR] Not an MP4 file: {target}")
             sys.exit(1)
-        reports.append(gate_video(target))
+        reports.append(gate_video(target, dry_run=dry_run))
 
     else:
         print(f"[ERROR] Path not found: {target}")
