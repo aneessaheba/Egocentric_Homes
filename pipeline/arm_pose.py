@@ -30,6 +30,9 @@ Usage:
 
   From video + save output video:
     python pipeline/arm_pose.py assets/videos/WashingCup.mp4 --output-video
+
+  Batch (all .mp4 files in a folder):
+    python pipeline/arm_pose.py --batch assets/videos/
 """
 
 import sys
@@ -461,6 +464,27 @@ def _print_summary(clip_name, total_frames, elapsed, annotated_dir):
     print(f"  Frames → {annotated_dir}/\n")
 
 
+def process_batch(folder: str, output_video: bool = False):
+    """Process all .mp4 files in a folder, skipping already-processed clips."""
+    folder = Path(folder)
+    videos = sorted(folder.glob("*.mp4"))
+    if not videos:
+        print(f"[ERROR] No .mp4 files found in {folder}")
+        sys.exit(1)
+
+    print(f"\n{'=' * 60}")
+    print(f"  Batch mode  —  {len(videos)} videos in {folder}")
+    print(f"{'=' * 60}\n")
+
+    for i, video in enumerate(videos, 1):
+        json_out = ARM_POSE_ROOT / f"{video.stem}.json"
+        if json_out.exists():
+            print(f"  [{i}/{len(videos)}] Skipping {video.name} (already processed)")
+            continue
+        print(f"  [{i}/{len(videos)}] Processing {video.name}")
+        process_video(str(video), output_video=output_video)
+
+
 def _stitch_video(annotated_dir, clip_name, fps, width, height):
     png_files = sorted(annotated_dir.glob("frame_*.png"))
     if not png_files:
@@ -488,11 +512,18 @@ if __name__ == "__main__":
             print("Usage: python pipeline/arm_pose.py --frames <folder>")
             sys.exit(1)
         process_frames_folder(clean_argv[idx + 1])
+    elif "--batch" in clean_argv:
+        idx = clean_argv.index("--batch")
+        if idx + 1 >= len(clean_argv):
+            print("Usage: python pipeline/arm_pose.py --batch <folder>")
+            sys.exit(1)
+        process_batch(clean_argv[idx + 1], output_video=output_video)
     elif len(clean_argv) == 2:
         process_video(clean_argv[1], output_video=output_video)
     else:
         print("Usage:")
         print("  Test   : python pipeline/arm_pose.py --test")
         print("  Frames : python pipeline/arm_pose.py --frames <folder>")
+        print("  Batch  : python pipeline/arm_pose.py --batch <folder> [--output-video]")
         print("  Video  : python pipeline/arm_pose.py <video_path> [--output-video]")
         sys.exit(1)
