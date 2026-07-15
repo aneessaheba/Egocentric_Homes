@@ -22,3 +22,14 @@ captured by contributors wearing head-mounted or wrist-mounted cameras.
 | Segmentation  | `segmentation/<clip>.json`     | JSON (RLE masks)|
 | Depth         | `depth/<clip>_depth.npy`       | NumPy float32   |
 | Transcription | `transcripts/<clip>.json`      | JSON (Whisper)  |
+
+## Activity distribution
+
+| Activity category   | Clips |
+|---------------------|-------|
+| Washing dishes      | 12    |
+| Chopping / cutting  | 10    |
+| Cooking on hob      | 9     |
+| Making tea / coffee | 8     |
+| Cleaning counter    | 6     |
+| Folding laundry     | 5     |
