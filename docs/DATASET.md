@@ -43,3 +43,10 @@ captured by contributors wearing head-mounted or wrist-mounted cameras.
 | Clips rejected       | 6        |
 | Mean hand visibility | 82%      |
 | Mean clip duration   | 34.2 sec |
+
+## Accessing the dataset
+
+The dataset is not yet publicly available. Annotations will be released on
+Hugging Face Datasets under CC-BY 4.0 once the collection campaign closes.
+
+To register interest in early access, contact aneessaheba04@gmail.com.
