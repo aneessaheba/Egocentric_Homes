@@ -33,3 +33,13 @@ captured by contributors wearing head-mounted or wrist-mounted cameras.
 | Making tea / coffee | 8     |
 | Cleaning counter    | 6     |
 | Folding laundry     | 5     |
+
+## Quality statistics
+
+| Metric               | Value    |
+|----------------------|----------|
+| Mean quality score   | 76.4     |
+| Acceptance rate      | 88%      |
+| Clips rejected       | 6        |
+| Mean hand visibility | 82%      |
+| Mean clip duration   | 34.2 sec |
