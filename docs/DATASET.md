@@ -12,3 +12,13 @@ captured by contributors wearing head-mounted or wrist-mounted cameras.
 | Resolution   | 720p – 1080p               |
 | Frame rate   | 24 – 30 fps                |
 | Activities   | Kitchen, laundry, cleaning |
+
+## Derived annotations
+
+| Stream        | File pattern                   | Format          |
+|---------------|--------------------------------|-----------------|
+| Hand pose     | `hand_pose/<clip>.json`        | JSON (landmarks)|
+| Arm pose      | `arm_pose/<clip>.json`         | JSON (keypoints)|
+| Segmentation  | `segmentation/<clip>.json`     | JSON (RLE masks)|
+| Depth         | `depth/<clip>_depth.npy`       | NumPy float32   |
+| Transcription | `transcripts/<clip>.json`      | JSON (Whisper)  |
