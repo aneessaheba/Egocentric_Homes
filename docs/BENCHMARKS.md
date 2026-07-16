@@ -32,3 +32,15 @@ Performance measurements for the HomeHands pipeline on reference hardware.
 
 With `batch_runner.py --workers 2`, throughput roughly doubles for multi-clip
 sessions by overlapping CPU pre/post-processing with GPU inference.
+
+## Memory usage per stage
+
+| Stage         | Peak GPU VRAM | Peak System RAM |
+|---------------|---------------|-----------------|
+| Hand pose     | 0 MB (CPU)    | ~500 MB         |
+| Arm pose      | ~480 MB       | ~600 MB         |
+| Segmentation  | ~980 MB       | ~1.2 GB         |
+| Depth         | ~1500 MB      | ~1.1 GB         |
+| Transcription | ~900 MB       | ~800 MB         |
+
+Peak concurrent VRAM (all models loaded): ~2.8 GB.
