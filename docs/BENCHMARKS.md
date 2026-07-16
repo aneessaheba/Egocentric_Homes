@@ -55,3 +55,12 @@ Peak concurrent VRAM (all models loaded): ~2.8 GB.
 | medium | 1.5 GB  | 40 s              | ~5%      |
 
 Pipeline default: `base`. Set `WHISPER_MODEL` in `config.py` to change.
+
+## Optimisation impact
+
+| Optimisation                      | Speedup | Quality impact   |
+|-----------------------------------|---------|------------------|
+| `SEG_FRAME_INTERVAL` 9 → 15       | ~1.4×   | Minor mask gaps  |
+| `WHISPER_MODEL` base → tiny       | ~3×     | -5% WER est.     |
+| `DEPTH_RESIZE_WIDTH` 518 → 384    | ~1.8×   | Lower precision  |
+| `batch_runner --workers 2`        | ~1.9×   | None             |
