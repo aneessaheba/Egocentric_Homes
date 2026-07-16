@@ -21,3 +21,14 @@ Performance measurements for the HomeHands pipeline on reference hardware.
 | Transcription | 6 s      | 9 s      | 7 s      |
 | Quality check | 4 s      | 6 s      | 5 s      |
 | **Total**     | **93 s** |**145 s** |**107 s** |
+
+## Throughput
+
+| Config | Clips / hour (30-sec avg) |
+|--------|--------------------------|
+| A      | ~38                      |
+| B      | ~25                      |
+| C      | ~33                      |
+
+With `batch_runner.py --workers 2`, throughput roughly doubles for multi-clip
+sessions by overlapping CPU pre/post-processing with GPU inference.
