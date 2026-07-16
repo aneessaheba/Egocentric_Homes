@@ -64,3 +64,15 @@ Pipeline default: `base`. Set `WHISPER_MODEL` in `config.py` to change.
 | `WHISPER_MODEL` base → tiny       | ~3×     | -5% WER est.     |
 | `DEPTH_RESIZE_WIDTH` 518 → 384    | ~1.8×   | Lower precision  |
 | `batch_runner --workers 2`        | ~1.9×   | None             |
+
+## Batch runner scaling
+
+Time to process 10 × 30-second clips (Config A):
+
+| Workers | Wall time | GPU util. avg |
+|---------|-----------|---------------|
+| 1       | ~25 min   | 70%           |
+| 2       | ~14 min   | 88%           |
+| 3+      | OOM risk  | —             |
+
+Diminishing returns beyond 2 workers on single-GPU setups due to VRAM pressure.
