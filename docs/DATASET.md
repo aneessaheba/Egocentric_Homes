@@ -50,3 +50,10 @@ The dataset is not yet publicly available. Annotations will be released on
 Hugging Face Datasets under CC-BY 4.0 once the collection campaign closes.
 
 To register interest in early access, contact aneessaheba04@gmail.com.
+
+## Known limitations
+
+- **Silent clips**: 8% of clips have no narration; transcript is empty
+- **Occlusion**: heavy occlusion reduces hand accuracy in ~12% of frames
+- **Environment variety**: most clips in home kitchens
+- **Language**: 85% English narration; 15% Hindi/Tamil/Telugu
