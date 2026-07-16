@@ -44,3 +44,14 @@ sessions by overlapping CPU pre/post-processing with GPU inference.
 | Transcription | ~900 MB       | ~800 MB         |
 
 Peak concurrent VRAM (all models loaded): ~2.8 GB.
+
+## Whisper model comparison
+
+| Model  | Size    | Speed (30 s clip) | WER (en) |
+|--------|---------|-------------------|----------|
+| tiny   | 39 MB   | 2 s               | ~15%     |
+| base   | 150 MB  | 6 s               | ~10%     |
+| small  | 461 MB  | 15 s              | ~7%      |
+| medium | 1.5 GB  | 40 s              | ~5%      |
+
+Pipeline default: `base`. Set `WHISPER_MODEL` in `config.py` to change.
