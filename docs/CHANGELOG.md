@@ -160,3 +160,12 @@ All notable changes to this project will be documented here.
 
 ### Changed
 - Campaign slot count now at 72 accepted clips
+
+## [0.7.2] — 2026-07-16
+
+### Added
+- `docs/DATASET.md` — HomeHands-50 overview, distributions, quality stats
+- `docs/BENCHMARKS.md` — per-stage timing, throughput, memory, and Whisper comparison
+
+### Changed
+- Campaign slot count at 74
